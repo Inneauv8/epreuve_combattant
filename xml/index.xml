@@ -1,0 +1,21 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygenindex xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="index.xsd" version="1.9.8" xml:lang="en-US">
+  <compound refid="namespace_capteur_ligne" kind="namespace"><name>CapteurLigne</name>
+    <member refid="namespace_capteur_ligne_1a4c49ac4427dd14d653214b9326b05e03" kind="function"><name>initLine</name></member>
+    <member refid="namespace_capteur_ligne_1a9f1e7930d15aa89cb90dda262db91a2e" kind="function"><name>readLineValue</name></member>
+  </compound>
+  <compound refid="namespace_capteur_ligne_1_1_0d0" kind="namespace"><name>CapteurLigne::@0</name>
+  </compound>
+  <compound refid="namespace_capteur_ligne_1_1_0d1" kind="namespace"><name>CapteurLigne::@1</name>
+  </compound>
+  <compound refid="capteur_ligne_8cpp" kind="file"><name>capteurLigne.cpp</name>
+  </compound>
+  <compound refid="capteur_ligne_8h" kind="file"><name>capteurLigne.h</name>
+  </compound>
+  <compound refid="main_8cpp" kind="file"><name>main.cpp</name>
+    <member refid="main_8cpp_1a4fc01d736fe50cf5b977f755b675f11d" kind="function"><name>setup</name></member>
+    <member refid="main_8cpp_1afe461d27b9c48d5921c00d521181f12f" kind="function"><name>loop</name></member>
+  </compound>
+  <compound refid="dir_68267d1309a1af8e8297ef4c3efbcdba" kind="dir"><name>src</name>
+  </compound>
+</doxygenindex>

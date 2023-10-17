@@ -1,8 +1,6 @@
 #include <QTRSensors.h>
 #include <Arduino.h>
 
-
-
 namespace CapteurLigne {
     int initLine(const uint8_t pins[], uint8_t pinLedOn);
 

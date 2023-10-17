@@ -1,5 +1,5 @@
 /**************************************************************************************************
-Nom du fichier : main.cpp
+Nom du fichier : capteurLigne.cpp
 Auteur : Maxime Boucher
 Date de création : 2023-10-17
 
@@ -21,10 +21,10 @@ namespace CapteurLigne{
     uint16_t sensorValues[8];
   }
   /**
-  * @brief Initialise le detecteur de ligne
-  * @param pins Tableau des numéros des pin digitale de l'arduino utilisées par le capteur N de la ligne
-  * @param pinLedOn Pin digitale qui définit si les diodes émetent ou non
-  */
+   * @brief Initialise le detecteur de ligne
+   * @param pins Tableau des numéros des pin digitale de l'arduino utilisées par le capteur N de la ligne
+   * @param pinLedOn Pin digitale qui définit si les diodes émetent ou non
+   */
   int initLine(const uint8_t pins[], uint8_t pinLedOn){
       qtr.setTypeRC();
       qtr.setSensorPins(pins,8);
@@ -76,8 +76,8 @@ namespace CapteurLigne{
   }
 
   /**
-  * @brief Lit la valeur du capteur de ligne
-  */
+   * @brief Lit la valeur du capteur de ligne
+   */
   int readLineValue(void) 
   {
     return qtr.readLineBlack(sensorValues);
