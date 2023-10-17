@@ -1,9 +1,9 @@
 /**************************************************************************************************
 Nom du fichier : main.cpp
-Auteur : Mathieu Durand
-Date de création : 2023/10/16
+Auteur : Maxime Boucher
+Date de création : 2023-10-17
 
-Description : Fichier principale Arduino
+Description : Librairie permettant la mise en application du capteur de ligne
               
 Notes : 
 
@@ -15,47 +15,35 @@ Modifications :
 //  INCLUDES
 // *************************************************************************************************	
 
-#include <Arduino.h>
-#include <LibRobus.h>
+#include "capteurLigne.h"
 
 // *************************************************************************************************
 //  CONSTANTES
 // *************************************************************************************************
-/* VIDE */
+
 
 // *************************************************************************************************
 //  FONCTIONS LOCALES
 // *************************************************************************************************
-/* VIDE */
+
 
 // *************************************************************************************************
 //  STRUCTURES ET UNIONS
 // *************************************************************************************************
-/* VIDE */
+
 
 // *************************************************************************************************
 // VARIABLES GLOBALES
 // *************************************************************************************************
-/* VIDE */
 
-/**
- * @brief Initialisation du programme.
- * @author Mathieu Durand
- */
+
 void setup()
 {   
     BoardInit();
-    Serial.begin(115200); // 115200 ou 9600
-    
-    // Décommenter si le programme a absolument besoin du serial.
-    //while(!Serial);
+    Serial.begin(9600);
 }
 
-/**
- * @brief Boucle du programme.
- * @author Mathieu Durand
-*/
 void loop()
 {
-    
+    Serial.println("TEST");
 }
