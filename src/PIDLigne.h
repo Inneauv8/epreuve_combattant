@@ -18,7 +18,11 @@ namespace PIDLigne
 	// *************************************************************************************************
 	//  STRUCTURES ET UNIONS
 	// *************************************************************************************************
-	
+	struct MotorVelocities
+    {
+        float leftMotorSpeed;
+        float rightMotorSpeed;
+    };
 		  
 	// *************************************************************************************************
 	// VARIABLES GLOBALES
@@ -29,6 +33,8 @@ namespace PIDLigne
 	//  PROTOTYPE DE FONCTIONS
 	// *************************************************************************************************
     void initPID(float sensorDistance, float sensorWidth);
+    float computePID(float trueError);
+    MotorVelocities computeMotorSpeed(float wheelBaseDiameter, float robotSpeed);
 
 
 	void main(void);
@@ -38,6 +44,8 @@ namespace PIDLigne
 		// *************************************************************************************************
 		// VARIABLES LOCALES
 		// *************************************************************************************************
+        float computeError(int sensorValue);
+
 		extern float sensorDistance;
         extern float sensorWidth;
 	}
