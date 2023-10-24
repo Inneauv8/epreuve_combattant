@@ -70,6 +70,7 @@ $(function() {
 </div><!-- top -->
 <div class="header">
   <div class="summary">
+<a href="#nested-classes">Classes</a> &#124;
 <a href="#func-members">Fonctions</a>  </div>
   <div class="headertitle"><div class="title">Référence de l'espace de nommage PIDLigne</div></div>
 </div><!--header-->
@@ -78,6 +79,11 @@ $(function() {
 <p>Description du namespace.  
 <a href="../../d1/dd2/namespacePIDLigne.html#details">Plus de détails...</a></p>
 <table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="nested-classes" name="nested-classes"></a>
+Classes</h2></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d9/d30/structPIDLigne_1_1MotorVelocities.html">MotorVelocities</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
 Fonctions</h2></td></tr>
 <tr class="memitem:a1ffd1493cb3bc9ab9510ec448186c007"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d1/dd2/namespacePIDLigne.html#a1ffd1493cb3bc9ab9510ec448186c007">main</a> (void)</td></tr>
@@ -88,11 +94,61 @@ Fonctions</h2></td></tr>
 <tr class="separator:a2f7ea617abec4a10e120f62e1d587d6c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ae312d11e7d7554d5761e3994c6014813"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d1/dd2/namespacePIDLigne.html#ae312d11e7d7554d5761e3994c6014813">initPID</a> (float sensorDistance, float sensorWidth)</td></tr>
 <tr class="separator:ae312d11e7d7554d5761e3994c6014813"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a25ac1444835f7ea2143a74538cf004bd"><td class="memItemLeft" align="right" valign="top">float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d1/dd2/namespacePIDLigne.html#a25ac1444835f7ea2143a74538cf004bd">computePID</a> (float trueError)</td></tr>
+<tr class="separator:a25ac1444835f7ea2143a74538cf004bd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a244971f470b794455a18bf093cb1d2ef"><td class="memItemLeft" align="right" valign="top"><a class="el" href="../../d9/d30/structPIDLigne_1_1MotorVelocities.html">MotorVelocities</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d1/dd2/namespacePIDLigne.html#a244971f470b794455a18bf093cb1d2ef">computeMotorSpeed</a> (float wheelBaseDiameter, float robotSpeed)</td></tr>
+<tr class="separator:a244971f470b794455a18bf093cb1d2ef"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Description détaillée</h2>
 <div class="textblock"><p >Description du namespace. </p>
 <dl class="section author"><dt>Auteur</dt><dd></dd></dl>
 </div><h2 class="groupheader">Documentation des fonctions</h2>
+<a id="a244971f470b794455a18bf093cb1d2ef" name="a244971f470b794455a18bf093cb1d2ef"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a244971f470b794455a18bf093cb1d2ef">&#9670;&#160;</a></span>computeMotorSpeed()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="../../d9/d30/structPIDLigne_1_1MotorVelocities.html">MotorVelocities</a> PIDLigne::computeMotorSpeed </td>
+          <td>(</td>
+          <td class="paramtype">float&#160;</td>
+          <td class="paramname"><em>wheelBaseDiameter</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">float&#160;</td>
+          <td class="paramname"><em>robotSpeed</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a25ac1444835f7ea2143a74538cf004bd" name="a25ac1444835f7ea2143a74538cf004bd"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a25ac1444835f7ea2143a74538cf004bd">&#9670;&#160;</a></span>computePID()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">float PIDLigne::computePID </td>
+          <td>(</td>
+          <td class="paramtype">float&#160;</td>
+          <td class="paramname"><em>trueError</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
 <a id="ae312d11e7d7554d5761e3994c6014813" name="ae312d11e7d7554d5761e3994c6014813"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#ae312d11e7d7554d5761e3994c6014813">&#9670;&#160;</a></span>initPID()</h2>
 
