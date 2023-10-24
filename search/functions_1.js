@@ -1,5 +1,6 @@
 var searchData=
 [
-  ['initline_0',['initLine',['../d5/d4d/namespaceCapteurLigne.html#a4c49ac4427dd14d653214b9326b05e03',1,'CapteurLigne']]],
-  ['initpid_1',['initPID',['../d1/dd2/namespacePIDLigne.html#ae312d11e7d7554d5761e3994c6014813',1,'PIDLigne']]]
+  ['calculpid_0',['calculPID',['../db/d41/namespaceMOVE.html#ac6099e79407c9c9a4e24998b02e725fb',1,'MOVE']]],
+  ['computemotorspeed_1',['computeMotorSpeed',['../d1/dd2/namespacePIDLigne.html#a244971f470b794455a18bf093cb1d2ef',1,'PIDLigne']]],
+  ['computepid_2',['computePID',['../d1/dd2/namespacePIDLigne.html#a25ac1444835f7ea2143a74538cf004bd',1,'PIDLigne']]]
 ];

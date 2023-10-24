@@ -1,5 +1,5 @@
 var searchData=
 [
-  ['computemotorspeed_0',['computeMotorSpeed',['../d1/dd2/namespacePIDLigne.html#a244971f470b794455a18bf093cb1d2ef',1,'PIDLigne']]],
-  ['computepid_1',['computePID',['../d1/dd2/namespacePIDLigne.html#a25ac1444835f7ea2143a74538cf004bd',1,'PIDLigne']]]
+  ['averagespeedd_0',['averageSpeedD',['../db/d41/namespaceMOVE.html#a493850f42349b45be7cbf7ee36a57758',1,'MOVE']]],
+  ['averagespeedg_1',['averageSpeedG',['../db/d41/namespaceMOVE.html#ac5d4d59797d29e02e024d0b1282b4ccc',1,'MOVE']]]
 ];
