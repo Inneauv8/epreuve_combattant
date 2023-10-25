@@ -7,8 +7,7 @@ Date de création : 17/10/2023
 #ifndef MOVE_H
 #define MOVE_H
 
-#include <Arduino.h>
-#include <LibRobus.h>
+#include <math.h>
 
 namespace MOVE {
   // *************************************************************************************************
@@ -19,11 +18,7 @@ namespace MOVE {
   #define WHEEL_DIAMETER 2.992126
 
 
-  extern float pulseToDist;
-
-  extern float vitesse;
-  extern bool target;
-  extern struct valeursPID pid;
+  float pulseToDist = M_PI*WHEEL_DIAMETER/3200.0;
 
   // *************************************************************************************************
   //  STRUCTURES ET UNIONS
@@ -35,6 +30,7 @@ namespace MOVE {
       float Ki; // Constante intégrale
       float Kd; // Constante dérivée
       float Ti; // Temps initial
+      float dt; // Intervalle de temps pour le calcul d'intégrales et de dérivées
       float Sp; // Set Point (Valeur voulue)
       float Pv; // Process Value (Valeur réelle)
       float p; // Valeur proportionnelle
@@ -48,8 +44,6 @@ namespace MOVE {
     float D;
   };
   
-  extern struct valeursDistance Distance;
-
   struct posRobot {
       float x;
       float y;
@@ -57,7 +51,8 @@ namespace MOVE {
 
   };
 
-  extern struct posRobot position;
+  extern valeursDistance Distance;
+  extern posRobot position;
   
   // *************************************************************************************************
   //  PROTOTYPE DE FONCTIONS
