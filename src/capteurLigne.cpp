@@ -12,7 +12,7 @@ Modifications :
 ***************************************************************************************************/
 
 #include "capteurLigne.h"
-#include <arduino.h>
+#include <Arduino.h>
 
 namespace CapteurLigne{
 
