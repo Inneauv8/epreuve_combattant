@@ -35,7 +35,7 @@ namespace PIDLigne
 	// *************************************************************************************************
 	//  PROTOTYPE DE FONCTIONS
 	// *************************************************************************************************
-    void initPID(float sensorDistance, float sensorWidth);
+    void initPID(float sensorDistance, float sensorWidth, float Kp, float Ki, float Kd, const uint8_t pins[], uint8_t pinLedOn);
     float computePID(float trueError);
     WheelVelocities computeWheelSpeed(float wheelBaseDiameter, float robotSpeed);
 

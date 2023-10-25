@@ -26,7 +26,7 @@ namespace MOVE {
   // *************************************************************************************************
   //  CONSTANTES
   // *************************************************************************************************
-  /* VIDE */
+  float pulseToDist = M_PI*WHEEL_DIAMETER/3200.0;
 
   // dimensions de la piste: 16x10 pieds, donc une case en x = 5.333 pouces et une case en y = 10.909 pouces
   char parcours[11][36] = {
