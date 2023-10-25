@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['leftmotorspeed_0',['leftMotorSpeed',['../d9/d30/structPIDLigne_1_1MotorVelocities.html#ad4ad1d6df185bbb0680a67f17efaf161',1,'PIDLigne::MotorVelocities']]]
+  ['leftwheelspeed_0',['leftWheelSpeed',['../df/dd7/structPIDLigne_1_1WheelVelocities.html#a7e94defd64fbcea7690b5ea36c986dcd',1,'PIDLigne::WheelVelocities']]]
 ];

@@ -76,41 +76,67 @@ $(function() {
 </div><!--header-->
 <div class="contents">
 
-<p>Description du namespace.  
+<p>Computes left and right motor speeds according to line sensor.  
 <a href="../../d1/dd2/namespacePIDLigne.html#details">Plus de détails...</a></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="nested-classes" name="nested-classes"></a>
 Classes</h2></td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d9/d30/structPIDLigne_1_1MotorVelocities.html">MotorVelocities</a></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../df/dd7/structPIDLigne_1_1WheelVelocities.html">WheelVelocities</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
 Fonctions</h2></td></tr>
-<tr class="memitem:a1ffd1493cb3bc9ab9510ec448186c007"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d1/dd2/namespacePIDLigne.html#a1ffd1493cb3bc9ab9510ec448186c007">main</a> (void)</td></tr>
-<tr class="memdesc:a1ffd1493cb3bc9ab9510ec448186c007"><td class="mdescLeft">&#160;</td><td class="mdescRight">Ceci est la description de la fonction.  <a href="../../d1/dd2/namespacePIDLigne.html#a1ffd1493cb3bc9ab9510ec448186c007">Plus de détails...</a><br /></td></tr>
-<tr class="separator:a1ffd1493cb3bc9ab9510ec448186c007"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a2f7ea617abec4a10e120f62e1d587d6c"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d1/dd2/namespacePIDLigne.html#a2f7ea617abec4a10e120f62e1d587d6c">prototypeFonction</a> (int ceciEstLeNomDeLaVariableEnParametre)</td></tr>
-<tr class="memdesc:a2f7ea617abec4a10e120f62e1d587d6c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Ceci est la description de la fonction.  <a href="../../d1/dd2/namespacePIDLigne.html#a2f7ea617abec4a10e120f62e1d587d6c">Plus de détails...</a><br /></td></tr>
-<tr class="separator:a2f7ea617abec4a10e120f62e1d587d6c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac6ebf59ea700858e41de8dbb98f47d60"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d1/dd2/namespacePIDLigne.html#ac6ebf59ea700858e41de8dbb98f47d60">initPID</a> (float _sensorDistance, float _sensorWidth, float Kp, float Ki, float Kd, const uint8_t pins[], uint8_t pinLedOn)</td></tr>
+<tr class="memdesc:ac6ebf59ea700858e41de8dbb98f47d60"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initialise les paramètres du PID et du capteur de ligne.  <a href="../../d1/dd2/namespacePIDLigne.html#ac6ebf59ea700858e41de8dbb98f47d60">Plus de détails...</a><br /></td></tr>
+<tr class="separator:ac6ebf59ea700858e41de8dbb98f47d60"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a25ac1444835f7ea2143a74538cf004bd"><td class="memItemLeft" align="right" valign="top">float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d1/dd2/namespacePIDLigne.html#a25ac1444835f7ea2143a74538cf004bd">computePID</a> (float trueError)</td></tr>
+<tr class="memdesc:a25ac1444835f7ea2143a74538cf004bd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calcule la vitesse angulaire cible pour la correction.  <a href="../../d1/dd2/namespacePIDLigne.html#a25ac1444835f7ea2143a74538cf004bd">Plus de détails...</a><br /></td></tr>
+<tr class="separator:a25ac1444835f7ea2143a74538cf004bd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a472f7cb8a2e6b419be967209ffb96f6b"><td class="memItemLeft" align="right" valign="top"><a class="el" href="../../df/dd7/structPIDLigne_1_1WheelVelocities.html">WheelVelocities</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d1/dd2/namespacePIDLigne.html#a472f7cb8a2e6b419be967209ffb96f6b">computeWheelSpeed</a> (float wheelBaseDiameter, float robotSpeed)</td></tr>
+<tr class="memdesc:a472f7cb8a2e6b419be967209ffb96f6b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calcule la vitesse de chaque roue pour corriger la trajectoire.  <a href="../../d1/dd2/namespacePIDLigne.html#a472f7cb8a2e6b419be967209ffb96f6b">Plus de détails...</a><br /></td></tr>
+<tr class="separator:a472f7cb8a2e6b419be967209ffb96f6b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ae312d11e7d7554d5761e3994c6014813"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d1/dd2/namespacePIDLigne.html#ae312d11e7d7554d5761e3994c6014813">initPID</a> (float sensorDistance, float sensorWidth)</td></tr>
 <tr class="separator:ae312d11e7d7554d5761e3994c6014813"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a25ac1444835f7ea2143a74538cf004bd"><td class="memItemLeft" align="right" valign="top">float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d1/dd2/namespacePIDLigne.html#a25ac1444835f7ea2143a74538cf004bd">computePID</a> (float trueError)</td></tr>
-<tr class="separator:a25ac1444835f7ea2143a74538cf004bd"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a244971f470b794455a18bf093cb1d2ef"><td class="memItemLeft" align="right" valign="top"><a class="el" href="../../d9/d30/structPIDLigne_1_1MotorVelocities.html">MotorVelocities</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d1/dd2/namespacePIDLigne.html#a244971f470b794455a18bf093cb1d2ef">computeMotorSpeed</a> (float wheelBaseDiameter, float robotSpeed)</td></tr>
-<tr class="separator:a244971f470b794455a18bf093cb1d2ef"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Description détaillée</h2>
-<div class="textblock"><p >Description du namespace. </p>
-<dl class="section author"><dt>Auteur</dt><dd></dd></dl>
+<div class="textblock"><p >Computes left and right motor speeds according to line sensor. </p>
+<dl class="section author"><dt>Auteur</dt><dd>Charles-William Lambert </dd></dl>
 </div><h2 class="groupheader">Documentation des fonctions</h2>
-<a id="a244971f470b794455a18bf093cb1d2ef" name="a244971f470b794455a18bf093cb1d2ef"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a244971f470b794455a18bf093cb1d2ef">&#9670;&#160;</a></span>computeMotorSpeed()</h2>
+<a id="a25ac1444835f7ea2143a74538cf004bd" name="a25ac1444835f7ea2143a74538cf004bd"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a25ac1444835f7ea2143a74538cf004bd">&#9670;&#160;</a></span>computePID()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="../../d9/d30/structPIDLigne_1_1MotorVelocities.html">MotorVelocities</a> PIDLigne::computeMotorSpeed </td>
+          <td class="memname">float PIDLigne::computePID </td>
+          <td>(</td>
+          <td class="paramtype">float&#160;</td>
+          <td class="paramname"><em>trueError</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Calcule la vitesse angulaire cible pour la correction. </p>
+<dl class="params"><dt>Paramètres</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">trueError</td><td>Angle de déviation par rapport à la ligne suivie. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Renvoie</dt><dd>float La vitesse angulaire pour la correction des moteurs. </dd></dl>
+
+</div>
+</div>
+<a id="a472f7cb8a2e6b419be967209ffb96f6b" name="a472f7cb8a2e6b419be967209ffb96f6b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a472f7cb8a2e6b419be967209ffb96f6b">&#9670;&#160;</a></span>computeWheelSpeed()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="../../df/dd7/structPIDLigne_1_1WheelVelocities.html">WheelVelocities</a> PIDLigne::computeWheelSpeed </td>
           <td>(</td>
           <td class="paramtype">float&#160;</td>
           <td class="paramname"><em>wheelBaseDiameter</em>, </td>
@@ -129,28 +155,92 @@ Fonctions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
+<p>Calcule la vitesse de chaque roue pour corriger la trajectoire. </p>
+<dl class="params"><dt>Paramètres</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">wheelBaseDiameter</td><td>La distance entre les deux roues. </td></tr>
+    <tr><td class="paramname">robotSpeed</td><td>La vitesse cible du robot. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Renvoie</dt><dd><a class="el" href="../../df/dd7/structPIDLigne_1_1WheelVelocities.html">WheelVelocities</a> La vitesse cible au sol de chaque roue. </dd></dl>
+
 </div>
 </div>
-<a id="a25ac1444835f7ea2143a74538cf004bd" name="a25ac1444835f7ea2143a74538cf004bd"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a25ac1444835f7ea2143a74538cf004bd">&#9670;&#160;</a></span>computePID()</h2>
+<a id="ac6ebf59ea700858e41de8dbb98f47d60" name="ac6ebf59ea700858e41de8dbb98f47d60"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac6ebf59ea700858e41de8dbb98f47d60">&#9670;&#160;</a></span>initPID() <span class="overload">[1/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">float PIDLigne::computePID </td>
+          <td class="memname">void PIDLigne::initPID </td>
           <td>(</td>
           <td class="paramtype">float&#160;</td>
-          <td class="paramname"><em>trueError</em></td><td>)</td>
+          <td class="paramname"><em>_sensorDistance</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
           <td></td>
+          <td class="paramtype">float&#160;</td>
+          <td class="paramname"><em>_sensorWidth</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">float&#160;</td>
+          <td class="paramname"><em>Kp</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">float&#160;</td>
+          <td class="paramname"><em>Ki</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">float&#160;</td>
+          <td class="paramname"><em>Kd</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const uint8_t&#160;</td>
+          <td class="paramname"><em>pins</em>[], </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint8_t&#160;</td>
+          <td class="paramname"><em>pinLedOn</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
         </tr>
       </table>
 </div><div class="memdoc">
 
+<p>Initialise les paramètres du PID et du capteur de ligne. </p>
+<dl class="params"><dt>Paramètres</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">_sensorDistance</td><td>Distance entre le lapteur de ligne et le centre de rotation du robot. </td></tr>
+    <tr><td class="paramname">_sensorWidth</td><td>Largeur du capteur de ligne. </td></tr>
+    <tr><td class="paramname">Kp</td><td>Constante proportionnelle du PID. </td></tr>
+    <tr><td class="paramname">Ki</td><td>Constante intégrale du PID. </td></tr>
+    <tr><td class="paramname">Kd</td><td>Constante dérivée du PID. </td></tr>
+    <tr><td class="paramname">pins</td><td>Tableau des numéros des pin digitale de l'arduino utilisées par le capteur N de la ligne. </td></tr>
+    <tr><td class="paramname">pinLedOn</td><td>Pin digitale qui définit si les diodes émetent ou non. </td></tr>
+  </table>
+  </dd>
+</dl>
+
 </div>
 </div>
 <a id="ae312d11e7d7554d5761e3994c6014813" name="ae312d11e7d7554d5761e3994c6014813"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ae312d11e7d7554d5761e3994c6014813">&#9670;&#160;</a></span>initPID()</h2>
+<h2 class="memtitle"><span class="permalink"><a href="#ae312d11e7d7554d5761e3994c6014813">&#9670;&#160;</a></span>initPID() <span class="overload">[2/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -174,55 +264,6 @@ Fonctions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-
-</div>
-</div>
-<a id="a1ffd1493cb3bc9ab9510ec448186c007" name="a1ffd1493cb3bc9ab9510ec448186c007"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a1ffd1493cb3bc9ab9510ec448186c007">&#9670;&#160;</a></span>main()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void PIDLigne::main </td>
-          <td>(</td>
-          <td class="paramtype">void&#160;</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Ceci est la description de la fonction. </p>
-<dl class="section author"><dt>Auteur</dt><dd></dd></dl>
-
-</div>
-</div>
-<a id="a2f7ea617abec4a10e120f62e1d587d6c" name="a2f7ea617abec4a10e120f62e1d587d6c"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a2f7ea617abec4a10e120f62e1d587d6c">&#9670;&#160;</a></span>prototypeFonction()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">int PIDLigne::prototypeFonction </td>
-          <td>(</td>
-          <td class="paramtype">int&#160;</td>
-          <td class="paramname"><em>ceciEstLeNomDeLaVariableEnParametre</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Ceci est la description de la fonction. </p>
-<dl class="section author"><dt>Auteur</dt><dd></dd></dl>
-<dl class="params"><dt>Paramètres</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">ceciEstLeNomDeLaVariableEnParametre</td><td></td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Renvoie</dt><dd>int </dd></dl>
 
 </div>
 </div>

@@ -79,16 +79,17 @@ $(function() {
 <div class="fragment"><div class="line"><a id="l00001" name="l00001"></a><span class="lineno">    1</span><span class="preprocessor">#include &lt;QTRSensors.h&gt;</span></div>
 <div class="line"><a id="l00002" name="l00002"></a><span class="lineno">    2</span><span class="preprocessor">#include &lt;Arduino.h&gt;</span></div>
 <div class="line"><a id="l00003" name="l00003"></a><span class="lineno">    3</span> </div>
-<div class="line"><a id="l00004" name="l00004"></a><span class="lineno">    4</span><span class="keyword">namespace </span><a class="code hl_namespace" href="../../d5/d4d/namespaceCapteurLigne.html">CapteurLigne</a> {</div>
-<div class="line"><a id="l00005" name="l00005"></a><span class="lineno">    5</span>    <span class="keywordtype">int</span> <a class="code hl_function" href="../../d5/d4d/namespaceCapteurLigne.html#a4c49ac4427dd14d653214b9326b05e03">initLine</a>(<span class="keyword">const</span> uint8_t pins[], uint8_t pinLedOn);</div>
-<div class="line"><a id="l00006" name="l00006"></a><span class="lineno">    6</span> </div>
-<div class="line"><a id="l00007" name="l00007"></a><span class="lineno">    7</span>    <span class="keywordtype">int</span> <a class="code hl_function" href="../../d5/d4d/namespaceCapteurLigne.html#a9f1e7930d15aa89cb90dda262db91a2e">readLineValue</a>(<span class="keywordtype">void</span>);</div>
-<div class="line"><a id="l00008" name="l00008"></a><span class="lineno">    8</span> </div>
-<div class="line"><a id="l00009" name="l00009"></a><span class="lineno">    9</span>    <span class="keyword">namespace </span>{</div>
-<div class="line"><a id="l00010" name="l00010"></a><span class="lineno">   10</span>        <span class="keyword">extern</span> QTRSensors qtr;</div>
-<div class="line"><a id="l00011" name="l00011"></a><span class="lineno">   11</span>        <span class="keyword">extern</span> uint16_t sensorValues[8];</div>
-<div class="line"><a id="l00012" name="l00012"></a><span class="lineno">   12</span>    }       </div>
-<div class="line"><a id="l00013" name="l00013"></a><span class="lineno">   13</span>}</div>
+<div class="line"><a id="l00004" name="l00004"></a><span class="lineno">    4</span><span class="keyword">namespace </span><a class="code hl_namespace" href="../../d5/d4d/namespaceCapteurLigne.html">CapteurLigne</a> </div>
+<div class="line"><a id="l00005" name="l00005"></a><span class="lineno">    5</span>{</div>
+<div class="line"><a id="l00006" name="l00006"></a><span class="lineno">    6</span>    <span class="keywordtype">int</span> <a class="code hl_function" href="../../d5/d4d/namespaceCapteurLigne.html#a4c49ac4427dd14d653214b9326b05e03">initLine</a>(<span class="keyword">const</span> uint8_t pins[], uint8_t pinLedOn);</div>
+<div class="line"><a id="l00007" name="l00007"></a><span class="lineno">    7</span> </div>
+<div class="line"><a id="l00008" name="l00008"></a><span class="lineno">    8</span>    <span class="keywordtype">int</span> <a class="code hl_function" href="../../d5/d4d/namespaceCapteurLigne.html#a9f1e7930d15aa89cb90dda262db91a2e">readLineValue</a>(<span class="keywordtype">void</span>);</div>
+<div class="line"><a id="l00009" name="l00009"></a><span class="lineno">    9</span> </div>
+<div class="line"><a id="l00010" name="l00010"></a><span class="lineno">   10</span>    <span class="keyword">namespace </span>{</div>
+<div class="line"><a id="l00011" name="l00011"></a><span class="lineno">   11</span>        <span class="keyword">extern</span> QTRSensors qtr;</div>
+<div class="line"><a id="l00012" name="l00012"></a><span class="lineno">   12</span>        <span class="keyword">extern</span> uint16_t sensorValues[8];</div>
+<div class="line"><a id="l00013" name="l00013"></a><span class="lineno">   13</span>    }       </div>
+<div class="line"><a id="l00014" name="l00014"></a><span class="lineno">   14</span>}</div>
 <div class="ttc" id="anamespaceCapteurLigne_html"><div class="ttname"><a href="../../d5/d4d/namespaceCapteurLigne.html">CapteurLigne</a></div><div class="ttdef"><b>Definition:</b> capteurLigne.cpp:17</div></div>
 <div class="ttc" id="anamespaceCapteurLigne_html_a4c49ac4427dd14d653214b9326b05e03"><div class="ttname"><a href="../../d5/d4d/namespaceCapteurLigne.html#a4c49ac4427dd14d653214b9326b05e03">CapteurLigne::initLine</a></div><div class="ttdeci">int initLine(const uint8_t pins[], uint8_t pinLedOn)</div><div class="ttdoc">Initialise le detecteur de ligne.</div><div class="ttdef"><b>Definition:</b> capteurLigne.cpp:28</div></div>
 <div class="ttc" id="anamespaceCapteurLigne_html_a9f1e7930d15aa89cb90dda262db91a2e"><div class="ttname"><a href="../../d5/d4d/namespaceCapteurLigne.html#a9f1e7930d15aa89cb90dda262db91a2e">CapteurLigne::readLineValue</a></div><div class="ttdeci">int readLineValue(void)</div><div class="ttdoc">Lit la valeur du capteur de ligne.</div><div class="ttdef"><b>Definition:</b> capteurLigne.cpp:81</div></div>
