@@ -7,17 +7,16 @@ Date de création : 17/10/2023
 #ifndef MOVE_H
 #define MOVE_H
 
-
 namespace MOVE {
   // *************************************************************************************************
   //  CONSTANTES
   // *************************************************************************************************
   /* VIDE */
-  #define wheelBaseDiameter 7.480315
-  #define wheelDiameter 2.992126
+  #define WHEEL_BASE_DIAMETER 7.480315
+  #define WHEEL_DIAMETER 2.992126
 
 
-  float pulseToDist = M_PI*wheelDiameter/3200.0;
+  float pulseToDist = M_PI*WHEEL_DIAMETER/3200.0;
 
   // *************************************************************************************************
   //  STRUCTURES ET UNIONS
