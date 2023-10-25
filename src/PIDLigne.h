@@ -7,6 +7,9 @@ Date de création : 24/10/23
 #ifndef PIDLigne_H
 #define PIDLigne_H
 
+#include "Move.h"
+#include "capteurLigne.h"
+
 namespace PIDLigne
 {
 	
@@ -18,10 +21,10 @@ namespace PIDLigne
 	// *************************************************************************************************
 	//  STRUCTURES ET UNIONS
 	// *************************************************************************************************
-	struct MotorVelocities
+	struct WheelVelocities
     {
-        float leftMotorSpeed;
-        float rightMotorSpeed;
+        float leftWheelSpeed;
+        float rightWheelSpeed;
     };
 		  
 	// *************************************************************************************************
@@ -34,11 +37,8 @@ namespace PIDLigne
 	// *************************************************************************************************
     void initPID(float sensorDistance, float sensorWidth);
     float computePID(float trueError);
-    MotorVelocities computeMotorSpeed(float wheelBaseDiameter, float robotSpeed);
+    WheelVelocities computeWheelSpeed(float wheelBaseDiameter, float robotSpeed);
 
-
-	void main(void);
-	int prototypeFonction(int ceciEstLeNomDeLaVariableEnParametre);
 
 	namespace {
 		// *************************************************************************************************
@@ -48,6 +48,8 @@ namespace PIDLigne
 
 		extern float sensorDistance;
         extern float sensorWidth;
+
+		extern struct MOVE::valeursPID anglePID;
 	}
 }
 
