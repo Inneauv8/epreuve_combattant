@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['leftwheelspeed_0',['leftWheelSpeed',['../df/dd7/structPIDLigne_1_1WheelVelocities.html#a7e94defd64fbcea7690b5ea36c986dcd',1,'PIDLigne::WheelVelocities']]]
+  ['orientation_0',['orientation',['../da/d0a/structMOVE_1_1posRobot.html#af4fed97c2fb378e855243acdc088d2c5',1,'MOVE::posRobot']]],
+  ['out_1',['Out',['../dd/d4f/structMOVE_1_1valeursPID.html#ac952d919e02628876d858830a3262185',1,'MOVE::valeursPID']]]
 ];
