@@ -7,7 +7,10 @@ Date de création : 17/10/2023
 #ifndef MOVE_H
 #define MOVE_H
 
+#include <float.h>
+
 #include <math.h>
+#include <mathX.h>
 
 namespace MOVE {
   // *************************************************************************************************
@@ -23,29 +26,28 @@ namespace MOVE {
   //  STRUCTURES ET UNIONS
   // *************************************************************************************************
   struct valeursPID {
-    valeursPID() : Kp(0.0), Ki(0.0), Kd(0.0), Ti(0.0), dt(0.0), Sp(0.0), Pv(0.0) {}
+    valeursPID() : Kp(0.0), Ki(0.0), Kd(0.0), initialTime(0), Sp(0.0), Pv(0.0), integral(0.0) {}
     float Kp;  // Constante proportionnelle
     float Ki;  // Constante intégrale
     float Kd;  // Constante dérivée
-    float Ti;  // Temps initial
-    float dt;  // Intervalle de temps pour le calcul d'intégrales et de dérivées
+    long initialTime;  // Temps initial
     float Sp;  // Set Point (Valeur voulue)
     float Pv;  // Process Value (Valeur réelle)
-    float p;   // Valeur proportionnelle
-    float i;   // Valeur intégrale
-    float d;   // Valeur dérivée
+    float integral;   // Valeur intégrale
     float Out; // Valeur de sortie
   };
 
+
   struct valeursDistance {
-    float G;
-    float D;
+    float Left;
+    float Right;
   };
 
   struct posRobot {
-    float x;
-    float y;
-    float orientation;
+      posRobot() : x(0), y(0), orientation(0){}
+      float x;
+      float y;
+      float orientation;
   };
 
   extern valeursDistance Distance;
@@ -55,20 +57,20 @@ namespace MOVE {
   //  PROTOTYPE DE FONCTIONS
   // *************************************************************************************************
 
-  void calculPID(valeursPID *incomingValues);
+  float calculPID(valeursPID *incomingValues, bool resetIOnZeroError = true);
   void updatePos();
-  float speedG();
-  float speedD();
+  float computeRightMotorSpeed();
+  float computeLeftMotorSpeed();
   float averageSpeedG();
   float averageSpeedD();
   float speedToVoltage(bool motor, float speed);
-  float moveRadius(float xFinal, float yFinal, float finalOrientation);
+  long double moveRadius(float xFinal, float yFinal, float finalOrientation);
   void showDataPID(valeursPID *incomingValues);
   void updatePIDG(float Sp);
   void updatePIDD(float Sp);
   void updatePIDMain(float speed, float dV);
-  float radiusToSpeedG(float moveRadiusRobot, float finalOrientation);
-  float radiusToSpeedD(float moveRadiusRobot, float finalOrientation);
+  float radiusToSpeedG(double moveRadiusRobot, float finalOrientation);
+  float radiusToSpeedD(double moveRadiusRobot, float finalOrientation);
   void move(float xFinal, float yFinal, float finalOrientation);
 
   // *************************************************************************************************
