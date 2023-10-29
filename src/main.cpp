@@ -77,6 +77,12 @@ float computeOrientation() {
     return theta;
 }
 
+float computeDistance() {
+    float distance = (ENCODER_Read(LEFT) + ENCODER_Read(RIGHT)) * MOVE::pulseToDist / 2.0;
+    
+    return distance;
+}
+
 float radToDeg(float rad) {
     return rad * 180 / M_PI;
 }
@@ -116,6 +122,29 @@ bool rotate(float velocity, float radius, float angle) {
     return angleReached;
 }
 
+bool forward(float velocity, float distance) {
+    static float initialDistance;
+
+    float actualDistance = computeDistance();
+
+    if (isnan(initialDistance)) {
+        initialDistance = actualDistance;
+    }
+
+    bool distanceReached = fabs(actualDistance - initialDistance) >= fabs(distance);
+    if (!distanceReached)
+    {
+        rightPID.Sp = velocity;
+        leftPID.Sp = velocity;
+    }
+
+    if (distanceReached) {
+        initialDistance = NAN;
+    }
+
+    return distanceReached;
+}
+
 void followWall(float id, float velocity, float radius = 13.3, float distance = 425.0) {
     float baseAngularVelocity = velocity / radius;
 
@@ -140,19 +169,23 @@ void loop() {
 
     delay(5);
     
-    /*
+    
     if (movementIndex == 0) {
         if (rotate(16, 18, M_PI / 2.0)) {
             movementIndex++;
         };
     } else if(movementIndex == 1) {
-        if (rotate(16, 18, -M_PI / 2.0)) {
+        if (forward(16, 24)) {
+            movementIndex++;
+        };
+    } else if(movementIndex == 2) {
+        if (rotate(16, 18, M_PI / 2.0)) {
             movementIndex++;
         };
     }
-    */
+    
 
-   followWall(RIGHT, velocity);
+   //followWall(RIGHT, velocity);
    /*
     float angularVelocity = 0;
     float baseAngularVelocity = 1.2;
