@@ -148,7 +148,7 @@ bool forward(float velocity, float distance) {
 void followWall(float id, float velocity, float radius = 13.3, float distance = 425.0) {
     float baseAngularVelocity = velocity / radius;
 
-    float angularVelocity = sigmoid(ROBUS_ReadIR(id), distance, 1, 25.0, -2) * baseAngularVelocity;
+    float angularVelocity = sigmoid(ROBUS_ReadIR(id), distance, 1, 25.0, -2) * (id == RIGHT ? baseAngularVelocity : -baseAngularVelocity);
 
     move(velocity, angularVelocity);
 }
@@ -185,7 +185,7 @@ void loop() {
     }
     
 
-   //followWall(RIGHT, velocity);
+   followWall(RIGHT, velocity);
    /*
     float angularVelocity = 0;
     float baseAngularVelocity = 1.2;
