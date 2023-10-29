@@ -211,7 +211,7 @@ void loop() {
 
     delay(5);
     
-    
+    /*
     if (movementIndex == 0) { // tournant à droite
         if (rotate(30, 6 + 12 * 0, M_PI / 2.0)) {
             movementIndex++;
@@ -228,14 +228,17 @@ void loop() {
         if (forward(30, 96)) {
             movementIndex++;
         };
+    }
+    */
+
+   move(16, 0);
+
+    if (ROBUS_ReadIR(RIGHT) > 725) {
+        armState = EXTENDED_RIGHT;
+    }
         
-        if (ROBUS_ReadIR(RIGHT) > 725) {
-            armState = EXTENDED_RIGHT;
-        }
-        
-        if (ROBUS_ReadIR(LEFT) > 725) {
-            armState = EXTENDED_LEFT;
-        }
+    if (ROBUS_ReadIR(LEFT) > 725) {
+        armState = EXTENDED_LEFT;
     }
 
     switch (armState)
