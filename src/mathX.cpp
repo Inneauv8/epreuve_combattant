@@ -73,7 +73,11 @@ double dist(double x, double y) {
  * @return The mapped value within the target range.
  */
 double map(double value, double minValue, double maxValue, double minResult, double maxResult) {
-    return ((value - min(minValue, maxValue)) * abs(maxResult - minResult)) / abs(maxValue - minValue) + min(minResult, maxResult);
+    // Normalize the input value to the range [0, 1]
+    double normalizedValue = (value - minValue) / (maxValue - minValue);
+    
+    // Map the normalized value to the range [minResult, maxResult]
+    return (normalizedValue * (maxResult - minResult)) + minResult;
 }
 
 /**
@@ -176,4 +180,9 @@ double smallestDifferenceInWrap(double value, double targetValue, int minValue, 
  */
 double smallestAngleDifference(double angle, double targetAngle) {
     return smallestDifferenceInWrap(angle, targetAngle, -M_PI, M_PI);
+}
+
+double sigmoid(float x, float offsetX = 0, float offsetY = 0, float width = 0, float height = 0) {
+    const double e = 2.7182818284590452353602874713527;
+    return height / (1 + pow(e, -(x - offsetX) / width)) + offsetY;
 }

@@ -25,4 +25,6 @@ double smallestDifferenceInWrap(double value, double targetValue, int minValue, 
 
 double smallestAngleDifference(double angle, double targetAngle);
 
+double sigmoid(float x, float offsetX = 0, float offsetY = 0, float width = 0, float height = 0);
+
 #endif //MATHX_H

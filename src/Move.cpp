@@ -221,8 +221,8 @@ namespace MOVE {
     static float speedMotor = 0.0;
     static float oldPulse = 0.0;
     float present = micros();
-    float pulse = ENCODER_Read(0);
-    speedMotor = 1000000.0 * pulseToDist*float(pulse-oldPulse)/float(present - past);
+    float pulse = ENCODER_Read(LEFT);
+    speedMotor = 1000000.0 * pulseToDist * float(pulse-oldPulse) / float(present - past);
   
     past = present;
     oldPulse = pulse;
@@ -237,8 +237,8 @@ namespace MOVE {
       static float speedMotor = 0.0;
       static float oldPulse = 0.0;
       float present = micros();
-      float pulse = ENCODER_Read(1);
-      speedMotor = 1000000.0*pulseToDist*float(pulse-oldPulse)/float(present - past);
+      float pulse = ENCODER_Read(RIGHT);
+      speedMotor = 1000000.0 * pulseToDist * float(pulse-oldPulse) / float(present - past);
       
       past = present;
       oldPulse = pulse;
@@ -379,7 +379,7 @@ namespace MOVE {
     pidG.Pv = computeRightMotorSpeed();
     calculPID(&pidG);
     //printData(13, speedToVoltage(0, pidG.Out), pidG.Out, 0, 0, 0, 0, 0, 0, 0);
-    MOTOR_SetSpeed(0, (speedToVoltage(0, pidG.Out)));
+    MOTOR_SetSpeed(LEFT, (speedToVoltage(1, pidG.Out)));
     //showDataPID(&pidG);
   }
 
@@ -393,7 +393,7 @@ namespace MOVE {
     pidD.Sp = Sp;
     pidD.Pv = computeLeftMotorSpeed();
     calculPID(&pidD);
-    MOTOR_SetSpeed(1, (speedToVoltage(1, pidD.Out)));
+    MOTOR_SetSpeed(RIGHT, (speedToVoltage(1, pidD.Out)));
     //showDataPID(&pidD);
   }
 
@@ -435,6 +435,20 @@ namespace MOVE {
     
     updatePIDG(speed + (pidSpeed.Out / 2));
     updatePIDD(speed - (pidSpeed.Out / 2));
+  }
+  
+  float computeRobotVelocity() {
+    return (MOVE::averageSpeedD()+MOVE::averageSpeedD())/2.0;
+  }
+
+  WheelVelocities moveByRadius(float velocity, float radius)
+  {
+    float angularVelocity = isinf(radius) ? 0 : velocity / radius;
+
+    float rightWheelVelocity = velocity - (angularVelocity * WHEEL_BASE_DIAMETER) / 2.0;
+    float leftWheelVelocity = velocity + (angularVelocity * WHEEL_BASE_DIAMETER) / 2.0;
+
+    return {rightWheelVelocity, leftWheelVelocity};
   }
   
   /*float radiusToSpeedG(double moveRadiusRobot, float finalOrientation)
@@ -723,92 +737,4 @@ namespace MOVE {
     }
     Serial.println();
   }
-}
-
-using namespace MOVE;
-
-float dV = 0.0;
-
-
-void setup(){
-  BoardInit();
-  Serial.begin(9600);
-
-  ENCODER_Reset(0);
-  ENCODER_Reset(1);
-  updatePos();
-  
-  
-}
-
-void loop()
-{
- 
- if (ROBUS_IsBumper(0))
-  {
-    //dV = 0.0;
-    
-    x = 0, y = 3, theta = 0;
-  }
-  else
-  {
-    //dV = 20.0;
-  
-  
-  }
-  delay(5);
-  //move(x, y, theta);
-  updatePIDMain(vitesse, radiusToDV(18, M_PI / 2));
-  printPosition(0);
-  
-  
-  /*if(position.x != y || position.y != y)
-  {
-    move(x, y, theta);
-  }*/
-
-  /*if(position.x > (x+0.3) && position.x < (x-0.3))
-  {
-    move(x, y, theta);
-  }
-  if(position.y > (y+0.3) && position.y < (y-0.3))
-  {
-    move(x, y, theta);
-  }
-  if(position.orientation > (theta+0.3) && position.orientation < (theta-0.3))
-  {
-    move(x, y, theta);
-  }*/
-  /*else
-  {
-    updatePIDMain(0,0);
-  }*/
-  
-  //delay(5);
-  
-
-  
-  /*
-  prendre les deux vitesses, comparer entre elles pour trouver l'erreur, ajuster la vitesse pour atteindre SP. 
-
-  convertir vitesse en position ou lire encodeurs, 
-
-  fonction PID pour les deux moteurs: utilise les fonctions pids de chaque moteur pour se déplacer à un point précis 
-  avec la bonne orientation. 
-
-  valeurs d'Entrée: position en x initiale, position en x finale, position en y initiale, position en y finale, orientation initiale,
-  orientation finale.
-
-  valeurs de sortie : rien
-
-  utilise la vitesse générale comme facteur de conversion pour trouver un dt à utiliser pour convertir les déplacements 
-  calculés par les maths d'arcs de cercle en vitesse à donner aux moteurs. le feed back se fait par l'update de la position et 
-  de l'orientation.
-
-  PV = (ecart entre pulse des deux moteurs)
-
-  Out : changement de l'écart d'encodeur entre les deux moteurs
-  à convertir en correction de vitesse pour chaque moteur
-  */
-
 }
