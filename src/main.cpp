@@ -150,6 +150,26 @@ void followWall(float id, float velocity, float radius = 13.3, float distance = 
     move(velocity, angularVelocity);
 }
 
+bool activateServoForDistance(float id, float distance, float targetAngle, float resetAngle) {
+    static float initialDistance = NAN;
+
+    float actualDistance = computeDistance();
+
+    if (isnan(initialDistance)) {
+        initialDistance = actualDistance;
+        SERVO_SetAngle(id, targetAngle);
+    }
+
+    bool distanceReached = fabs(actualDistance - initialDistance) >= fabs(distance);
+
+    if (distanceReached) {
+        SERVO_SetAngle(id, resetAngle);
+        initialDistance = NAN;
+    }
+
+    return distanceReached;
+}
+
 void updatePIDs() {
     rightPID.Pv = MOVE::computeLeftMotorSpeed();
     MOTOR_SetSpeed(RIGHT, clamp(rightPID.update(), -1, 1));
