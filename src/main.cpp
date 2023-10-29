@@ -119,7 +119,7 @@ bool rotate(float velocity, float radius, float angle) {
 void followWall(float id, float velocity, float radius = 13.3, float distance = 425.0) {
     float baseAngularVelocity = velocity / radius;
 
-    float angularVelocity = sigmoid(ROBUS_ReadIR(id), distance, 1, 25.0, -2) * baseAngularVelocity;
+    float angularVelocity = sigmoid(ROBUS_ReadIR(id), distance, 1, 25.0, -2) * (id == RIGHT ? baseAngularVelocity : -baseAngularVelocity);
 
     move(velocity, angularVelocity);
 }
@@ -145,14 +145,21 @@ void loop() {
         if (rotate(16, 18, M_PI / 2.0)) {
             movementIndex++;
         };
-    } else if(movementIndex == 1) {
+    }
+    */
+    
+    /*
+    else if(movementIndex == 1) {
         if (rotate(16, 18, -M_PI / 2.0)) {
             movementIndex++;
         };
     }
     */
+    
 
    followWall(RIGHT, velocity);
+
+
    /*
     float angularVelocity = 0;
     float baseAngularVelocity = 1.2;
