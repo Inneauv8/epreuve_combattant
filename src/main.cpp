@@ -103,7 +103,7 @@ void move(float velocity, float angularVelocity) {
 }
 
 bool rotate(float velocity, float radius, float angle) {
-    static float initialAngle;
+    static float initialAngle = NAN;
 
     float orientation = computeOrientation();
 
@@ -123,7 +123,7 @@ bool rotate(float velocity, float radius, float angle) {
 }
 
 bool forward(float velocity, float distance) {
-    static float initialDistance;
+    static float initialDistance = NAN;
 
     float actualDistance = computeDistance();
 
@@ -132,11 +132,8 @@ bool forward(float velocity, float distance) {
     }
 
     bool distanceReached = fabs(actualDistance - initialDistance) >= fabs(distance);
-    if (!distanceReached)
-    {
-        rightPID.Sp = velocity;
-        leftPID.Sp = velocity;
-    }
+    
+    rotate(distanceReached ? 0 : velocity, INFINITY);
 
     if (distanceReached) {
         initialDistance = NAN;
@@ -171,7 +168,7 @@ void loop() {
     
     
     if (movementIndex == 0) {
-        if (rotate(16, 18, M_PI / 2.0)) {
+        if (rotate(16, 18 + 12 * 2, M_PI / 2.0)) {
             movementIndex++;
         };
     } else if(movementIndex == 1) {
@@ -179,13 +176,17 @@ void loop() {
             movementIndex++;
         };
     } else if(movementIndex == 2) {
-        if (rotate(16, 18, M_PI / 2.0)) {
+        if (rotate(16, 18 + 12 * 2, M_PI / 2.0)) {
             movementIndex++;
+        };
+    } else if (movementIndex == 3) {
+        if (forward(16, 96)) {
+            movementIndex = 0;
         };
     }
     
 
-   followWall(RIGHT, velocity);
+   //followWall(RIGHT, velocity);
    /*
     float angularVelocity = 0;
     float baseAngularVelocity = 1.2;
