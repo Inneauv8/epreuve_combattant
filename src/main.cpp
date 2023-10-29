@@ -27,6 +27,8 @@ Modifications :
 //  CONSTANTES
 // *************************************************************************************************
 
+#define ARM_SERVO SERVO_1
+
 int movementIndex = 0;
 
 // *************************************************************************************************
@@ -65,9 +67,14 @@ void setupPID() {
     leftPID.Kd = 0.001;
 }
 
+void setupServo() {
+    SERVO_Enable(ARM_SERVO);
+}
+
 void setup()
 {   
     setupPID();
+    setupServo();
     BoardInit();
     Serial.begin(9600);
 
@@ -192,6 +199,14 @@ void updatePIDs() {
 
 const float velocity = 20;
 
+enum ArmState {
+    EXTENDED_RIGHT,
+    NOT_EXTENDED,
+    EXTENDED_LEFT,
+};
+
+ArmState armState = NOT_EXTENDED;
+
 void loop() {
 
     delay(5);
@@ -214,6 +229,28 @@ void loop() {
             movementIndex++;
         };
         
+        if (ROBUS_ReadIR(RIGHT) > 725) {
+            armState = EXTENDED_RIGHT;
+        }
+        
+        if (ROBUS_ReadIR(LEFT) > 725) {
+            armState = EXTENDED_LEFT;
+        }
+    }
+
+    switch (armState)
+    {
+    case EXTENDED_RIGHT:
+        if (activateServoForDistance(ARM_SERVO, 24, 0, 90)) {
+            armState = NOT_EXTENDED;
+        }
+        break;
+    
+    case EXTENDED_LEFT:
+        if (activateServoForDistance(ARM_SERVO, 24, 180, 90)) {
+            armState = NOT_EXTENDED;
+        }
+        break;
     }
     
 
