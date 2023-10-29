@@ -85,6 +85,8 @@ Classes</h2></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../dd/d4f/structMOVE_1_1valeursPID.html">valeursPID</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../df/dbe/structMOVE_1_1WheelVelocities.html">WheelVelocities</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
 Fonctions</h2></td></tr>
@@ -127,6 +129,10 @@ Fonctions</h2></td></tr>
 <tr class="memitem:aa9b04ea910034c127b3bf0b41160b7a7"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../db/d41/namespaceMOVE.html#aa9b04ea910034c127b3bf0b41160b7a7">updatePIDMain</a> (float speed, float dV)</td></tr>
 <tr class="memdesc:aa9b04ea910034c127b3bf0b41160b7a7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Update the robot's movement using a PID control system.  <a href="../../db/d41/namespaceMOVE.html#aa9b04ea910034c127b3bf0b41160b7a7">Plus de détails...</a><br /></td></tr>
 <tr class="separator:aa9b04ea910034c127b3bf0b41160b7a7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aefcfc27e525ab76f9e7aa10c12dcd7a8"><td class="memItemLeft" align="right" valign="top">float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../db/d41/namespaceMOVE.html#aefcfc27e525ab76f9e7aa10c12dcd7a8">computeRobotVelocity</a> ()</td></tr>
+<tr class="separator:aefcfc27e525ab76f9e7aa10c12dcd7a8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac7b6ddaa34930955fb9b0dc3acb68185"><td class="memItemLeft" align="right" valign="top"><a class="el" href="../../df/dbe/structMOVE_1_1WheelVelocities.html">WheelVelocities</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../db/d41/namespaceMOVE.html#ac7b6ddaa34930955fb9b0dc3acb68185">moveByRadius</a> (float velocity, float radius)</td></tr>
+<tr class="separator:ac7b6ddaa34930955fb9b0dc3acb68185"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ab95312698e3630a56761473bedc9853d"><td class="memItemLeft" align="right" valign="top">float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../db/d41/namespaceMOVE.html#ab95312698e3630a56761473bedc9853d">radiusToDV</a> (double moveRadiusRobot, float finalOrientation)</td></tr>
 <tr class="memdesc:ab95312698e3630a56761473bedc9853d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calculate the rate of change in speed (dV) required for a given move radius and final orientation.  <a href="../../db/d41/namespaceMOVE.html#ab95312698e3630a56761473bedc9853d">Plus de détails...</a><br /></td></tr>
 <tr class="separator:ab95312698e3630a56761473bedc9853d"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -286,6 +292,23 @@ Variables</h2></td></tr>
 
 </div>
 </div>
+<a id="aefcfc27e525ab76f9e7aa10c12dcd7a8" name="aefcfc27e525ab76f9e7aa10c12dcd7a8"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aefcfc27e525ab76f9e7aa10c12dcd7a8">&#9670;&#160;</a></span>computeRobotVelocity()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">float MOVE::computeRobotVelocity </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
 <a id="a75e8591b69cdf243cdb654b159b7aac9" name="a75e8591b69cdf243cdb654b159b7aac9"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a75e8591b69cdf243cdb654b159b7aac9">&#9670;&#160;</a></span>correctAngle()</h2>
 
@@ -355,6 +378,34 @@ Variables</h2></td></tr>
   </table>
   </dd>
 </dl>
+
+</div>
+</div>
+<a id="ac7b6ddaa34930955fb9b0dc3acb68185" name="ac7b6ddaa34930955fb9b0dc3acb68185"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac7b6ddaa34930955fb9b0dc3acb68185">&#9670;&#160;</a></span>moveByRadius()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="../../df/dbe/structMOVE_1_1WheelVelocities.html">WheelVelocities</a> MOVE::moveByRadius </td>
+          <td>(</td>
+          <td class="paramtype">float&#160;</td>
+          <td class="paramname"><em>velocity</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">float&#160;</td>
+          <td class="paramname"><em>radius</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
 
 </div>
 </div>
