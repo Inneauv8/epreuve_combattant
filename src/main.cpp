@@ -27,6 +27,7 @@ Modifications :
 //  CONSTANTES
 // *************************************************************************************************
 
+int movementIndex = 0;
 
 // *************************************************************************************************
 //  FONCTIONS LOCALES
@@ -37,6 +38,13 @@ Modifications :
 //  STRUCTURES ET UNIONS
 // *************************************************************************************************
 
+enum STATE 
+{
+    Bleu = 0,
+    Vert = 1,
+    Jaune = 2,
+    Rouge = 3,
+};
 
 // *************************************************************************************************
 // VARIABLES GLOBALES
@@ -119,6 +127,8 @@ bool rotate(float velocity, float radius, float angle) {
         initialAngle = NAN;
     }
 
+
+
     return angleReached;
 }
 
@@ -178,7 +188,7 @@ void updatePIDs() {
     MOTOR_SetSpeed(LEFT, clamp(leftPID.update(), -1, 1));
 }
 
-int movementIndex = 0;
+
 
 const float velocity = 20;
 
@@ -187,22 +197,23 @@ void loop() {
     delay(5);
     
     
-    if (movementIndex == 0) {
-        if (rotate(16, 18 + 12 * 2, M_PI / 2.0)) {
+    if (movementIndex == 0) { // tournant à droite
+        if (rotate(30, 6 + 12 * 0, M_PI / 2.0)) {
             movementIndex++;
         };
-    } else if(movementIndex == 1) {
-        if (forward(16, 24)) {
+    } else if(movementIndex == 1) { //segment tapis
+        if (forward(30, 24)) {
             movementIndex++;
         };
-    } else if(movementIndex == 2) {
-        if (rotate(16, 18 + 12 * 2, M_PI / 2.0)) {
+    } else if(movementIndex == 2) { // tournant à droite
+        if (rotate(30, 18 + 12 * 2, M_PI / 2.0)) {
             movementIndex++;
         };
     } else if (movementIndex == 3) {
-        if (forward(16, 96)) {
-            movementIndex = 0;
+        if (forward(30, 96)) {
+            movementIndex++;
         };
+        
     }
     
 
