@@ -72,7 +72,7 @@ namespace PIDLigne {
     float computePID(float trueError)
     {
         anglePID.Pv = trueError;
-        MOVE::calculPID(&anglePID);
+        anglePID.update();
 
         return anglePID.Out;
     }

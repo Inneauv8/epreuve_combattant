@@ -77,6 +77,7 @@ void setup()
 {   
     setupPID();
     setupServo();
+    PIDLigne::initPID(2.7387791339, 2.625137795, 1.0, 0.0, 0.0, {}, 1);
     BoardInit();
     Serial.begin(9600);
 
@@ -213,6 +214,11 @@ enum ArmState {
 };
 
 ArmState armState = NOT_EXTENDED;
+
+void loopLineFollower()
+{
+    PIDLigne::computeWheelSpeed(WHEEL_BASE_DIAMETER, 16.0);
+}
 
 void loop() {
 
