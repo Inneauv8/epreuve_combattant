@@ -80,6 +80,18 @@ namespace CapteurLigne{
    */
   int readLineValue(void) 
   {
+    /*
+    const uint8_t LINE_FOLLOWER_PINS[] = {2, 3, 14, 15, 8, 9, 10, 11};
+    for (int i = 0; i < 8; i++) {
+      if (i != 0) {
+        Serial.print("\t");
+      }
+      Serial.print(digitalRead(LINE_FOLLOWER_PINS[i]));
+    }
+
+    Serial.println();
+    */
+
     return qtr.readLineBlack(sensorValues);
   }
 }

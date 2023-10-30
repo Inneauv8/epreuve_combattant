@@ -112,8 +112,9 @@ namespace PIDLigne {
          * @return float L'erreur angulaire équivalente.
          */
         float computeError(int sensorValue)
-        {
-            float normalizedSensorValue = sensorValue / 3500.0 - 1.0;
+        {   
+            //float normalizedSensorValue = sensorValue / 4000.0 - 1.0;
+            float normalizedSensorValue = map((double) sensorValue, 0.0, 7000.0, -1.0, 1.0);
             float sensorPhysicalPosition = normalizedSensorValue * (sensorWidth / 2);
             float trueError = atan2(sensorPhysicalPosition, sensorDistance);
             return trueError;

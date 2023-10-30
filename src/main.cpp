@@ -28,7 +28,9 @@ Modifications :
 //  CONSTANTES
 // *************************************************************************************************
 
+#define CLAW_SERVO SERVO_1
 #define ARM_SERVO SERVO_2
+const uint8_t LINE_FOLLOWER_PINS[] = {38, 52, 51, 50, 49, 48, 47, 46};
 
 int movementIndex = -1;
 
@@ -49,9 +51,23 @@ enum STATE
     Rouge = 3,
 };
 
+enum ClawState {
+    OPENED,
+    CLOSED,
+};
+
+enum ArmState {
+    EXTENDED_RIGHT,
+    NOT_EXTENDED,
+    EXTENDED_LEFT,
+};
+
 // *************************************************************************************************
 // VARIABLES GLOBALES
 // *************************************************************************************************
+
+ArmState armState = NOT_EXTENDED;
+ClawState clawState = OPENED;
 
 long initialTime = 0;
 
@@ -71,19 +87,20 @@ void setupPID() {
 void setupServo() {
     SERVO_Enable(ARM_SERVO);
     SERVO_SetAngle(ARM_SERVO, 90);
+    SERVO_Enable(CLAW_SERVO);
 }
 
 void setup()
 {   
     setupPID();
     setupServo();
-    PIDLigne::initPID(2.7387791339, 2.625137795, 1.0, 0.0, 0.0, {}, 1);
     BoardInit();
+    //Good value : 8, 0.001, 0.15
+    //PIDLigne::initPID(2.7387791339, 2.625137795, 6, 0, 0.1, LINE_FOLLOWER_PINS, 45);
     Serial.begin(9600);
 
     ENCODER_Reset(RIGHT);
     ENCODER_Reset(LEFT);
-    //MOVE::updatePos();
 
     initialTime = millis();
 }
@@ -105,6 +122,48 @@ float radToDeg(float rad) {
     return rad * 180 / M_PI;
 }
 
+bool distanceFlag(float distance, float *initialDistance) {
+    float actualDistance = computeDistance();
+
+    if (isnan(*initialDistance)) {
+        *initialDistance = actualDistance;
+    }
+
+    bool distanceReached = fabs(actualDistance - *initialDistance) >= fabs(distance);
+    
+    if (distanceReached) {
+        *initialDistance = NAN;
+    }
+
+    return distanceReached;
+}
+
+bool orientationFlag(float angle, float *initialOrientation) {
+    float actualOrientation = computeOrientation();
+
+    if (isnan(*initialOrientation)) {
+        *initialOrientation = actualOrientation;
+    }
+
+    bool angleReached = fabs(actualOrientation - *initialOrientation) >= fabs(angle);
+    
+    if (angleReached) {
+        *initialOrientation = NAN;
+    }
+
+    return angleReached;
+}
+
+bool distanceFlag(float distance) {
+    static float initialDistance = NAN;
+    return distanceFlag(distance, &initialDistance);
+}
+
+bool orientationFlag(float angle) {
+    static float initialOrientation = NAN;
+    return orientationFlag(angle, &initialOrientation);
+}
+
 void rotate(float velocity, float radius) {
     MOVE::WheelVelocities velocities = MOVE::moveByRadius(velocity, radius);
 
@@ -120,48 +179,70 @@ void move(float velocity, float angularVelocity) {
     leftPID.Sp = leftWheelVelocity;
 }
 
+void moveUnited(float velocity, float radius, float orientation) {
+
+    float baseAngularVelocity = isinf(radius) ? 0 : (velocity / radius);
+
+    //10 / 33 = 0.303
+
+    //Serial.println(radius);
+
+    float targetAngle = smallestAngleDifference(computeOrientation(), orientation);
+    float angularVelocity = sigmoid(targetAngle, 0, 1, 1, -2) * -baseAngularVelocity;
+
+    move(velocity, angularVelocity);
+}
+
 bool rotate(float velocity, float radius, float angle) {
-    static float initialAngle = NAN;
+    static float initialOrientation = NAN;
+    float actualOrientation = computeOrientation();
 
-    float orientation = computeOrientation();
-
-    if (isnan(initialAngle)) {
-        initialAngle = orientation;
+    if (isnan(initialOrientation)) {
+        initialOrientation = actualOrientation;
     }
 
-    bool angleReached = fabs(orientation - initialAngle) >= fabs(angle);
+    float targetOrientation = wrap((initialOrientation + fabs(angle) * (radius > 0 ? 1 : -1)), -M_PI, M_PI);
 
-    rotate(angleReached ? 0 : velocity, radius * (angle > 0 ? 1 : -1));
+    bool angleReached = fabs(actualOrientation - initialOrientation) >= fabs(angle);
 
     if (angleReached) {
-        initialAngle = NAN;
+        move(0, 0);
+    } else {
+        moveUnited(velocity, fabs(radius), targetOrientation);
+    }
+    
+    if (angleReached) {
+        initialOrientation = NAN;
     }
 
-
-
-    return angleReached;
+    return false;
 }
 
 bool forward(float velocity, float distance) {
     static float initialDistance = NAN;
     static float initialOrientation = NAN;
 
-    float actualDistance = computeDistance();
-    float actualOrientation = computeOrientation();
+    //float actualDistance = computeDistance();
+    //float actualOrientation = computeOrientation();
 
     if (isnan(initialDistance)) {
-        initialDistance = actualDistance;
-        initialOrientation = actualOrientation;
+        initialOrientation = computeOrientation();
     }
 
-    bool distanceReached = fabs(actualDistance - initialDistance) >= fabs(distance);
-
-    float correction = sigmoid(actualOrientation, initialOrientation, 1, 0.1, -2) * 5;
-    
-    move(distanceReached ? 0 : velocity, correction);
+    bool distanceReached = distanceFlag(distance, &initialDistance);
 
     if (distanceReached) {
-        initialDistance = NAN;
+        move(0, 0);
+    } else {
+        moveUnited(velocity, velocity / 5.0, initialOrientation);
+    }
+
+    //float correction = sigmoid(actualOrientation, initialOrientation, 1, 0.1, -2) * 5;
+    
+    //move(distanceReached ? 0 : velocity, 0);
+
+    if (isnan(initialDistance)) {
+       initialOrientation = NAN;
     }
 
     return distanceReached;
@@ -185,14 +266,14 @@ bool activateServoForDistance(float id, float distance, float targetAngle, float
         SERVO_SetAngle(id, targetAngle);
     }
 
-    bool distanceReached = fabs(actualDistance - initialDistance) >= fabs(distance);
-
-    if (distanceReached) {
-        SERVO_SetAngle(id, resetAngle);
-        initialDistance = NAN;
-    }
+    bool distanceReached = distanceFlag(distance, &initialDistance);
+    SERVO_SetAngle(id, distanceReached ? resetAngle : targetAngle);
 
     return distanceReached;
+}
+
+void setClaw(ClawState state) {
+    clawState = state;
 }
 
 void updatePIDs() {
@@ -203,62 +284,60 @@ void updatePIDs() {
     MOTOR_SetSpeed(LEFT, clamp(leftPID.update(), -1, 1));
 }
 
-
-
-const float velocity = 20;
-
-enum ArmState {
-    EXTENDED_RIGHT,
-    NOT_EXTENDED,
-    EXTENDED_LEFT,
-};
-
-ArmState armState = NOT_EXTENDED;
-
 void loopLineFollower()
 {
-    PIDLigne::computeWheelSpeed(WHEEL_BASE_DIAMETER, 16.0);
+    PIDLigne::WheelVelocities wheelVelocities = PIDLigne::computeWheelSpeed(WHEEL_BASE_DIAMETER, 5.0);
+    rightPID.Sp = wheelVelocities.rightWheelSpeed;
+    leftPID.Sp = wheelVelocities.leftWheelSpeed;
 }
 
 void loop() {
 
     delay(5);
+
+    int closedTime = 19000;
+    int openedTime = 1000;
+
+    if (millis() % (closedTime + openedTime) < closedTime) {
+        setClaw(CLOSED);
+    } else {
+        setClaw(OPENED);
+    }
     
     
     if (movementIndex == -1) { // tournant à droite
         if (forward(10, 96 / 2.0)) {
             movementIndex++;
         }
-    }
-    if (movementIndex == 0) { // tournant à droite
+    } else if (movementIndex == 0) { // tournant à droite
         if (rotate(10, 18 + 12 + 3, M_PI / 2.0)) {
             movementIndex++;
         }
-    }
-    if(movementIndex == 1) { //segment tapis
+    } else if(movementIndex == 1) { //segment tapis
         if (forward(10, 24)) {
             movementIndex++;
         }
-    }
-    if(movementIndex == 2) { // tournant à droite
+    } else if(movementIndex == 2) { // tournant à droite
         if (rotate(10, 18 + 12 + 3, M_PI / 2.0)) {
             movementIndex++;
         }
-    }
-    if (movementIndex == 3) {
+    } else if (movementIndex == 3) {
         if (forward(10, 96)) {
             movementIndex = 0;
         }
-
-        if (ROBUS_ReadIR(RIGHT) > 500) {
-            armState = EXTENDED_RIGHT;
-        }
-        
-        
-        //if (ROBUS_ReadIR(LEFT) > 500) {
-            //armState = EXTENDED_LEFT;
-        //}
     }
+    
+
+    if (ROBUS_ReadIR(RIGHT) > 500) {
+        armState = EXTENDED_RIGHT;
+    }
+        
+        
+    if (ROBUS_ReadIR(LEFT) > 500) {
+        armState = EXTENDED_LEFT;
+    }
+
+    //loopLineFollower();
 
     //move(30, 0);
 
@@ -266,6 +345,7 @@ void loop() {
 
     //SERVO_SetAngle(ARM_SERVO, 0);
 
+    
     switch (armState)
     {
     case EXTENDED_RIGHT:
@@ -281,6 +361,7 @@ void loop() {
         break;
     }
     
+    SERVO_SetAngle(CLAW_SERVO, clawState == OPENED ? 75 : 110);
 
    //followWall(RIGHT, velocity);
    /*
