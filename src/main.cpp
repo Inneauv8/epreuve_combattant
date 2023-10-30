@@ -21,15 +21,16 @@ Modifications :
 #include <LibRobus.h>
 #include <float.h>
 #include <mathX.h>
+#include <Adafruit_TCS34725.h>
 
 
 // *************************************************************************************************
 //  CONSTANTES
 // *************************************************************************************************
 
-#define ARM_SERVO SERVO_1
+#define ARM_SERVO SERVO_2
 
-int movementIndex = 0;
+int movementIndex = -1;
 
 // *************************************************************************************************
 //  FONCTIONS LOCALES
@@ -69,6 +70,7 @@ void setupPID() {
 
 void setupServo() {
     SERVO_Enable(ARM_SERVO);
+    SERVO_SetAngle(ARM_SERVO, 90);
 }
 
 void setup()
@@ -141,16 +143,21 @@ bool rotate(float velocity, float radius, float angle) {
 
 bool forward(float velocity, float distance) {
     static float initialDistance = NAN;
+    static float initialOrientation = NAN;
 
     float actualDistance = computeDistance();
+    float actualOrientation = computeOrientation();
 
     if (isnan(initialDistance)) {
         initialDistance = actualDistance;
+        initialOrientation = actualOrientation;
     }
 
     bool distanceReached = fabs(actualDistance - initialDistance) >= fabs(distance);
+
+    float correction = sigmoid(actualOrientation, initialOrientation, 1, 0.1, -2) * 5;
     
-    rotate(distanceReached ? 0 : velocity, INFINITY);
+    move(distanceReached ? 0 : velocity, correction);
 
     if (distanceReached) {
         initialDistance = NAN;
@@ -211,46 +218,58 @@ void loop() {
 
     delay(5);
     
-    /*
+    
+    if (movementIndex == -1) { // tournant à droite
+        if (forward(10, 96 / 2.0)) {
+            movementIndex++;
+        }
+    }
     if (movementIndex == 0) { // tournant à droite
-        if (rotate(30, 6 + 12 * 0, M_PI / 2.0)) {
+        if (rotate(10, 18 + 12 + 3, M_PI / 2.0)) {
             movementIndex++;
-        };
-    } else if(movementIndex == 1) { //segment tapis
-        if (forward(30, 24)) {
-            movementIndex++;
-        };
-    } else if(movementIndex == 2) { // tournant à droite
-        if (rotate(30, 18 + 12 * 2, M_PI / 2.0)) {
-            movementIndex++;
-        };
-    } else if (movementIndex == 3) {
-        if (forward(30, 96)) {
-            movementIndex++;
-        };
+        }
     }
-    */
-
-   move(16, 0);
-
-    if (ROBUS_ReadIR(RIGHT) > 725) {
-        armState = EXTENDED_RIGHT;
+    if(movementIndex == 1) { //segment tapis
+        if (forward(10, 24)) {
+            movementIndex++;
+        }
     }
+    if(movementIndex == 2) { // tournant à droite
+        if (rotate(10, 18 + 12 + 3, M_PI / 2.0)) {
+            movementIndex++;
+        }
+    }
+    if (movementIndex == 3) {
+        if (forward(10, 96)) {
+            movementIndex = 0;
+        }
+
+        if (ROBUS_ReadIR(RIGHT) > 500) {
+            armState = EXTENDED_RIGHT;
+        }
         
-    if (ROBUS_ReadIR(LEFT) > 725) {
-        armState = EXTENDED_LEFT;
+        
+        //if (ROBUS_ReadIR(LEFT) > 500) {
+            //armState = EXTENDED_LEFT;
+        //}
     }
+
+    //move(30, 0);
+
+    //Serial.println(armState);
+
+    //SERVO_SetAngle(ARM_SERVO, 0);
 
     switch (armState)
     {
     case EXTENDED_RIGHT:
-        if (activateServoForDistance(ARM_SERVO, 24, 0, 90)) {
-            armState = NOT_EXTENDED;
+        if (activateServoForDistance(ARM_SERVO, 85, 180, 40)) {
+           armState = NOT_EXTENDED;
         }
         break;
     
     case EXTENDED_LEFT:
-        if (activateServoForDistance(ARM_SERVO, 24, 180, 90)) {
+        if (activateServoForDistance(ARM_SERVO, 85, 0, 40)) {
             armState = NOT_EXTENDED;
         }
         break;
