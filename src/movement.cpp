@@ -97,7 +97,7 @@ namespace Movement {
         move(velocity, angularVelocity);
     }
 
-    bool rotate(float velocity, float radius, float angle) {
+    bool rotate(float velocity, float radius, float angle, boolean reset) {
         static float initialOrientation = NAN;
         float actualOrientation = computeOrientation();
 
@@ -107,7 +107,7 @@ namespace Movement {
 
         float targetOrientation = wrap((initialOrientation + fabs(angle * 2) * (radius > 0 ? 1 : -1)), -M_PI, M_PI);
 
-        bool angleReached = fabs(actualOrientation - initialOrientation) >= fabs(angle);
+        bool angleReached = fabs(actualOrientation - initialOrientation) >= fabs(angle) || reset;
 
         if (angleReached) {
             //move(0, 0);
@@ -125,7 +125,7 @@ namespace Movement {
         return angleReached;
     }
 
-    bool forward(float velocity, float distance) {
+    bool forward(float velocity, float distance, boolean reset) {
         static float initialDistance = NAN;
         static float initialOrientation = NAN;
 
@@ -137,7 +137,7 @@ namespace Movement {
             initialOrientation = computeOrientation();
         }
 
-        bool distanceReached = fabs(actualDistance - initialDistance) >= fabs(distance);
+        bool distanceReached = fabs(actualDistance - initialDistance) >= fabs(distance) || reset;
 
         if (distanceReached) {
             //move(0, 0);
