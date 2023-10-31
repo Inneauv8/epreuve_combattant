@@ -13,7 +13,7 @@ Date de création :
 #include "pid.h"
 #include "float.h"
 
-#define WHEEL_BASE_DIAMETER 7.480315
+#define WHEEL_BASE_DIAMETER 7.5 //7.480315
 #define WHEEL_DIAMETER 2.992126
 #define INACTIVE NAN
 

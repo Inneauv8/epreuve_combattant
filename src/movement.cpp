@@ -91,7 +91,7 @@ namespace Movement {
 
         float targetAngle = smallestAngleDifference(computeOrientation(), orientation);
         float angularVelocity = sigmoid(targetAngle, 0, 1, 0.1, -2) * -baseAngularVelocity;
-        Serial.println(angularVelocity);
+        //Serial.println(angularVelocity);
 
         move(velocity, angularVelocity);
     }
@@ -104,14 +104,15 @@ namespace Movement {
             initialOrientation = actualOrientation;
         }
 
-        float targetOrientation = wrap((initialOrientation + fabs(angle) * (radius > 0 ? 1 : -1)), -M_PI, M_PI);
+        float targetOrientation = wrap((initialOrientation + fabs(angle * 2) * (radius > 0 ? 1 : -1)), -M_PI, M_PI);
 
         bool angleReached = fabs(actualOrientation - initialOrientation) >= fabs(angle);
 
         if (angleReached) {
-            move(0, 0);
+            //move(0, 0);
         } else {
-            moveUnited(velocity, radius, initialOrientation + angle);
+            rotate(velocity, radius);
+            //moveUnited(velocity, radius, initialOrientation + angle);
         }
 
         //rotate(velocity, radius);
@@ -138,10 +139,10 @@ namespace Movement {
         bool distanceReached = fabs(actualDistance - initialDistance) >= fabs(distance);
 
         if (distanceReached) {
-            move(0, 0);
+            //move(0, 0);
         } else {
             //moveUnited(velocity, velocity / 5.0, initialOrientation);
-            moveUnited(velocity, 5.0 / velocity, initialOrientation);
+            moveUnited(velocity, 5.0 / 10.0, initialOrientation);
         }
 
         //float correction = sigmoid(actualOrientation, initialOrientation, 1, 0.1, -2) * 5;
