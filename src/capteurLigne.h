@@ -7,6 +7,8 @@ namespace CapteurLigne
 
     int readLineValue(void);
 
+    bool isBlackLine(void);
+
     namespace {
         extern QTRSensors qtr;
         extern uint16_t sensorValues[8];

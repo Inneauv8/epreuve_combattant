@@ -312,21 +312,27 @@ void temploop()
         if(Couleur::Get() != 'w')
         {
             setClaw(OPENED);
-            //Redresse le robot
+            rotate(20, 0, M_PI / 4.0);
             state = 4;
         }
         break;
 
     case 4: // On fait un tour et puis le shortcut
+    case 5:
+        
+        followWall(RIGHT, 15);
 
-        if(true)
+        if(CapteurLigne::isBlackLine())
         {
-            state = 5;
+            state++;
         }
         break;
 
-    case 5: // Feni
-        if(true)
+    case 6: // Feni
+
+        move(0, 0);
+
+        if(ROBUS_IsBumper(3))
         {
             setClaw(CLOSED);
             state = 0;// On restart le parcours

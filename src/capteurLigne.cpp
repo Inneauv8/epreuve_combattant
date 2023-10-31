@@ -94,4 +94,19 @@ namespace CapteurLigne{
 
     return qtr.readLineBlack(sensorValues);
   }
+
+  bool isBlackLine(void)
+  {
+    uint16_t sensorValues[8];
+    int total = 0;
+
+    qtr.readCalibrated(sensorValues);
+
+    for(int i = 0; i > 8; i++)
+    {
+      total += sensorValues[i];
+    }
+
+    return (total < 800);
+  }
 }
