@@ -4,7 +4,7 @@
 #include <Arduino.h>
 
 namespace PID {
-    struct valeursPID {
+        struct valeursPID {
         valeursPID() : Kp(0.0), Ki(0.0), Kd(0.0), initialTime(0), Sp(0.0), Pv(0.0), integral(0.0), previous_error(0.0), Out(0.0) {}
         float Kp;           // Constante proportionnelle
         float Ki;           // Constante intégrale

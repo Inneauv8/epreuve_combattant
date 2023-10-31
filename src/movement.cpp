@@ -3,12 +3,13 @@
 namespace Movement {
 
     float pulseToDist = M_PI*WHEEL_DIAMETER/3200.0;
+    float orientationOffset = 0;
 
     float computeOrientation() {
         float deltaS = (ENCODER_Read(LEFT) - ENCODER_Read(RIGHT)) * pulseToDist / 2.0;
         float theta = deltaS * 2 / (WHEEL_BASE_DIAMETER);
 
-        return theta;
+        return theta - orientationOffset;
     }
 
     float computeDistance() {

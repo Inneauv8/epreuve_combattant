@@ -21,6 +21,7 @@ namespace Movement
 {
 
     extern float pulseToDist;
+    extern float orientationOffset;
 
     struct WheelVelocities {
         float rightVelocity;
@@ -30,6 +31,8 @@ namespace Movement
     float computeOrientation();
     float computeDistance();
 
+    void resetOrientation();
+    
     bool distanceFlag(float distance, float *initialDistance);
     bool orientationFlag(float angle, float *initialOrientation);
     bool distanceFlag(float distance);

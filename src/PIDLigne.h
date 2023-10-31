@@ -7,8 +7,9 @@ Date de création : 24/10/23
 #ifndef PIDLigne_H
 #define PIDLigne_H
 
-#include "Move.h"
+//#include "pid.h"
 #include "capteurLigne.h"
+#include "Move.h"
 
 namespace PIDLigne
 {
