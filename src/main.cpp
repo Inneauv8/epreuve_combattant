@@ -283,7 +283,8 @@ void temploop()
         {
             setArm(EXTENDED_LEFT);
         }
-        if(Couleur::Get() == 'w')
+
+        if (Couleur::Get() == 'w')
         {
             setArm(NOT_EXTENDED);
             state = 3;
@@ -293,12 +294,11 @@ void temploop()
 
     case 2: // Suivi du jaune, détection du cup
 
-
         if (ROBUS_ReadIR(RIGHT) > 500)
         {
             setArm(EXTENDED_RIGHT);
         }
-        if(Couleur::Get() == 'w')
+        if (Couleur::Get() == 'w')
         {
             setArm(NOT_EXTENDED);
             state = 3;
@@ -313,7 +313,7 @@ void temploop()
         if(Couleur::Get() != 'w')
         {
             setClaw(OPENED);
-            rotate(20, 0, M_PI / 4.0);
+            rotate(20, 18 + 12, M_PI / 4.0);
             state = 4;
         }
         break;
