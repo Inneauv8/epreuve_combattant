@@ -186,13 +186,31 @@ namespace Movement {
         
         return speedMotor;
     }
+
+    void setPIDRight(float Kp, float Ki, float Kd) {
+        rightPID.Kp = Kp;
+        rightPID.Ki = Ki;
+        rightPID.Kd = Kd;
+    }
+    void setPIDLeft(float Kp, float Ki, float Kd) {
+        leftPID.Kp = Kp;
+        leftPID.Ki = Ki;
+        leftPID.Kd = Kd;
+    }
+
+    void setRightSpeed(float speed) {
+        rightPID.Sp = speed;
+    }
+    void setLeftSpeed(float speed) {
+        leftPID.Sp = speed;
+    }
     
     void updatePIDs() {
-    rightPID.Pv = computeRightMotorSpeed();
-    MOTOR_SetSpeed(RIGHT, clamp(rightPID.update(), -1, 1));
+        rightPID.Pv = computeRightMotorSpeed();
+        MOTOR_SetSpeed(RIGHT, clamp(rightPID.update(), -1, 1));
 
-    leftPID.Pv = computeLeftMotorSpeed();
-    MOTOR_SetSpeed(LEFT, clamp(leftPID.update(), -1, 1));
+        leftPID.Pv = computeLeftMotorSpeed();
+        MOTOR_SetSpeed(LEFT, clamp(leftPID.update(), -1, 1));
     }
 
 
