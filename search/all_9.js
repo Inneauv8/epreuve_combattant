@@ -1,12 +1,6 @@
 var searchData=
 [
-  ['parcours_0',['parcours',['../db/d41/namespaceMOVE.html#af1134c4d3bf61af6bdbfd99a05b91c60',1,'MOVE']]],
-  ['pidligne_1',['PIDLigne',['../d1/dd2/namespacePIDLigne.html',1,'']]],
-  ['position_2',['position',['../db/d41/namespaceMOVE.html#ab0fc3f5b24c7ec44768b264324f18817',1,'MOVE']]],
-  ['posrobot_3',['posRobot',['../da/d0a/structMOVE_1_1posRobot.html',1,'MOVE::posRobot'],['../da/d0a/structMOVE_1_1posRobot.html#a35f2b8b1b04c55f6dacdc3af9dee6d12',1,'MOVE::posRobot::posRobot()']]],
-  ['previous_5ferror_4',['previous_error',['../dd/d4f/structMOVE_1_1valeursPID.html#a32262d0f1d17f48efc82e8f1020ad85a',1,'MOVE::valeursPID']]],
-  ['printdata_5',['printData',['../db/d41/namespaceMOVE.html#a303a2cfdece169e357a2dfe9fd37832c',1,'MOVE']]],
-  ['printposition_6',['printPosition',['../db/d41/namespaceMOVE.html#ae48861672ed878f1bc1b2191fc015e23',1,'MOVE']]],
-  ['pulsetodist_7',['pulseToDist',['../db/d41/namespaceMOVE.html#abe8624d377434776ac057e2fe59d30ac',1,'MOVE']]],
-  ['pv_8',['Pv',['../dd/d4f/structMOVE_1_1valeursPID.html#a6f045b52c5767ab739c5aa58ba1ae9e3',1,'MOVE::valeursPID']]]
+  ['orientation_0',['orientation',['../da/d0a/structMOVE_1_1posRobot.html#af4fed97c2fb378e855243acdc088d2c5',1,'MOVE::posRobot']]],
+  ['orientationflag_1',['orientationFlag',['../db/db7/namespaceMovement.html#a921b4f8bc3ea92264e8d22504782db52',1,'Movement::orientationFlag(float angle, float *initialOrientation)'],['../db/db7/namespaceMovement.html#aea9c1a281d67de7c62541a9f85e1ff83',1,'Movement::orientationFlag(float angle)']]],
+  ['out_2',['Out',['../dd/d4f/structMOVE_1_1valeursPID.html#ac952d919e02628876d858830a3262185',1,'MOVE::valeursPID::Out()'],['../de/db6/structPID_1_1valeursPID.html#a01120ab2dd9429db295497b5ba937f8e',1,'PID::valeursPID::Out()']]]
 ];

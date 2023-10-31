@@ -1,6 +1,7 @@
 var searchData=
 [
-  ['posrobot_0',['posRobot',['../da/d0a/structMOVE_1_1posRobot.html#a35f2b8b1b04c55f6dacdc3af9dee6d12',1,'MOVE::posRobot']]],
-  ['printdata_1',['printData',['../db/d41/namespaceMOVE.html#a303a2cfdece169e357a2dfe9fd37832c',1,'MOVE']]],
-  ['printposition_2',['printPosition',['../db/d41/namespaceMOVE.html#ae48861672ed878f1bc1b2191fc015e23',1,'MOVE']]]
+  ['move_0',['move',['../db/d41/namespaceMOVE.html#a4c2535d28abd5a94e9dbaed21a4a62b3',1,'MOVE::move()'],['../db/db7/namespaceMovement.html#a7284b9fc1288b7d374d8b6f3bfd1657e',1,'Movement::move()']]],
+  ['movebyradius_1',['moveByRadius',['../db/d41/namespaceMOVE.html#ac7b6ddaa34930955fb9b0dc3acb68185',1,'MOVE']]],
+  ['moveradius_2',['moveRadius',['../db/d41/namespaceMOVE.html#a9fe030616c86c21206860494198be947',1,'MOVE']]],
+  ['moveunited_3',['moveUnited',['../db/db7/namespaceMovement.html#ab806832c46ecc3cd5ed6ac8601f45e12',1,'Movement']]]
 ];

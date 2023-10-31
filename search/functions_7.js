@@ -1,5 +1,4 @@
 var searchData=
 [
-  ['showdatapid_0',['showDataPID',['../db/d41/namespaceMOVE.html#a315e036cd760b1e3d9320732fc4f7137',1,'MOVE']]],
-  ['speedtovoltage_1',['speedToVoltage',['../db/d41/namespaceMOVE.html#a6dc94d29c95a22759d8046d06361f99e',1,'MOVE']]]
+  ['orientationflag_0',['orientationFlag',['../db/db7/namespaceMovement.html#a921b4f8bc3ea92264e8d22504782db52',1,'Movement::orientationFlag(float angle, float *initialOrientation)'],['../db/db7/namespaceMovement.html#aea9c1a281d67de7c62541a9f85e1ff83',1,'Movement::orientationFlag(float angle)']]]
 ];

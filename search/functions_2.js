@@ -1,5 +1,4 @@
 var searchData=
 [
-  ['initline_0',['initLine',['../d5/d4d/namespaceCapteurLigne.html#a4c49ac4427dd14d653214b9326b05e03',1,'CapteurLigne']]],
-  ['initpid_1',['initPID',['../d1/dd2/namespacePIDLigne.html#ac6ebf59ea700858e41de8dbb98f47d60',1,'PIDLigne']]]
+  ['distanceflag_0',['distanceFlag',['../db/db7/namespaceMovement.html#a077707d173a885f3249c054594274169',1,'Movement::distanceFlag(float distance, float *initialDistance)'],['../db/db7/namespaceMovement.html#ac3690f607562fafeda3e2bc238aa3e65',1,'Movement::distanceFlag(float distance)']]]
 ];
