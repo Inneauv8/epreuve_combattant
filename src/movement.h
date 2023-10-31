@@ -45,9 +45,9 @@ namespace Movement
 
     void moveUnited(float velocity, float radius, float orientation);
 
-    bool rotate(float velocity, float radius, float angle);
+    bool rotate(float velocity, float radius, float angle, boolean reset = false);
 
-    bool forward(float velocity, float distance);
+    bool forward(float velocity, float distance, boolean reset = false);
 
     float computeLeftMotorSpeed();
     float computeRightMotorSpeed();

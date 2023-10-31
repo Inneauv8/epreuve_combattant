@@ -352,7 +352,7 @@ void loop()
         if(Couleur::Get() != 'w')
         {
             setClaw(OPENED);
-            rotate(20, 0, M_PI / 4.0);
+            rotate(20, 18 + 12, M_PI / 4.0);
             state = 4;
         }
         break;
