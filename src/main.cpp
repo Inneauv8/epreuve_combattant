@@ -65,7 +65,7 @@ enum ArmState
 
 ArmState armState = NOT_EXTENDED;
 ClawState clawState = OPENED;
-byte state = 0;
+byte state = 88; //Remettre à zéro pour le sifflet 
 
 void setupPID() {
     setPIDRight(0.0625, 0.0001, 0.001);
@@ -88,9 +88,13 @@ void setup()
     //PIDLigne::initPID(2.7387791339, 2.625137795, 8, 0, 0.1, LINE_FOLLOWER_PINS, 45);
     Serial.begin(9600);
 
+
+    CapteurLigne::initLine(LINE_FOLLOWER_PINS, 45);
     ENCODER_Reset(RIGHT);
     ENCODER_Reset(LEFT);
     //Sifflet::init();
+
+    delay(1000);
 }
 
 bool activateServoForDistance(float id, float distance, float targetAngle, float resetAngle) {
@@ -174,7 +178,7 @@ void updateEverything()
     updatePIDs();
 }
 
-void loop()
+void temploop()
 {
     
     delay(5);
@@ -250,12 +254,10 @@ void loop()
     updatePIDs();
 }
 
-void temploop()
-{   
-    Serial.println(state);
+void loop()
+{
+   // Serial.println(state);
     delay(5);
-    bool lineReached = false;
-
     switch (state)
     {
     case 0: // Attente du sifflet, détection de la couleur de départ
@@ -362,6 +364,14 @@ void temploop()
             state = 0;// On restart le parcours
         }
         break;
+    case 88:
+    break;
+    case 89:
+        Serial.println(CapteurLigne::isBlackLine());
+    break;
+    case 90:
+        Serial.println(Couleur::Get());
+    break;
     }
 
     updateEverything();

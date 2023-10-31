@@ -97,16 +97,19 @@ namespace CapteurLigne{
 
   bool isBlackLine(void)
   {
+    static uint16_t mean = 0;
     uint16_t sensorValues[8];
-    int total = 0;
+    uint16_t total = 0;
 
     qtr.readCalibrated(sensorValues);
 
-    for(int i = 0; i > 8; i++)
+    for(int i = 0; i < 8; i++)
     {
       total += sensorValues[i];
     }
-
-    return (total < 800);
+    
+    mean = mean * 0.9 + total * 0.1;
+    Serial.println(mean);
+    return (mean > 6800);
   }
 }
