@@ -16,10 +16,10 @@ namespace PID {
         float previous_error;  // Previous error value
         float Out;          // Valeur de sortie
         float update() {
-            unsigned long currentTime = millis();  // Get current time in milliseconds
+            unsigned long currentTime = micros();  // Get current time in milliseconds
 
             // Calculate the time difference (dt) since the last update
-            float dt = (currentTime - initialTime) / 1000.0; // Convert to seconds
+            float dt = (currentTime - initialTime) / 1000000.0; // Convert to seconds
 
             // Calculate the error
             float error = Sp - Pv;

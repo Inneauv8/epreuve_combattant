@@ -65,7 +65,7 @@ enum ArmState
 
 ArmState armState = NOT_EXTENDED;
 ClawState clawState = OPENED;
-byte state = 0;
+byte state = 88; //Remettre à zéro pour le sifflet 
 
 void setupPID() {
     setPIDRight(0.0625, 0.0001, 0.001);
@@ -88,9 +88,13 @@ void setup()
     //PIDLigne::initPID(2.7387791339, 2.625137795, 8, 0, 0.1, LINE_FOLLOWER_PINS, 45);
     Serial.begin(9600);
 
+
+    CapteurLigne::initLine(LINE_FOLLOWER_PINS, 45);
     ENCODER_Reset(RIGHT);
     ENCODER_Reset(LEFT);
     //Sifflet::init();
+
+    delay(1000);
 }
 
 bool activateServoForDistance(float id, float distance, float targetAngle, float resetAngle) {
@@ -174,7 +178,7 @@ void updateEverything()
     updatePIDs();
 }
 
-void loop()
+void temploop()
 {
     
     delay(5);
@@ -250,8 +254,10 @@ void loop()
     updatePIDs();
 }
 
-void temploop()
+void loop()
 {
+   // Serial.println(state);
+    delay(5);
     switch (state)
     {
     case 0: // Attente du sifflet, détection de la couleur de départ
@@ -277,34 +283,67 @@ void temploop()
         break;
 
     case 1: // Suivi du vert, détection du cup
-
-
-        if (ROBUS_ReadIR(LEFT) > 500)
-        {
-            setArm(EXTENDED_LEFT);
+        static byte state2 = 0;
+        switch (state2) {
+            case 0:
+                moveUnited(5,INFINITY,0);
+                if (CapteurLigne::isBlackLine()) state2++;
+            break;
+            case 1:
+                if (rotate(10,18,PI/2.0)) state2++;
+            break;
+            case 2:
+                if (forward(10,24)) state2++;
+            break;
+            case 3:
+                if (rotate(10,18,PI/2.0)) state2++;
+            break;
+            case 4:
+                moveUnited(10,INFINITY,PI);
+                if (ROBUS_ReadIR(RIGHT) > 500)
+                        {
+                            setArm(EXTENDED_RIGHT);
+                        }
+                        if(Couleur::Get() == 'w')
+                        {
+                            setArm(NOT_EXTENDED);
+                            state = 3;
+                        }
+            break;
         }
-        if(Couleur::Get() == 'w')
-        {
-            setArm(NOT_EXTENDED);
-            state = 3;
-        }
-
-        break;
+    break;
 
     case 2: // Suivi du jaune, détection du cup
-
-
-        if (ROBUS_ReadIR(RIGHT) > 500)
-        {
-            setArm(EXTENDED_RIGHT);
+        static byte state3 = 0;
+        switch (state3) {
+            case 0:
+                moveUnited(2,INFINITY,0);
+                if (CapteurLigne::isBlackLine()) state3++;
+            break;
+            case 1:
+                if (rotate(10,30,PI/2.0)) state3++;
+            break;
+            case 2:
+                if (forward(10,24)) state3++;
+            break;
+            case 3:
+                if (rotate(10,30,PI/2.0)) state3++;
+            break;
+            case 4:
+                moveUnited(10,INFINITY,PI);
+                if (ROBUS_ReadIR(RIGHT) > 500)
+                        {
+                            setArm(EXTENDED_RIGHT);
+                        }
+                        if(Couleur::Get() == 'w')
+                        {
+                            setArm(NOT_EXTENDED);
+                            state = 3;
+                        }
+                if (Couleur::Get() != 'w') state++;
+            break;
         }
-        if(Couleur::Get() == 'w')
-        {
-            setArm(NOT_EXTENDED);
-            state = 3;
-        }
-
-        break;
+    break;
 
     case 3: // Suivi de la ligne, détection de retour à la couleur
 
@@ -339,6 +378,14 @@ void temploop()
             state = 0;// On restart le parcours
         }
         break;
+    case 88:
+    break;
+    case 89:
+        Serial.println(CapteurLigne::isBlackLine());
+    break;
+    case 90:
+        Serial.println(Couleur::Get());
+    break;
     }
 
     updateEverything();

@@ -18,17 +18,19 @@ Modifications :
 namespace Couleur
 {
     namespace {
-        extern Adafruit_TCS34725 tcs = Adafruit_TCS34725(TCS34725_INTEGRATIONTIME_700MS, TCS34725_GAIN_1X);
-        extern uint16_t r,g,b,c;
+        Adafruit_TCS34725 tcs = Adafruit_TCS34725(TCS34725_INTEGRATIONTIME_700MS, TCS34725_GAIN_1X);
+        uint16_t r,g,b,c;
     }  
 
     char Get(void){
         tcs.getRawData(&r, &g, &b, &c);
+        Serial.println(String(r)+'\t'+String(g)+'\t'+String(b));
         if ( r > 240 && g < 150 && b < 150) return 'r';
-        if ( r > 450 && g > 350 && b < 300) return 'j';
-        if ( r < 150 && g > 150 && b < 180) return 'v';
+        if ( r > 250 && g > 250 && b < 190) return 'j';
+        if ( r < 150 && g > 130 && b < 150) return 'v';
         if ( r < 110 && g > 140 && b > 190) return 'b';
         if ( r > 500 && g > 500 && b > 500) return 'w';
+        if ( r < 250 && g < 250 && b < 250) return 'n';
         return '\0';
     }
 }
