@@ -48,6 +48,13 @@ namespace Movement
 
     float computeLeftMotorSpeed();
     float computeRightMotorSpeed();
+
+    void setPIDRight(float Kp, float Ki, float Kd);
+    void setPIDLeft(float Kp, float Ki, float Kd);
+
+    void setRightSpeed(float speed);
+    void setLeftSpeed(float speed);
+
     void updatePIDs();
 
 

@@ -64,13 +64,8 @@ ArmState armState = NOT_EXTENDED;
 ClawState clawState = OPENED;
 
 void setupPID() {
-    Movement::rightPID.Kp = 0.0425;
-    Movement::rightPID.Ki = 0.0001;
-    Movement::rightPID.Kd = 0.001;
-
-    Movement::leftPID.Kp = 0.0425;
-    Movement::leftPID.Ki = 0.0001;
-    Movement::leftPID.Kd = 0.001;
+    setPIDRight(0.0425, 0.0001, 0.001);
+    setPIDLeft(0.0425, 0.0001, 0.001);
 }
 
 void setupServo() {
@@ -216,5 +211,6 @@ void loop() {
     //Serial.println((MOVE::averageSpeedD()+MOVE::averageSpeedD())/2.0);
     //MOVE::updatePIDMain(5, MOVE::radiusToDV(9, -M_PI));
     //PIDLigne::computeWheelSpeed();
+    updateServos();
     Movement::updatePIDs();
 }
