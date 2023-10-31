@@ -64,8 +64,8 @@ ArmState armState = NOT_EXTENDED;
 ClawState clawState = OPENED;
 
 void setupPID() {
-    setPIDRight(0.0425, 0.0001, 0.001);
-    setPIDLeft(0.0425, 0.0001, 0.001);
+    setPIDRight(0.0625, 0.0001, 0.001);
+    setPIDLeft(0.0625, 0.0001, 0.001);
 }
 
 void setupServo() {
@@ -162,19 +162,19 @@ void loop() {
             movementIndex++;
         }
     } else if (movementIndex == 0) { // tournant à droite
-        if (rotate(10, 18 + 12 + 3, M_PI / 2.0)) {
+        if (rotate(20, 18 + 12, M_PI / 2.0)) {
             movementIndex++;
         }
     } else if(movementIndex == 1) { //segment tapis
-        if (forward(10, 24)) {
+        if (forward(20, 24)) {
             movementIndex++;
         }
     } else if(movementIndex == 2) { // tournant à droite
-        if (rotate(10, 18 + 12 + 3, M_PI / 2.0)) {
+        if (rotate(20, 18 + 12, M_PI / 2.0)) {
             movementIndex++;
         }
     } else if (movementIndex == 3) {
-        if (forward(10, 96)) {
+        if (forward(20, 96)) {
             movementIndex = 0;
         }
     }
