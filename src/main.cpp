@@ -19,6 +19,7 @@ Modifications :
 #include "PIDLigne.h"
 #include "Move.h"
 #include "sifflet.h"
+#include "couleur.h"
 #include <LibRobus.h>
 #include <float.h>
 #include <mathX.h>
@@ -150,6 +151,30 @@ void updateServos() {
     SERVO_SetAngle(CLAW_SERVO, clawState == OPENED ? 75 : 110);
 }
 
+void updateEverything()
+{
+    switch (armState)
+    {
+    case EXTENDED_RIGHT:
+        if (activateServoForDistance(ARM_SERVO, 85, 180, 40))
+        {
+            armState = NOT_EXTENDED;
+        }
+        break;
+
+    case EXTENDED_LEFT:
+        if (activateServoForDistance(ARM_SERVO, 85, 0, 40))
+        {
+            armState = NOT_EXTENDED;
+        }
+        break;
+    }
+
+    //SERVO_SetAngle(CLAW_SERVO, clawState == OPENED ? 75 : 110);
+    updateServos();
+    updatePIDs();
+}
+
 void loop()
 {
 
@@ -242,7 +267,7 @@ void temploop()
     switch (state)
     {
     case 0: // Attente du sifflet, détection de la couleur de départ
-        /* code */
+
         if (!Sifflet::active)
         {
             if (Sifflet::update(1.0))
@@ -252,11 +277,11 @@ void temploop()
         }
         if (Sifflet::active)
         {
-            if (/*Couleur départ == vert*/true)
+            if (Couleur::Get() == 'v')
             {
                 state = 1;
             }
-            else if (/*Couleur départ == jaune*/true)
+            else if (Couleur::Get() == 'j')
             {
                 state = 2;
             }
@@ -267,13 +292,13 @@ void temploop()
 
         /*Algo pour suivre la couleur verte*/
 
-        if (/*Détecte le cup à gauche*/true)
+        if (ROBUS_ReadIR(LEFT) > 500)
         {
-            //Sort le bras à gauche
+            setArm(EXTENDED_LEFT);
         }
-        if(/*Couleur sol est blanche*/true)
+        if(Couleur::Get() == 'w')
         {
-            //Remonte le bras
+            setArm(NOT_EXTENDED);
             state = 3;
         }
 
@@ -283,13 +308,13 @@ void temploop()
 
         /*Algo pour suivre la couleur jaune*/
 
-        if (/*Détecte le cup à droite*/true)
+        if (ROBUS_ReadIR(RIGHT) > 500)
         {
-            //Sort le bras à droite
+            setArm(EXTENDED_RIGHT);
         }
-        if(/*Couleur sol est blanche*/true)
+        if(Couleur::Get() == 'w')
         {
-            //Remonte le bras
+            setArm(NOT_EXTENDED);
             state = 3;
         }
 
@@ -297,11 +322,11 @@ void temploop()
 
     case 3: // Suivi de la ligne, détection de retour à la couleur
 
-        // Suit la ligne
+        loopLineFollower();
 
-        if(/*Couleur du sol != blanc*/true)
+        if(Couleur::Get() != 'w')
         {
-            //Descend le cup
+            setClaw(OPENED);
             //Redresse le robot
             state = 4;
         }
@@ -320,6 +345,7 @@ void temploop()
         /* Stop moteurs */
         if(/*Pèse sur bumper arrière*/true)
         {
+            setClaw(CLOSED);
             state = 0;// On restart le parcours
         }
         break;
@@ -328,26 +354,3 @@ void temploop()
     updateEverything();
 }
 
-void updateEverything()
-{
-    switch (armState)
-    {
-    case EXTENDED_RIGHT:
-        if (activateServoForDistance(ARM_SERVO, 85, 180, 40))
-        {
-            armState = NOT_EXTENDED;
-        }
-        break;
-
-    case EXTENDED_LEFT:
-        if (activateServoForDistance(ARM_SERVO, 85, 0, 40))
-        {
-            armState = NOT_EXTENDED;
-        }
-        break;
-    }
-
-    //SERVO_SetAngle(CLAW_SERVO, clawState == OPENED ? 75 : 110);
-    updateServos();
-    updatePIDs();
-}
