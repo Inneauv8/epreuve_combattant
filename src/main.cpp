@@ -30,7 +30,7 @@ Modifications :
 
 #define CLAW_SERVO SERVO_1
 #define ARM_SERVO SERVO_2
-const uint8_t LINE_FOLLOWER_PINS[] = {38, 52, 51, 50, 49, 48, 47, 46};
+const uint8_t LINE_FOLLOWER_PINS[] = {38, 52, 51, 43, 49, 48, 47, 46};
 
 int movementIndex = -1;
 
@@ -75,11 +75,11 @@ MOVE::valeursPID rightPID = {};
 MOVE::valeursPID leftPID = {};
 
 void setupPID() {
-    rightPID.Kp = 0.0625;
+    rightPID.Kp = 0.0425;
     rightPID.Ki = 0.0001;
     rightPID.Kd = 0.001;
 
-    leftPID.Kp = 0.0625;
+    leftPID.Kp = 0.0425;
     leftPID.Ki = 0.0001;
     leftPID.Kd = 0.001;
 }
@@ -122,6 +122,7 @@ float radToDeg(float rad) {
     return rad * 180 / M_PI;
 }
 
+/*
 bool distanceFlag(float distance, float *initialDistance) {
     float actualDistance = computeDistance();
 
@@ -153,7 +154,9 @@ bool orientationFlag(float angle, float *initialOrientation) {
 
     return angleReached;
 }
+*/
 
+/*
 bool distanceFlag(float distance) {
     static float initialDistance = NAN;
     return distanceFlag(distance, &initialDistance);
@@ -163,6 +166,7 @@ bool orientationFlag(float angle) {
     static float initialOrientation = NAN;
     return orientationFlag(angle, &initialOrientation);
 }
+*/
 
 void rotate(float velocity, float radius) {
     MOVE::WheelVelocities velocities = MOVE::moveByRadius(velocity, radius);
@@ -188,7 +192,8 @@ void moveUnited(float velocity, float radius, float orientation) {
     //Serial.println(radius);
 
     float targetAngle = smallestAngleDifference(computeOrientation(), orientation);
-    float angularVelocity = sigmoid(targetAngle, 0, 1, 1, -2) * -baseAngularVelocity;
+    float angularVelocity = sigmoid(targetAngle, 0, 1, 0.1, -2) * -baseAngularVelocity;
+    Serial.println(angularVelocity);
 
     move(velocity, angularVelocity);
 }
@@ -203,46 +208,65 @@ bool rotate(float velocity, float radius, float angle) {
 
     float targetOrientation = wrap((initialOrientation + fabs(angle) * (radius > 0 ? 1 : -1)), -M_PI, M_PI);
 
+    /*
+    Serial.print(actualOrientation);
+    Serial.print("\t");
+    Serial.print(initialOrientation);
+    Serial.print("\t");
+    Serial.print(fabs(actualOrientation - initialOrientation));
+    Serial.print("\t");
+    Serial.print(angle);
+    Serial.print("\t");
+    Serial.print(fabs(angle));
+    Serial.print("\t");
+    Serial.println(targetOrientation);
+    */
+
     bool angleReached = fabs(actualOrientation - initialOrientation) >= fabs(angle);
 
     if (angleReached) {
         move(0, 0);
     } else {
-        moveUnited(velocity, fabs(radius), targetOrientation);
+        moveUnited(velocity, radius, initialOrientation + angle);
     }
+
+    //rotate(velocity, radius);
     
     if (angleReached) {
         initialOrientation = NAN;
     }
 
-    return false;
+    return angleReached;
 }
 
 bool forward(float velocity, float distance) {
     static float initialDistance = NAN;
     static float initialOrientation = NAN;
 
-    //float actualDistance = computeDistance();
+    float actualDistance = computeDistance();
     //float actualOrientation = computeOrientation();
 
     if (isnan(initialDistance)) {
+        initialDistance = computeDistance();
         initialOrientation = computeOrientation();
     }
 
-    bool distanceReached = distanceFlag(distance, &initialDistance);
+    bool distanceReached = fabs(actualDistance - initialDistance) >= fabs(distance);
 
     if (distanceReached) {
         move(0, 0);
     } else {
-        moveUnited(velocity, velocity / 5.0, initialOrientation);
+        //moveUnited(velocity, velocity / 5.0, initialOrientation);
+        moveUnited(velocity, 5.0 / velocity, initialOrientation);
     }
 
     //float correction = sigmoid(actualOrientation, initialOrientation, 1, 0.1, -2) * 5;
     
     //move(distanceReached ? 0 : velocity, 0);
 
-    if (isnan(initialDistance)) {
-       initialOrientation = NAN;
+    if (distanceReached) {
+        initialDistance = NAN;
+        initialOrientation = NAN;
     }
 
     return distanceReached;
@@ -267,6 +291,7 @@ bool activateServoForDistance(float id, float distance, float targetAngle, float
     }
 
     bool distanceReached = distanceFlag(distance, &initialDistance);
+    
     SERVO_SetAngle(id, distanceReached ? resetAngle : targetAngle);
 
     return distanceReached;
