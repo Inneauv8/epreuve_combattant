@@ -133,7 +133,7 @@ namespace Movement {
             initialOrientation = actualOrientation;
         }
 
-        float targetOrientation = wrap((initialOrientation + fabs(angle * 2) * (radius > 0 ? 1 : -1)), -M_PI, M_PI);
+        float targetOrientation = wrap((initialOrientation + fabs(angle * 2) * (angularVelocity > 0 ? 1 : -1)), -M_PI, M_PI);
 
         bool angleReached = fabs(actualOrientation - initialOrientation) >= fabs(angle) || reset;
 
