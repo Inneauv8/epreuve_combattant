@@ -125,6 +125,34 @@ namespace Movement {
         return angleReached;
     }
 
+    bool rotateAngularVelocity(float velocity, float angularVelocity, float angle, boolean reset) {
+        static float initialOrientation = NAN;
+        float actualOrientation = computeOrientation();
+
+        if (isnan(initialOrientation)) {
+            initialOrientation = actualOrientation;
+        }
+
+        float targetOrientation = wrap((initialOrientation + fabs(angle * 2) * (radius > 0 ? 1 : -1)), -M_PI, M_PI);
+
+        bool angleReached = fabs(actualOrientation - initialOrientation) >= fabs(angle) || reset;
+
+        if (angleReached) {
+            //move(0, 0);
+        } else {
+            move(velocity, angularVelocity);
+            //moveUnited(velocity, radius, initialOrientation + angle);
+        }
+
+        //rotate(velocity, radius);
+        
+        if (angleReached) {
+            initialOrientation = NAN;
+        }
+
+        return angleReached;
+    }
+
     bool forward(float velocity, float distance, boolean reset) {
         static float initialDistance = NAN;
         static float initialOrientation = NAN;
