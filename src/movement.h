@@ -46,22 +46,6 @@ namespace Movement
 
     bool forward(float velocity, float distance);
 
-    float computeRightMotorSpeed()
-    {
-    
-    static float past = 0.0;
-    static float speedMotor = 0.0;
-    static float oldPulse = 0.0;
-    float present = micros();
-    float pulse = ENCODER_Read(LEFT);
-    speedMotor = 1000000.0 * pulseToDist * float(pulse-oldPulse) / float(present - past);
-  
-    past = present;
-    oldPulse = pulse;
-    
-    return speedMotor;
-  }
-
     float computeLeftMotorSpeed();
     float computeRightMotorSpeed();
     void updatePIDs();
