@@ -178,6 +178,22 @@ void loop()
             movementIndex++;
         }
     } else if(movementIndex == 1) { //segment tapis
+        if (forward(20, 26)) {
+            movementIndex++;
+        }
+    } else if(movementIndex == 2) { // tournant à droite
+        if (rotate(20, 18 + 12, M_PI / 2.0)) {
+            movementIndex++;
+        }
+    } else if(movementIndex == 2) { // tournant à droite
+        if (forward(20, 96)) {
+            movementIndex++;
+        }
+    } else if(movementIndex == 2) { // tournant à droite
+        if (rotate(20, 18 + 12, M_PI / 2.0)) {
+            movementIndex++;
+        }
+    } else if(movementIndex == 2) { // tournant à droite
         if (forward(20, 24)) {
             movementIndex++;
         }
@@ -185,7 +201,7 @@ void loop()
         if (rotate(20, 18 + 12, M_PI / 2.0)) {
             movementIndex++;
         }
-    } else if (movementIndex == 3) {
+    }else if (movementIndex == 3) {
         if (forward(20, 96)) {
             movementIndex = 0;
         }
