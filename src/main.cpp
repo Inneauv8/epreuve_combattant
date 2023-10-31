@@ -4,19 +4,21 @@ Auteur : Maxime Boucher
 Date de création : 2023-10-17
 
 Description : Librairie permettant la mise en application du capteur de ligne
-              
-Notes : 
 
-Modifications : 
+Notes :
+
+Modifications :
 
 ***************************************************************************************************/
 
 // *************************************************************************************************
 //  INCLUDES
-// *************************************************************************************************	
+// *************************************************************************************************
 
 #include "capteurLigne.h"
 #include "PIDLigne.h"
+#include "Move.h"
+#include "sifflet.h"
 #include <LibRobus.h>
 #include <float.h>
 #include <mathX.h>
@@ -40,17 +42,18 @@ int movementIndex = -1;
 //  FONCTIONS LOCALES
 // *************************************************************************************************
 
-
 // *************************************************************************************************
 //  STRUCTURES ET UNIONS
 // *************************************************************************************************
 
-enum ClawState {
+enum ClawState
+{
     OPENED,
     CLOSED,
 };
 
-enum ArmState {
+enum ArmState
+{
     EXTENDED_RIGHT,
     NOT_EXTENDED,
     EXTENDED_LEFT,
@@ -62,29 +65,32 @@ enum ArmState {
 
 ArmState armState = NOT_EXTENDED;
 ClawState clawState = OPENED;
+byte state = 0;
 
 void setupPID() {
     setPIDRight(0.0625, 0.0001, 0.001);
     setPIDLeft(0.0625, 0.0001, 0.001);
 }
 
-void setupServo() {
+void setupServo()
+{
     SERVO_Enable(ARM_SERVO);
     SERVO_SetAngle(ARM_SERVO, 90);
     SERVO_Enable(CLAW_SERVO);
 }
 
 void setup()
-{   
+{
     setupPID();
     setupServo();
     BoardInit();
-    //Good value : 8, 0.001, 0.15
-    //PIDLigne::initPID(2.7387791339, 2.625137795, 6, 0, 0.1, LINE_FOLLOWER_PINS, 45);
+    // Good value : 8, 0.001, 0.15
+    // PIDLigne::initPID(2.7387791339, 2.625137795, 6, 0, 0.1, LINE_FOLLOWER_PINS, 45);
     Serial.begin(9600);
 
     ENCODER_Reset(RIGHT);
     ENCODER_Reset(LEFT);
+    Sifflet::init();
 }
 
 bool activateServoForDistance(float id, float distance, float targetAngle, float resetAngle) {
@@ -101,7 +107,8 @@ bool activateServoForDistance(float id, float distance, float targetAngle, float
     return distanceReached;
 }
 
-void setClaw(ClawState state) {
+void setClaw(ClawState state)
+{
     clawState = state;
 }
 
@@ -143,22 +150,27 @@ void updateServos() {
     SERVO_SetAngle(CLAW_SERVO, clawState == OPENED ? 75 : 110);
 }
 
-void loop() {
+void loop()
+{
 
     delay(5);
 
     int closedTime = 19000;
     int openedTime = 1000;
 
-    if (millis() % (closedTime + openedTime) < closedTime) {
+    if (millis() % (closedTime + openedTime) < closedTime)
+    {
         setClaw(CLOSED);
-    } else {
+    }
+    else
+    {
         setClaw(OPENED);
     }
-    
-    
-    if (movementIndex == -1) { // tournant à droite
-        if (forward(10, 96 / 2.0)) {
+
+    if (movementIndex == -1)
+    { // tournant à droite
+        if (forward(10, 96 / 2.0))
+        {
             movementIndex++;
         }
     } else if (movementIndex == 0) { // tournant à droite
@@ -189,28 +201,141 @@ void loop() {
         setArm(EXTENDED_LEFT);
     }
 
-   //followWall(RIGHT, velocity);
-   /*
-    float angularVelocity = 0;
-    float baseAngularVelocity = 1.2;
+    // followWall(RIGHT, velocity);
+    /*
+     float angularVelocity = 0;
+     float baseAngularVelocity = 1.2;
 
-    angularVelocity = sigmoid(ROBUS_ReadIR(0), 425.0, 1, 25.0, -2) * baseAngularVelocity;
+     angularVelocity = sigmoid(ROBUS_ReadIR(0), 425.0, 1, 25.0, -2) * baseAngularVelocity;
 
 
-    rotate(velocity, 16 / angularVelocity);
-    */
+     rotate(velocity, 16 / angularVelocity);
+     */
 
-   //ROBUS_ReadIR
-    
+    // ROBUS_ReadIR
 
-    //rightPID.Sp = 0;
-    //leftPID.Sp = 0;
+    // rightPID.Sp = 0;
+    // leftPID.Sp = 0;
 
-    //MOVE::WheelVelocities velocities = MOVE::moveByRadius(computeOrientation() < M_PI / 2 ? 16 : 0, 23.622);
+    // MOVE::WheelVelocities velocities = MOVE::moveByRadius(computeOrientation() < M_PI / 2 ? 16 : 0, 23.622);
 
-    //Serial.println((MOVE::averageSpeedD()+MOVE::averageSpeedD())/2.0);
-    //MOVE::updatePIDMain(5, MOVE::radiusToDV(9, -M_PI));
-    //PIDLigne::computeWheelSpeed();
+    // Serial.println((MOVE::averageSpeedD()+MOVE::averageSpeedD())/2.0);
+    // MOVE::updatePIDMain(5, MOVE::radiusToDV(9, -M_PI));
+    // PIDLigne::computeWheelSpeed();
+    updatePIDs();
+}
+
+void temploop()
+{
+    switch (state)
+    {
+    case 0: // Attente du sifflet, détection de la couleur de départ
+        /* code */
+        if (!Sifflet::active)
+        {
+            if (Sifflet::update(1.0))
+            {
+                Sifflet::trigger();
+            }
+        }
+        if (Sifflet::active)
+        {
+            if (/*Couleur départ == vert*/true)
+            {
+                state = 1;
+            }
+            else if (/*Couleur départ == jaune*/true)
+            {
+                state = 2;
+            }
+        }
+        break;
+
+    case 1: // Suivi du vert, détection du cup
+
+        /*Algo pour suivre la couleur verte*/
+
+        if (/*Détecte le cup à gauche*/true)
+        {
+            //Sort le bras à gauche
+        }
+        if(/*Couleur sol est blanche*/true)
+        {
+            //Remonte le bras
+            state = 3;
+        }
+
+        break;
+
+    case 2: // Suivi du jaune, détection du cup
+
+        /*Algo pour suivre la couleur jaune*/
+
+        if (/*Détecte le cup à droite*/true)
+        {
+            //Sort le bras à droite
+        }
+        if(/*Couleur sol est blanche*/true)
+        {
+            //Remonte le bras
+            state = 3;
+        }
+
+        break;
+
+    case 3: // Suivi de la ligne, détection de retour à la couleur
+
+        // Suit la ligne
+
+        if(/*Couleur du sol != blanc*/true)
+        {
+            //Descend le cup
+            //Redresse le robot
+            state = 4;
+        }
+        break;
+
+    case 4: // On fait un tour et puis le shortcut
+        /* shortcut mode */
+
+        if(/*Détecte la ligne noire pour une deuxième fois*/true)
+        {
+            state = 5;
+        }
+        break;
+
+    case 5: // Feni
+        /* Stop moteurs */
+        if(/*Pèse sur bumper arrière*/true)
+        {
+            state = 0;// On restart le parcours
+        }
+        break;
+    }
+
+    updateEverything();
+}
+
+void updateEverything()
+{
+    switch (armState)
+    {
+    case EXTENDED_RIGHT:
+        if (activateServoForDistance(ARM_SERVO, 85, 180, 40))
+        {
+            armState = NOT_EXTENDED;
+        }
+        break;
+
+    case EXTENDED_LEFT:
+        if (activateServoForDistance(ARM_SERVO, 85, 0, 40))
+        {
+            armState = NOT_EXTENDED;
+        }
+        break;
+    }
+
+    //SERVO_SetAngle(CLAW_SERVO, clawState == OPENED ? 75 : 110);
     updateServos();
-    Movement::updatePIDs();
+    updatePIDs();
 }
