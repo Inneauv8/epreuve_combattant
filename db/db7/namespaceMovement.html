@@ -104,10 +104,10 @@ Fonctions</h2></td></tr>
 <tr class="separator:a7284b9fc1288b7d374d8b6f3bfd1657e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ab806832c46ecc3cd5ed6ac8601f45e12"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../db/db7/namespaceMovement.html#ab806832c46ecc3cd5ed6ac8601f45e12">moveUnited</a> (float velocity, float radius, float orientation)</td></tr>
 <tr class="separator:ab806832c46ecc3cd5ed6ac8601f45e12"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af45ab3090fa01010d6aef30d67d09484"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../db/db7/namespaceMovement.html#af45ab3090fa01010d6aef30d67d09484">rotate</a> (float velocity, float radius, float angle)</td></tr>
-<tr class="separator:af45ab3090fa01010d6aef30d67d09484"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a0aee57f6a368fc7b6048764a25224f42"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../db/db7/namespaceMovement.html#a0aee57f6a368fc7b6048764a25224f42">forward</a> (float velocity, float distance)</td></tr>
-<tr class="separator:a0aee57f6a368fc7b6048764a25224f42"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a170c79f5d9f9d48af9ef9eb0e347a9f6"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../db/db7/namespaceMovement.html#a170c79f5d9f9d48af9ef9eb0e347a9f6">rotate</a> (float velocity, float radius, float angle, boolean reset)</td></tr>
+<tr class="separator:a170c79f5d9f9d48af9ef9eb0e347a9f6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a53c94a82981a4b350d5b1803c4b9a1fd"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../db/db7/namespaceMovement.html#a53c94a82981a4b350d5b1803c4b9a1fd">forward</a> (float velocity, float distance, boolean reset)</td></tr>
+<tr class="separator:a53c94a82981a4b350d5b1803c4b9a1fd"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a814c30370dc9161034bb9e3e1501c517"><td class="memItemLeft" align="right" valign="top">float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../db/db7/namespaceMovement.html#a814c30370dc9161034bb9e3e1501c517">computeLeftMotorSpeed</a> ()</td></tr>
 <tr class="separator:a814c30370dc9161034bb9e3e1501c517"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a041b426651c996de6d6794d6693b301b"><td class="memItemLeft" align="right" valign="top">float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../db/db7/namespaceMovement.html#a041b426651c996de6d6794d6693b301b">computeRightMotorSpeed</a> ()</td></tr>
@@ -247,8 +247,8 @@ Variables</h2></td></tr>
 
 </div>
 </div>
-<a id="a0aee57f6a368fc7b6048764a25224f42" name="a0aee57f6a368fc7b6048764a25224f42"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a0aee57f6a368fc7b6048764a25224f42">&#9670;&#160;</a></span>forward()</h2>
+<a id="a53c94a82981a4b350d5b1803c4b9a1fd" name="a53c94a82981a4b350d5b1803c4b9a1fd"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a53c94a82981a4b350d5b1803c4b9a1fd">&#9670;&#160;</a></span>forward()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -263,7 +263,13 @@ Variables</h2></td></tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">float&#160;</td>
-          <td class="paramname"><em>distance</em>&#160;</td>
+          <td class="paramname"><em>distance</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">boolean&#160;</td>
+          <td class="paramname"><em>reset</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -446,8 +452,8 @@ Variables</h2></td></tr>
 
 </div>
 </div>
-<a id="af45ab3090fa01010d6aef30d67d09484" name="af45ab3090fa01010d6aef30d67d09484"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#af45ab3090fa01010d6aef30d67d09484">&#9670;&#160;</a></span>rotate() <span class="overload">[2/2]</span></h2>
+<a id="a170c79f5d9f9d48af9ef9eb0e347a9f6" name="a170c79f5d9f9d48af9ef9eb0e347a9f6"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a170c79f5d9f9d48af9ef9eb0e347a9f6">&#9670;&#160;</a></span>rotate() <span class="overload">[2/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -468,7 +474,13 @@ Variables</h2></td></tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">float&#160;</td>
-          <td class="paramname"><em>angle</em>&#160;</td>
+          <td class="paramname"><em>angle</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">boolean&#160;</td>
+          <td class="paramname"><em>reset</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
