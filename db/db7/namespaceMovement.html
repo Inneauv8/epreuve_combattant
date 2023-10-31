@@ -112,6 +112,14 @@ Fonctions</h2></td></tr>
 <tr class="separator:a814c30370dc9161034bb9e3e1501c517"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a041b426651c996de6d6794d6693b301b"><td class="memItemLeft" align="right" valign="top">float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../db/db7/namespaceMovement.html#a041b426651c996de6d6794d6693b301b">computeRightMotorSpeed</a> ()</td></tr>
 <tr class="separator:a041b426651c996de6d6794d6693b301b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae9b896b37ab3dd44d8ea9d303cf06af4"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../db/db7/namespaceMovement.html#ae9b896b37ab3dd44d8ea9d303cf06af4">setPIDRight</a> (float Kp, float Ki, float Kd)</td></tr>
+<tr class="separator:ae9b896b37ab3dd44d8ea9d303cf06af4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7144c384519feecfb9a0f03317d90d21"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../db/db7/namespaceMovement.html#a7144c384519feecfb9a0f03317d90d21">setPIDLeft</a> (float Kp, float Ki, float Kd)</td></tr>
+<tr class="separator:a7144c384519feecfb9a0f03317d90d21"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8a047da605804b001fe16200838f853c"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../db/db7/namespaceMovement.html#a8a047da605804b001fe16200838f853c">setRightSpeed</a> (float speed)</td></tr>
+<tr class="separator:a8a047da605804b001fe16200838f853c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae5164bcc0af81eb0fa2acf092e120f77"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../db/db7/namespaceMovement.html#ae5164bcc0af81eb0fa2acf092e120f77">setLeftSpeed</a> (float speed)</td></tr>
+<tr class="separator:ae5164bcc0af81eb0fa2acf092e120f77"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a139c19e9e943e62dfcb4cb05d075406c"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../db/db7/namespaceMovement.html#a139c19e9e943e62dfcb4cb05d075406c">updatePIDs</a> ()</td></tr>
 <tr class="separator:a139c19e9e943e62dfcb4cb05d075406c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
@@ -445,6 +453,110 @@ Variables</h2></td></tr>
           <td></td>
           <td>)</td>
           <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="ae5164bcc0af81eb0fa2acf092e120f77" name="ae5164bcc0af81eb0fa2acf092e120f77"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae5164bcc0af81eb0fa2acf092e120f77">&#9670;&#160;</a></span>setLeftSpeed()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void Movement::setLeftSpeed </td>
+          <td>(</td>
+          <td class="paramtype">float&#160;</td>
+          <td class="paramname"><em>speed</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a7144c384519feecfb9a0f03317d90d21" name="a7144c384519feecfb9a0f03317d90d21"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a7144c384519feecfb9a0f03317d90d21">&#9670;&#160;</a></span>setPIDLeft()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void Movement::setPIDLeft </td>
+          <td>(</td>
+          <td class="paramtype">float&#160;</td>
+          <td class="paramname"><em>Kp</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">float&#160;</td>
+          <td class="paramname"><em>Ki</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">float&#160;</td>
+          <td class="paramname"><em>Kd</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="ae9b896b37ab3dd44d8ea9d303cf06af4" name="ae9b896b37ab3dd44d8ea9d303cf06af4"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae9b896b37ab3dd44d8ea9d303cf06af4">&#9670;&#160;</a></span>setPIDRight()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void Movement::setPIDRight </td>
+          <td>(</td>
+          <td class="paramtype">float&#160;</td>
+          <td class="paramname"><em>Kp</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">float&#160;</td>
+          <td class="paramname"><em>Ki</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">float&#160;</td>
+          <td class="paramname"><em>Kd</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a8a047da605804b001fe16200838f853c" name="a8a047da605804b001fe16200838f853c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8a047da605804b001fe16200838f853c">&#9670;&#160;</a></span>setRightSpeed()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void Movement::setRightSpeed </td>
+          <td>(</td>
+          <td class="paramtype">float&#160;</td>
+          <td class="paramname"><em>speed</em></td><td>)</td>
+          <td></td>
         </tr>
       </table>
 </div><div class="memdoc">
