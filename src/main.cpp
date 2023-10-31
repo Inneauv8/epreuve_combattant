@@ -122,7 +122,6 @@ float radToDeg(float rad) {
     return rad * 180 / M_PI;
 }
 
-/*
 bool distanceFlag(float distance, float *initialDistance) {
     float actualDistance = computeDistance();
 
@@ -154,9 +153,8 @@ bool orientationFlag(float angle, float *initialOrientation) {
 
     return angleReached;
 }
-*/
 
-/*
+
 bool distanceFlag(float distance) {
     static float initialDistance = NAN;
     return distanceFlag(distance, &initialDistance);
@@ -166,7 +164,6 @@ bool orientationFlag(float angle) {
     static float initialOrientation = NAN;
     return orientationFlag(angle, &initialOrientation);
 }
-*/
 
 void rotate(float velocity, float radius) {
     MOVE::WheelVelocities velocities = MOVE::moveByRadius(velocity, radius);
