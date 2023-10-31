@@ -18,13 +18,11 @@ Modifications :
 #include "capteurLigne.h"
 #include "PIDLigne.h"
 #include "Move.h"
-#include "sifflet.h"
-#include "couleur.h"
 #include <LibRobus.h>
 #include <float.h>
 #include <mathX.h>
-#include <Adafruit_TCS34725.h>
 #include <movement.h>
+#include <couleur.h>
 
 using namespace Movement;
 
@@ -35,7 +33,7 @@ using namespace Movement;
 
 #define CLAW_SERVO SERVO_1
 #define ARM_SERVO SERVO_2
-const uint8_t LINE_FOLLOWER_PINS[] = {38, 52, 51, 43, 49, 48, 47, 46};
+const uint8_t LINE_FOLLOWER_PINS[] = {38, 52, 51, 42, 49, 48, 47, 46};
 
 int movementIndex = -1;
 
@@ -86,12 +84,12 @@ void setup()
     setupServo();
     BoardInit();
     // Good value : 8, 0.001, 0.15
-    // PIDLigne::initPID(2.7387791339, 2.625137795, 6, 0, 0.1, LINE_FOLLOWER_PINS, 45);
+    //PIDLigne::initPID(2.7387791339, 2.625137795, 8, 0, 0.1, LINE_FOLLOWER_PINS, 45);
     Serial.begin(9600);
 
     ENCODER_Reset(RIGHT);
     ENCODER_Reset(LEFT);
-    Sifflet::init();
+    //Sifflet::init();
 }
 
 bool activateServoForDistance(float id, float distance, float targetAngle, float resetAngle) {
@@ -120,8 +118,8 @@ void setArm(ArmState state) {
 void loopLineFollower()
 {
     PIDLigne::WheelVelocities wheelVelocities = PIDLigne::computeWheelSpeed(WHEEL_BASE_DIAMETER, 5.0);
-    Movement::rightPID.Sp = wheelVelocities.rightWheelSpeed;
-    Movement::leftPID.Sp = wheelVelocities.leftWheelSpeed;
+    setRightSpeed(wheelVelocities.rightWheelSpeed);
+    setLeftSpeed(wheelVelocities.leftWheelSpeed);
 }
 
 void followWall(float id, float velocity, float radius = 13.3, float distance = 425.0) {
@@ -177,9 +175,10 @@ void updateEverything()
 
 void loop()
 {
-
+    
     delay(5);
 
+    
     int closedTime = 19000;
     int openedTime = 1000;
 
@@ -192,6 +191,7 @@ void loop()
         setClaw(OPENED);
     }
 
+    
     if (movementIndex == -1)
     { // tournant à droite
         if (forward(10, 96 / 2.0))
@@ -203,11 +203,11 @@ void loop()
             movementIndex++;
         }
     } else if(movementIndex == 1) { //segment tapis
-        if (forward(20, 26)) {
+        if (forward(20, 28)) {
             movementIndex++;
         }
     } else if(movementIndex == 2) { // tournant à droite
-        if (rotate(20, 18 + 12, M_PI / 2.0)) {
+        if (rotate(20, 18 + 12 + 2, M_PI / 2.0 + M_PI / 8)) {
             movementIndex++;
         }
     } else if(movementIndex == 2) { // tournant à droite
@@ -232,37 +232,20 @@ void loop()
         }
     }
     
+    
 
     if (ROBUS_ReadIR(RIGHT) > 500) {
         setArm(EXTENDED_RIGHT);
     }
         
-        
     if (ROBUS_ReadIR(LEFT) > 500) {
         setArm(EXTENDED_LEFT);
     }
+    
 
-    // followWall(RIGHT, velocity);
-    /*
-     float angularVelocity = 0;
-     float baseAngularVelocity = 1.2;
+    //loopLineFollower();
+    //followWall(RIGHT, 10);
 
-     angularVelocity = sigmoid(ROBUS_ReadIR(0), 425.0, 1, 25.0, -2) * baseAngularVelocity;
-
-
-     rotate(velocity, 16 / angularVelocity);
-     */
-
-    // ROBUS_ReadIR
-
-    // rightPID.Sp = 0;
-    // leftPID.Sp = 0;
-
-    // MOVE::WheelVelocities velocities = MOVE::moveByRadius(computeOrientation() < M_PI / 2 ? 16 : 0, 23.622);
-
-    // Serial.println((MOVE::averageSpeedD()+MOVE::averageSpeedD())/2.0);
-    // MOVE::updatePIDMain(5, MOVE::radiusToDV(9, -M_PI));
-    // PIDLigne::computeWheelSpeed();
     updatePIDs();
 }
 
@@ -294,7 +277,6 @@ void temploop()
 
     case 1: // Suivi du vert, détection du cup
 
-        /*Algo pour suivre la couleur verte*/
 
         if (ROBUS_ReadIR(LEFT) > 500)
         {
@@ -310,7 +292,6 @@ void temploop()
 
     case 2: // Suivi du jaune, détection du cup
 
-        /*Algo pour suivre la couleur jaune*/
 
         if (ROBUS_ReadIR(RIGHT) > 500)
         {
@@ -337,17 +318,15 @@ void temploop()
         break;
 
     case 4: // On fait un tour et puis le shortcut
-        /* shortcut mode */
 
-        if(/*Détecte la ligne noire pour une deuxième fois*/true)
+        if(true)
         {
             state = 5;
         }
         break;
 
     case 5: // Feni
-        /* Stop moteurs */
-        if(/*Pèse sur bumper arrière*/true)
+        if(true)
         {
             setClaw(CLOSED);
             state = 0;// On restart le parcours
@@ -357,4 +336,3 @@ void temploop()
 
     updateEverything();
 }
-
