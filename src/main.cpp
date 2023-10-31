@@ -251,33 +251,41 @@ void loop()
 }
 
 void temploop()
-{
+{   
+    Serial.println(state);
+    delay(5);
+    bool lineReached = false;
+
     switch (state)
     {
     case 0: // Attente du sifflet, détection de la couleur de départ
 
-        if (!Sifflet::active)
+        if (!Sifflet::active && false)
         {
             if (Sifflet::update(1.0))
             {
                 Sifflet::trigger();
             }
         }
-        if (Sifflet::active)
+        if (Sifflet::active || true)
         {
             if (Couleur::Get() == 'v')
             {
                 state = 1;
             }
             else if (Couleur::Get() == 'j')
-            {
-                state = 2;
+            {   
+                state = 3;
             }
         }
         break;
 
     case 1: // Suivi du vert, détection du cup
+        lineReached = CapteurLigne::isBlackLine();
 
+        if (forward(16, 50000, lineReached)) {
+            state = 2;
+        }
 
         if (ROBUS_ReadIR(LEFT) > 500)
         {
@@ -287,12 +295,22 @@ void temploop()
         if (Couleur::Get() == 'w')
         {
             setArm(NOT_EXTENDED);
-            state = 3;
+            state = 5;
         }
 
         break;
 
-    case 2: // Suivi du jaune, détection du cup
+    case 2: // Suivi du vert, tourner
+        if (rotate(16, 18, M_PI / 2)) {
+            state = 1;
+        }
+        break;
+    case 3: // Suivi du jaune, détection du cup
+
+        lineReached = CapteurLigne::isBlackLine();
+        if (forward(16, 500000, lineReached)) {
+            state = 4;
+        }
 
         if (ROBUS_ReadIR(RIGHT) > 500)
         {
@@ -301,12 +319,17 @@ void temploop()
         if (Couleur::Get() == 'w')
         {
             setArm(NOT_EXTENDED);
-            state = 3;
+            state = 5;
+        }
+    case 4: // Suivi du jaune, tourner
+
+        if (rotate(16, 18 + 12, M_PI / 2)) {
+            state = 2;
         }
 
         break;
 
-    case 3: // Suivi de la ligne, détection de retour à la couleur
+    case 5: // Suivi de la ligne, détection de retour à la couleur
 
         loopLineFollower();
 
@@ -314,12 +337,12 @@ void temploop()
         {
             setClaw(OPENED);
             rotate(20, 18 + 12, M_PI / 4.0);
-            state = 4;
+            state = 6;
         }
         break;
 
-    case 4: // On fait un tour et puis le shortcut
-    case 5:
+    case 6: // On fait un tour et puis le shortcut
+    case 7:
         
         followWall(RIGHT, 15);
 
@@ -329,7 +352,7 @@ void temploop()
         }
         break;
 
-    case 6: // Feni
+    case 8: // Feni
 
         move(0, 0);
 

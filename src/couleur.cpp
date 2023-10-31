@@ -18,8 +18,8 @@ Modifications :
 namespace Couleur
 {
     namespace {
-        extern Adafruit_TCS34725 tcs = Adafruit_TCS34725(TCS34725_INTEGRATIONTIME_700MS, TCS34725_GAIN_1X);
-        extern uint16_t r,g,b,c;
+        Adafruit_TCS34725 tcs = Adafruit_TCS34725(TCS34725_INTEGRATIONTIME_700MS, TCS34725_GAIN_1X);
+        uint16_t r,g,b,c;
     }  
 
     char Get(void){
