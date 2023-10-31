@@ -34,7 +34,7 @@ using namespace Movement;
 
 #define CLAW_SERVO SERVO_1
 #define ARM_SERVO SERVO_2
-const uint8_t LINE_FOLLOWER_PINS[] = {38, 52, 51, 42, 49, 48, 47, 46};
+const uint8_t LINE_FOLLOWER_PINS[] = {38, 41, 43, 42, 49, 48, 47, 46};
 
 int movementIndex = -1;
 
@@ -65,11 +65,11 @@ enum ArmState
 
 ArmState armState = NOT_EXTENDED;
 ClawState clawState = OPENED;
-byte state = 88; //Remettre à zéro pour le sifflet 
+byte state = 2; //Remettre à zéro pour le sifflet 
 
 void setupPID() {
-    setPIDRight(0.0625, 0.0001, 0.001);
-    setPIDLeft(0.0625, 0.0001, 0.001);
+    setPIDRight(0.0425, 0.0001, 0.001);
+    setPIDLeft(0.0425, 0.0001, 0.001);
 }
 
 void setupServo()
@@ -79,22 +79,27 @@ void setupServo()
     SERVO_Enable(CLAW_SERVO);
 }
 
+void setClaw(ClawState state)
+{
+    clawState = state;
+}
+
 void setup()
 {
     setupPID();
     setupServo();
     BoardInit();
     // Good value : 8, 0.001, 0.15
-    //PIDLigne::initPID(2.7387791339, 2.625137795, 8, 0, 0.1, LINE_FOLLOWER_PINS, 45);
+    PIDLigne::initPID(2.7387791339, 2.625137795, 8, 0, 0.1, LINE_FOLLOWER_PINS, 45);
     Serial.begin(9600);
 
 
-    CapteurLigne::initLine(LINE_FOLLOWER_PINS, 45);
+    //CapteurLigne::initLine(LINE_FOLLOWER_PINS, 45);
     ENCODER_Reset(RIGHT);
     ENCODER_Reset(LEFT);
     //Sifflet::init();
 
-    delay(1000);
+    setClaw(CLOSED);
 }
 
 bool activateServoForDistance(float id, float distance, float targetAngle, float resetAngle) {
@@ -109,11 +114,6 @@ bool activateServoForDistance(float id, float distance, float targetAngle, float
     SERVO_SetAngle(id, distanceReached ? resetAngle : targetAngle);
 
     return distanceReached;
-}
-
-void setClaw(ClawState state)
-{
-    clawState = state;
 }
 
 void setArm(ArmState state) {
@@ -178,7 +178,7 @@ void updateEverything()
     updatePIDs();
 }
 
-void loop()
+void temploop()
 {
     
     delay(5);
@@ -254,7 +254,7 @@ void loop()
     updatePIDs();
 }
 
-/*
+
 void loop()
 {
    // Serial.println(state);
@@ -291,25 +291,21 @@ void loop()
                 if (CapteurLigne::isBlackLine()) state2++;
             break;
             case 1:
-                if (rotate(10,18,PI/2.0)) state2++;
+                if (rotate(15,18,PI/2.0)) state2++;
             break;
             case 2:
-                if (forward(10,24)) state2++;
+                if (forward(15,24)) state2++;
             break;
             case 3:
-                if (rotate(10,18,PI/2.0)) state2++;
+                if (rotate(15,18,PI/2.0)) state2++;
             break;
             case 4:
-                moveUnited(10,INFINITY,PI);
+                moveUnited(15,INFINITY,PI);
                 if (ROBUS_ReadIR(RIGHT) > 500)
                         {
                             setArm(EXTENDED_RIGHT);
                         }
-                        if(Couleur::Get() == 'w')
-                        {
-                            setArm(NOT_EXTENDED);
-                            state = 3;
-                        }
+
             break;
         }
     break;
@@ -318,30 +314,30 @@ void loop()
         static byte state3 = 0;
         switch (state3) {
             case 0:
-                moveUnited(2,INFINITY,0);
+                moveUnited(5,INFINITY,0);
                 if (CapteurLigne::isBlackLine()) state3++;
             break;
             case 1:
-                if (rotate(10,30,PI/2.0)) state3++;
+                if (rotate(15,33,PI/2.0)) state3++;
             break;
             case 2:
-                if (forward(10,24)) state3++;
+                if (forward(15,24)) state3++;
             break;
             case 3:
-                if (rotate(10,30,PI/2.0)) state3++;
+                if (rotate(15,33,(PI/2.0)+0.1)) state3++;
             break;
             case 4:
-                moveUnited(10,INFINITY,PI);
+                if (forward(15,88.5)) state3++;
                 if (ROBUS_ReadIR(RIGHT) > 500)
                         {
                             setArm(EXTENDED_RIGHT);
                         }
-                        if(Couleur::Get() == 'w')
-                        {
-                            setArm(NOT_EXTENDED);
-                            state = 3;
-                        }
-                if (Couleur::Get() != 'w') state++;
+            break;
+            case 5:
+                if (rotate(10,3,PI/3)) state3++;
+            break;
+            case 6:
+                if (forward(15,9)) state = 3;
             break;
         }
     break;
@@ -349,11 +345,10 @@ void loop()
     case 3: // Suivi de la ligne, détection de retour à la couleur
 
         loopLineFollower();
-
-        if(Couleur::Get() != 'w')
+        if(Couleur::Get() == 'j' || Couleur::Get() == 'v')
         {
             setClaw(OPENED);
-            rotate(20, 0, M_PI / 4.0);
+            rotate(10, 0, M_PI / 4.0);
             state = 4;
         }
         break;
@@ -392,5 +387,3 @@ void loop()
 
     updateEverything();
 }
-
-*/

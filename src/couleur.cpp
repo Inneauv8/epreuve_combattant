@@ -29,7 +29,7 @@ namespace Couleur
         if ( r > 250 && g > 250 && b < 190) return 'j';
         if ( r < 150 && g > 130 && b < 150) return 'v';
         if ( r < 110 && g > 140 && b > 190) return 'b';
-        if ( r > 500 && g > 500 && b > 500) return 'w';
+        if ( r > 5000 && g > 5000 && b > 5000) return 'w';
         if ( r < 250 && g < 250 && b < 250) return 'n';
         return '\0';
     }
