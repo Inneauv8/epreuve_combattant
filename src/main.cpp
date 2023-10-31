@@ -178,7 +178,7 @@ void updateEverything()
     updatePIDs();
 }
 
-void temploop()
+void loop()
 {
     
     delay(5);
@@ -254,6 +254,7 @@ void temploop()
     updatePIDs();
 }
 
+/*
 void loop()
 {
    // Serial.println(state);
@@ -262,89 +263,103 @@ void loop()
     {
     case 0: // Attente du sifflet, détection de la couleur de départ
 
-        if (!Sifflet::active && false)
+        if (!Sifflet::active)
         {
             if (Sifflet::update(1.0))
             {
                 Sifflet::trigger();
             }
         }
-        if (Sifflet::active || true)
+        if (Sifflet::active)
         {
             if (Couleur::Get() == 'v')
             {
                 state = 1;
             }
             else if (Couleur::Get() == 'j')
-            {   
-                state = 3;
+            {
+                state = 2;
             }
         }
         break;
 
     case 1: // Suivi du vert, détection du cup
-        lineReached = CapteurLigne::isBlackLine();
-
-        if (forward(16, 50000, lineReached)) {
-            state = 2;
+        static byte state2 = 0;
+        switch (state2) {
+            case 0:
+                moveUnited(5,INFINITY,0);
+                if (CapteurLigne::isBlackLine()) state2++;
+            break;
+            case 1:
+                if (rotate(10,18,PI/2.0)) state2++;
+            break;
+            case 2:
+                if (forward(10,24)) state2++;
+            break;
+            case 3:
+                if (rotate(10,18,PI/2.0)) state2++;
+            break;
+            case 4:
+                moveUnited(10,INFINITY,PI);
+                if (ROBUS_ReadIR(RIGHT) > 500)
+                        {
+                            setArm(EXTENDED_RIGHT);
+                        }
+                        if(Couleur::Get() == 'w')
+                        {
+                            setArm(NOT_EXTENDED);
+                            state = 3;
+                        }
+            break;
         }
+    break;
 
-        if (ROBUS_ReadIR(LEFT) > 500)
-        {
-            setArm(EXTENDED_LEFT);
+    case 2: // Suivi du jaune, détection du cup
+        static byte state3 = 0;
+        switch (state3) {
+            case 0:
+                moveUnited(2,INFINITY,0);
+                if (CapteurLigne::isBlackLine()) state3++;
+            break;
+            case 1:
+                if (rotate(10,30,PI/2.0)) state3++;
+            break;
+            case 2:
+                if (forward(10,24)) state3++;
+            break;
+            case 3:
+                if (rotate(10,30,PI/2.0)) state3++;
+            break;
+            case 4:
+                moveUnited(10,INFINITY,PI);
+                if (ROBUS_ReadIR(RIGHT) > 500)
+                        {
+                            setArm(EXTENDED_RIGHT);
+                        }
+                        if(Couleur::Get() == 'w')
+                        {
+                            setArm(NOT_EXTENDED);
+                            state = 3;
+                        }
+                if (Couleur::Get() != 'w') state++;
+            break;
         }
+    break;
 
-        if (Couleur::Get() == 'w')
-        {
-            setArm(NOT_EXTENDED);
-            state = 5;
-        }
-
-        break;
-
-    case 2: // Suivi du vert, tourner
-        if (rotate(16, 18, M_PI / 2)) {
-            state = 1;
-        }
-        break;
-    case 3: // Suivi du jaune, détection du cup
-
-        lineReached = CapteurLigne::isBlackLine();
-        if (forward(16, 500000, lineReached)) {
-            state = 4;
-        }
-
-        if (ROBUS_ReadIR(RIGHT) > 500)
-        {
-            setArm(EXTENDED_RIGHT);
-        }
-        if (Couleur::Get() == 'w')
-        {
-            setArm(NOT_EXTENDED);
-            state = 5;
-        }
-    case 4: // Suivi du jaune, tourner
-
-        if (rotate(16, 18 + 12, M_PI / 2)) {
-            state = 2;
-        }
-
-        break;
-
-    case 5: // Suivi de la ligne, détection de retour à la couleur
+    case 3: // Suivi de la ligne, détection de retour à la couleur
 
         loopLineFollower();
 
         if(Couleur::Get() != 'w')
         {
             setClaw(OPENED);
-            rotate(20, 18 + 12, M_PI / 4.0);
-            state = 6;
+            rotate(20, 0, M_PI / 4.0);
+            state = 4;
         }
         break;
 
-    case 6: // On fait un tour et puis le shortcut
-    case 7:
+    case 4: // On fait un tour et puis le shortcut
+    case 5:
         
         followWall(RIGHT, 15);
 
@@ -354,7 +369,7 @@ void loop()
         }
         break;
 
-    case 8: // Feni
+    case 6: // Feni
 
         move(0, 0);
 
@@ -365,6 +380,7 @@ void loop()
         }
         break;
     case 88:
+        move(2, 0);
     break;
     case 89:
         Serial.println(CapteurLigne::isBlackLine());
@@ -376,3 +392,5 @@ void loop()
 
     updateEverything();
 }
+
+*/
