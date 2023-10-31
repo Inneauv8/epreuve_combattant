@@ -9,5 +9,6 @@ var searchData=
   ['computerightmotorspeed_6',['computeRightMotorSpeed',['../db/d41/namespaceMOVE.html#a2cb579d311501e5a6c9a454cf55ed157',1,'MOVE::computeRightMotorSpeed()'],['../db/db7/namespaceMovement.html#a041b426651c996de6d6794d6693b301b',1,'Movement::computeRightMotorSpeed()']]],
   ['computerobotvelocity_7',['computeRobotVelocity',['../db/d41/namespaceMOVE.html#aefcfc27e525ab76f9e7aa10c12dcd7a8',1,'MOVE']]],
   ['computewheelspeed_8',['computeWheelSpeed',['../d1/dd2/namespacePIDLigne.html#a472f7cb8a2e6b419be967209ffb96f6b',1,'PIDLigne']]],
-  ['correctangle_9',['correctAngle',['../db/d41/namespaceMOVE.html#a75e8591b69cdf243cdb654b159b7aac9',1,'MOVE']]]
+  ['correctangle_9',['correctAngle',['../db/d41/namespaceMOVE.html#a75e8591b69cdf243cdb654b159b7aac9',1,'MOVE']]],
+  ['couleur_10',['Couleur',['../de/d5f/namespaceCouleur.html',1,'']]]
 ];

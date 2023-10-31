@@ -1,6 +1,4 @@
 var searchData=
 [
-  ['posrobot_0',['posRobot',['../da/d0a/structMOVE_1_1posRobot.html#a35f2b8b1b04c55f6dacdc3af9dee6d12',1,'MOVE::posRobot']]],
-  ['printdata_1',['printData',['../db/d41/namespaceMOVE.html#a303a2cfdece169e357a2dfe9fd37832c',1,'MOVE']]],
-  ['printposition_2',['printPosition',['../db/d41/namespaceMOVE.html#ae48861672ed878f1bc1b2191fc015e23',1,'MOVE']]]
+  ['orientationflag_0',['orientationFlag',['../db/db7/namespaceMovement.html#a921b4f8bc3ea92264e8d22504782db52',1,'Movement::orientationFlag(float angle, float *initialOrientation)'],['../db/db7/namespaceMovement.html#aea9c1a281d67de7c62541a9f85e1ff83',1,'Movement::orientationFlag(float angle)']]]
 ];
