@@ -98,7 +98,7 @@ namespace CapteurLigne
     return qtr.readLineBlack(sensorValues);
   }
 
-  bool isBlackLine(void)
+  bool isVariation(int treshhold)
   {
     static int variation;
     static uint16_t mean = 0;
@@ -116,8 +116,7 @@ namespace CapteurLigne
     mean = mean * 0.9 + total * 0.1;
     variation = abs((int)mean - (int)lastMean);
     lastMean = mean;
-    if (variation > 100)
-      Serial.println(variation);
-    return (variation > 100);
+    //Serial.println(variation);
+    return (variation > treshhold);
   }
 }

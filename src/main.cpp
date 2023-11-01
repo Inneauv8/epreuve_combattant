@@ -99,43 +99,8 @@ void setup()
 
     setClaw(CLOSED);
 
-    CapteurLigne::isBlackLine();
-    CapteurLigne::isBlackLine();
-    CapteurLigne::isBlackLine();
-    CapteurLigne::isBlackLine();
-    CapteurLigne::isBlackLine();
-    CapteurLigne::isBlackLine();
-    CapteurLigne::isBlackLine();
-    CapteurLigne::isBlackLine();
-    CapteurLigne::isBlackLine();
-    CapteurLigne::isBlackLine();
-    CapteurLigne::isBlackLine();
-    CapteurLigne::isBlackLine();
-    CapteurLigne::isBlackLine();
-    CapteurLigne::isBlackLine();
-    CapteurLigne::isBlackLine();
-    CapteurLigne::isBlackLine();
-    CapteurLigne::isBlackLine();
-    CapteurLigne::isBlackLine();
-    CapteurLigne::isBlackLine();
-    CapteurLigne::isBlackLine();
-    CapteurLigne::isBlackLine();
-    CapteurLigne::isBlackLine();
-    CapteurLigne::isBlackLine();
-    CapteurLigne::isBlackLine();
-    CapteurLigne::isBlackLine();
-    CapteurLigne::isBlackLine();
-    CapteurLigne::isBlackLine();
-    CapteurLigne::isBlackLine();
-    CapteurLigne::isBlackLine();
-    CapteurLigne::isBlackLine();
-    CapteurLigne::isBlackLine();
-    CapteurLigne::isBlackLine();
-    CapteurLigne::isBlackLine();
-    CapteurLigne::isBlackLine();
-    CapteurLigne::isBlackLine();
-    CapteurLigne::isBlackLine();
-
+    for (int i; i < 100; i++)
+        CapteurLigne::isVariation(1);
 }
 
 bool activateServoForDistance(float id, float distance, float targetAngle, float resetAngle)
@@ -161,7 +126,7 @@ void setArm(ArmState state)
 
 void loopLineFollower()
 {
-    PIDLigne::WheelVelocities wheelVelocities = PIDLigne::computeWheelSpeed(WHEEL_BASE_DIAMETER, 5.0);
+    PIDLigne::WheelVelocities wheelVelocities = PIDLigne::computeWheelSpeed(WHEEL_BASE_DIAMETER, 20.0);
     setRightSpeed(wheelVelocities.rightWheelSpeed);
     setLeftSpeed(wheelVelocities.leftWheelSpeed);
 }
@@ -219,10 +184,10 @@ void updateEverything()
     // SERVO_SetAngle(CLAW_SERVO, clawState == OPENED ? 75 : 110);
     updateServos();
     updatePIDs();
-    CapteurLigne::isBlackLine();
+    CapteurLigne::isVariation(1);
 }
 
-byte state = 1; // Remettre à zéro pour le sifflet
+byte state = 2; // Remettre à zéro pour le sifflet
 
 void loop()
 {
@@ -257,29 +222,53 @@ void loop()
         switch (state2)
         {
         case 0:
-            moveUnited(10, INFINITY, 0);
-            if (CapteurLigne::isBlackLine())
+            moveUnited(10, 0.5, 0);
+            if (CapteurLigne::isVariation(100))
+
                 state2++;
             break;
         case 1:
-            if (rotate(15, 18, PI / 2.0))
+            if (forward(10, 2.7387791339))
                 state2++;
             break;
         case 2:
-            if (forward(15, 24))
+            if (rotate(15, 18, (PI / 2.0)))
                 state2++;
             break;
         case 3:
-            if (rotate(15, 18, PI / 2.0))
+            if (forward(15, 24))
                 state2++;
             break;
         case 4:
-            moveUnited(15, INFINITY, PI);
-            if (ROBUS_ReadIR(RIGHT) > 500)
+            if (rotate(15, 18, (PI / 2.0) - 0.1))
+                state2++;
+            break;
+        case 5:
+            if (forward(15, 80))
+                state2++;
+            if (ROBUS_ReadIR(LEFT) > 500)
             {
-                setArm(EXTENDED_RIGHT);
+                setArm(EXTENDED_LEFT);
             }
-
+            break;
+        case 6:
+            forward(10, INFINITY);
+            if (ROBUS_ReadIR(LEFT) > 500)
+            {
+                setArm(EXTENDED_LEFT);
+            }
+            if (CapteurLigne::isVariation(150))
+            {
+                forward(10, INFINITY, true);
+                setArm(EXTENDED_RIGHT);
+                state2++;
+            }
+            break;
+        case 7:
+            if (forward(5, 10))
+            {
+                state = 3;
+            }
             break;
         }
         break;
@@ -289,37 +278,61 @@ void loop()
         switch (state3)
         {
         case 0:
-            moveUnited(10, INFINITY, 0);
-            if (CapteurLigne::isBlackLine())
+            moveUnited(10, 0.5, 0);
+            if (CapteurLigne::isVariation(110))
                 state3++;
             break;
         case 1:
-            if (rotate(15, 33, PI / 2.0))
+            if (forward(10, 2.7387791339))
                 state3++;
             break;
+
         case 2:
+            if (rotate(15, 31, PI / 2.0))
+                state3++;
+            break;
+
+        case 3:
             if (forward(15, 24))
                 state3++;
             break;
-        case 3:
-            if (rotate(15, 33, (PI / 2.0) + 0.1))
+        case 4:
+            if (rotate(15, 32, (PI / 2.0) + 0.1))
                 state3++;
             break;
-        case 4:
-            if (forward(15, 88.5))
+        case 5:
+            if (forward(15, 80))
                 state3++;
             if (ROBUS_ReadIR(RIGHT) > 500)
             {
                 setArm(EXTENDED_RIGHT);
             }
             break;
-        case 5:
-            if (rotate(10, 3, PI / 3))
-                state3++;
-            break;
         case 6:
-            if (forward(15, 9))
+            forward(15, INFINITY);
+            if (ROBUS_ReadIR(RIGHT) > 500)
+            {
+                setArm(EXTENDED_RIGHT);
+            }
+            if (CapteurLigne::isVariation(50))
+            {
+                forward(15, INFINITY, true);
+                setArm(EXTENDED_LEFT);
+                state3++;
+            }
+            break;
+        case 7:
+            if (rotate(15, 6, (2 * PI) / 3))
+            {
+                state3++;
+            }
+            break;
+        case 8:
+            if (rotate(15, -3, PI / 2))
+            {
                 state = 3;
+            }
+
             break;
         }
         break;
@@ -327,12 +340,6 @@ void loop()
     case 3: // Suivi de la ligne, détection de retour à la couleur
 
         loopLineFollower();
-        if (Couleur::Get() == 'j' || Couleur::Get() == 'v')
-        {
-            setClaw(OPENED);
-            rotate(10, 0, M_PI / 4.0);
-            state = 4;
-        }
         break;
 
     case 4: // On fait un tour et puis le shortcut
@@ -340,7 +347,7 @@ void loop()
 
         followWall(RIGHT, 15);
 
-        if (CapteurLigne::isBlackLine())
+        if (CapteurLigne::isVariation(110))
         {
             state++;
         }
@@ -360,7 +367,7 @@ void loop()
         move(2, 0);
         break;
     case 89:
-        CapteurLigne::isBlackLine();
+        CapteurLigne::isVariation(100);
         break;
     case 90:
         Serial.println(Couleur::Get());
