@@ -54,23 +54,23 @@ namespace Movement
     float computeLeftMotorSpeed();
     float computeRightMotorSpeed();
 
-    void setPIDRight(float Kp, float Ki, float Kd);
-    void setPIDLeft(float Kp, float Ki, float Kd);
+    void setPIDAngular(float Kp, float Ki, float Kd);
+    void setPIDVelocity(float Kp, float Ki, float Kd);
 
-    void setRightSpeed(float speed);
-    void setLeftSpeed(float speed);
+    void setWheelSpeed(float rightWheelSpeed, float leftWheelSpeed);
+
+    void setVelocity(float speed);
+    void setAngularVelocity(float angularVelocity);
 
     void updatePIDs();
-
-
 	namespace {
 		// *************************************************************************************************
 		// VARIABLES LOCALES
 		// *************************************************************************************************
 		/* VIDE */
 
-        extern PID::valeursPID rightPID;
-        extern PID::valeursPID leftPID;
+        extern PID::valeursPID angularPID;
+        extern PID::valeursPID velocityPID;
 	}
 }
 
