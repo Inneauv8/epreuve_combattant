@@ -27,7 +27,6 @@ Modifications :
 
 using namespace Movement;
 
-
 // *************************************************************************************************
 //  CONSTANTES
 // *************************************************************************************************
@@ -65,7 +64,6 @@ enum ArmState
 
 ArmState armState = NOT_EXTENDED;
 ClawState clawState = OPENED;
-byte state = 2; // Remettre à zéro pour le sifflet
 
 void setupPID()
 {
@@ -100,6 +98,44 @@ void setup()
     // Sifflet::init();
 
     setClaw(CLOSED);
+
+    CapteurLigne::isBlackLine();
+    CapteurLigne::isBlackLine();
+    CapteurLigne::isBlackLine();
+    CapteurLigne::isBlackLine();
+    CapteurLigne::isBlackLine();
+    CapteurLigne::isBlackLine();
+    CapteurLigne::isBlackLine();
+    CapteurLigne::isBlackLine();
+    CapteurLigne::isBlackLine();
+    CapteurLigne::isBlackLine();
+    CapteurLigne::isBlackLine();
+    CapteurLigne::isBlackLine();
+    CapteurLigne::isBlackLine();
+    CapteurLigne::isBlackLine();
+    CapteurLigne::isBlackLine();
+    CapteurLigne::isBlackLine();
+    CapteurLigne::isBlackLine();
+    CapteurLigne::isBlackLine();
+    CapteurLigne::isBlackLine();
+    CapteurLigne::isBlackLine();
+    CapteurLigne::isBlackLine();
+    CapteurLigne::isBlackLine();
+    CapteurLigne::isBlackLine();
+    CapteurLigne::isBlackLine();
+    CapteurLigne::isBlackLine();
+    CapteurLigne::isBlackLine();
+    CapteurLigne::isBlackLine();
+    CapteurLigne::isBlackLine();
+    CapteurLigne::isBlackLine();
+    CapteurLigne::isBlackLine();
+    CapteurLigne::isBlackLine();
+    CapteurLigne::isBlackLine();
+    CapteurLigne::isBlackLine();
+    CapteurLigne::isBlackLine();
+    CapteurLigne::isBlackLine();
+    CapteurLigne::isBlackLine();
+
 }
 
 bool activateServoForDistance(float id, float distance, float targetAngle, float resetAngle)
@@ -183,104 +219,10 @@ void updateEverything()
     // SERVO_SetAngle(CLAW_SERVO, clawState == OPENED ? 75 : 110);
     updateServos();
     updatePIDs();
+    CapteurLigne::isBlackLine();
 }
 
-void temploop()
-{
-
-    delay(5);
-
-    int closedTime = 19000;
-    int openedTime = 1000;
-
-    if (millis() % (closedTime + openedTime) < closedTime)
-    {
-        setClaw(CLOSED);
-    }
-    else
-    {
-        setClaw(OPENED);
-    }
-
-    if (movementIndex == -1)
-    { // tournant à droite
-        if (forward(10, 96 / 2.0))
-        {
-            movementIndex++;
-        }
-    }
-    else if (movementIndex == 0)
-    { // tournant à droite
-        if (rotate(20, 18 + 12, M_PI / 2.0))
-        {
-            movementIndex++;
-        }
-    }
-    else if (movementIndex == 1)
-    { // segment tapis
-        if (forward(20, 28))
-        {
-            movementIndex++;
-        }
-    }
-    else if (movementIndex == 2)
-    { // tournant à droite
-        if (rotate(20, 18 + 12 + 2, M_PI / 2.0 + M_PI / 8))
-        {
-            movementIndex++;
-        }
-    }
-    else if (movementIndex == 2)
-    { // tournant à droite
-        if (forward(20, 96))
-        {
-            movementIndex++;
-        }
-    }
-    else if (movementIndex == 2)
-    { // tournant à droite
-        if (rotate(20, 18 + 12, M_PI / 2.0))
-        {
-            movementIndex++;
-        }
-    }
-    else if (movementIndex == 2)
-    { // tournant à droite
-        if (forward(20, 24))
-        {
-            movementIndex++;
-        }
-    }
-    else if (movementIndex == 2)
-    { // tournant à droite
-        if (rotate(20, 18 + 12, M_PI / 2.0))
-        {
-            movementIndex++;
-        }
-    }
-    else if (movementIndex == 3)
-    {
-        if (forward(20, 96))
-        {
-            movementIndex = 0;
-        }
-    }
-
-    if (ROBUS_ReadIR(RIGHT) > 500)
-    {
-        setArm(EXTENDED_RIGHT);
-    }
-
-    if (ROBUS_ReadIR(LEFT) > 500)
-    {
-        setArm(EXTENDED_LEFT);
-    }
-
-    // loopLineFollower();
-    // followWall(RIGHT, 10);
-
-    updatePIDs();
-}
+byte state = 1; // Remettre à zéro pour le sifflet
 
 void loop()
 {
@@ -315,7 +257,7 @@ void loop()
         switch (state2)
         {
         case 0:
-            moveUnited(5, INFINITY, 0);
+            moveUnited(10, INFINITY, 0);
             if (CapteurLigne::isBlackLine())
                 state2++;
             break;
@@ -347,7 +289,7 @@ void loop()
         switch (state3)
         {
         case 0:
-            moveUnited(5, INFINITY, 0);
+            moveUnited(10, INFINITY, 0);
             if (CapteurLigne::isBlackLine())
                 state3++;
             break;
@@ -418,7 +360,7 @@ void loop()
         move(2, 0);
         break;
     case 89:
-        Serial.println(CapteurLigne::isBlackLine());
+        CapteurLigne::isBlackLine();
         break;
     case 90:
         Serial.println(Couleur::Get());
