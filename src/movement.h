@@ -15,6 +15,7 @@ Date de création :
 
 #define WHEEL_BASE_DIAMETER 7.5 //7.480315
 #define WHEEL_DIAMETER 2.992126
+#define MAX_VELOCITY 30
 #define INACTIVE NAN
 
 namespace Movement

@@ -79,7 +79,7 @@ namespace Movement {
         float baseAngularVelocity = isinf(radius) ? 0 : (velocity / radius);
 
         float targetAngle = smallestAngleDifference(computeOrientation(), orientation);
-        float angularVelocity = sigmoid(targetAngle, 0, 1, 0.1, -2) * -baseAngularVelocity;
+        float angularVelocity = sigmoid(targetAngle, 0, 1, 0.25, -2) * -baseAngularVelocity;
 
         move(velocity, angularVelocity);
     }
@@ -205,21 +205,28 @@ namespace Movement {
     void updatePIDs() {
         float rightMotorSpeed = computeRightMotorSpeed();
         float leftMotorSpeed = computeLeftMotorSpeed();
+
         float angularVelocity = (leftMotorSpeed - rightMotorSpeed) / WHEEL_BASE_DIAMETER;
         float velocity = (rightMotorSpeed + leftMotorSpeed) / 2.0;
 
         angularPID.Pv = angularVelocity;
         velocityPID.Pv = velocity;
 
-        float wantedVelocity = velocityPID.update();
+        //float wantedVelocity = velocityPID.update();
         float wantedAngularVelocity = angularPID.update();
+        float maxVelocity = clamp(MAX_VELOCITY - (fabs(angularVelocity) * WHEEL_BASE_DIAMETER / 2.0), 0, MAX_VELOCITY);
+
+        float wantedVelocity = clamp(velocityPID.update(), -maxVelocity, maxVelocity);
 
         float wantedRightMotorSpeed = wantedVelocity - wantedAngularVelocity * WHEEL_BASE_DIAMETER / 2.0;
         float wantedLeftMotorSpeed = wantedVelocity + wantedAngularVelocity * WHEEL_BASE_DIAMETER / 2.0;
         
         MOTOR_SetSpeed(RIGHT, clamp(wantedRightMotorSpeed, -1, 1));
-
         MOTOR_SetSpeed(LEFT, clamp(wantedLeftMotorSpeed, -1, 1));
+
+        Serial.print(wantedLeftMotorSpeed);
+        Serial.print("\t");
+        Serial.println(wantedRightMotorSpeed);
     }
 
     namespace {
