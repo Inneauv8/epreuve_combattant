@@ -247,11 +247,11 @@ namespace Movement
         angularPID.Pv = angularVelocity;
         velocityPID.Pv = velocity;
 
-        // float wantedVelocity = velocityPID.update();
+        float wantedVelocity = velocityPID.update();
         float wantedAngularVelocity = angularPID.update();
-        float maxVelocity = clamp(MAX_VELOCITY - (fabs(angularVelocity) * WHEEL_BASE_DIAMETER / 2.0), 0, MAX_VELOCITY);
+        // float maxVelocity = clamp(MAX_VELOCITY - (fabs(angularVelocity) * WHEEL_BASE_DIAMETER / 2.0), 0, MAX_VELOCITY);
 
-        float wantedVelocity = clamp(velocityPID.update(), -maxVelocity, maxVelocity);
+        // float wantedVelocity = clamp(velocityPID.update(), -maxVelocity, maxVelocity);
 
         float wantedRightMotorSpeed = wantedVelocity - wantedAngularVelocity * WHEEL_BASE_DIAMETER / 2.0;
         float wantedLeftMotorSpeed = wantedVelocity + wantedAngularVelocity * WHEEL_BASE_DIAMETER / 2.0;

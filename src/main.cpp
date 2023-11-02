@@ -67,8 +67,8 @@ ClawState clawState = OPENED;
 
 void setupPID()
 {
-    setPIDVelocity(0.15, 0.0, 0);
-    setPIDAngular(0.06, 0.0, 0);
+    setPIDVelocity(0.15, 0.001, 0);
+    setPIDAngular(0.1, 0.001, 0);
 }
 
 void setupServo()
@@ -95,7 +95,7 @@ void setup()
     // CapteurLigne::initLine(LINE_FOLLOWER_PINS, 45);
     ENCODER_Reset(RIGHT);
     ENCODER_Reset(LEFT);
-    // Sifflet::init();
+    Sifflet::init();
 
     setClaw(CLOSED);
 
@@ -205,14 +205,7 @@ void loop()
         }
         if (Sifflet::active)
         {
-            if (Couleur::Get() == 'v')
-            {
-                state = 1;
-            }
-            else if (Couleur::Get() == 'j')
-            {
-                state = 2;
-            }
+            state = 2;
         }
         break;
 
@@ -361,6 +354,9 @@ void loop()
             setClaw(CLOSED);
             state = 0; // On restart le parcours
         }
+        break;
+    case 87:
+        Sifflet::update(1.0);
         break;
     case 88:
         move(2, 0);

@@ -3,19 +3,21 @@
 #ifndef SIFFLET_H
 #define SIFFLET_H
 
-namespace Sifflet {
+namespace Sifflet
+{
 
     volatile bool active = false;
 
     float valeurFiltre = 0;
 
-    #define TAILLE_MOYENNE 5
-    #define DELAY_UPDATE 50
+#define TAILLE_MOYENNE 5
+#define DELAY_UPDATE 50
 
-    #define PIN_SIGNAL A2
-    #define PIN_AMBIANT A3
+#define PIN_SIGNAL A4
+#define PIN_AMBIANT A5
 
-    namespace {
+    namespace
+    {
         float voltageAmbiant = 0;
         float voltageDetecteur = 0;
         float difference = 0;
@@ -24,7 +26,8 @@ namespace Sifflet {
 
         long lastUpdate;
 
-        void init() {
+        void init()
+        {
             pinMode(PIN_SIGNAL, INPUT);
             pinMode(PIN_AMBIANT, INPUT);
         }
@@ -43,10 +46,11 @@ namespace Sifflet {
         {
             updateValeurFiltre();
 
-            if (millis() - lastUpdate > DELAY_UPDATE) {
+            if (millis() - lastUpdate > DELAY_UPDATE)
+            {
 
-                voltageAmbiant = ((float) analogRead(A3)) * 5.0 / 1023.0;
-                voltageDetecteur = ((float) analogRead(A2)) * 5.0 / 1023.0;
+                voltageAmbiant = ((float)analogRead(PIN_SIGNAL)) * 5.0 / 1023.0;
+                voltageDetecteur = ((float)analogRead(PIN_AMBIANT)) * 5.0 / 1023.0;
 
                 difference = voltageDetecteur - voltageAmbiant;
                 difference = difference < 0 ? 0 : difference;
@@ -62,7 +66,8 @@ namespace Sifflet {
             }
         }
 
-        bool update(float threshold) {
+        bool update(float threshold)
+        {
             update();
             return valeurFiltre > threshold;
         }
@@ -73,37 +78,37 @@ namespace Sifflet {
         active = !active;
     }
 
-     void printData()
-        {
-            difference = difference < 0 ? 0 : difference;
+    void printData()
+    {
+        difference = difference < 0 ? 0 : difference;
 
-            Serial.print("Tension ambiante: ");
-            Serial.print(voltageAmbiant);
-            Serial.print("V");
+        Serial.print("Tension ambiante: ");
+        Serial.print(voltageAmbiant);
+        Serial.print("V");
 
-            Serial.print("\t");
+        Serial.print("\t");
 
-            Serial.print("Tension detecteur: ");
-            Serial.print(voltageDetecteur);
-            Serial.print("V");
+        Serial.print("Tension detecteur: ");
+        Serial.print(voltageDetecteur);
+        Serial.print("V");
 
-            Serial.print("\t");
+        Serial.print("\t");
 
-            Serial.print("Difference: ");
-            Serial.print(difference);
-            Serial.print("V");
+        Serial.print("Difference: ");
+        Serial.print(difference);
+        Serial.print("V");
 
-            Serial.print("\t");
+        Serial.print("\t");
 
-            Serial.print("valeur filtre: ");
-            Serial.print(valeurFiltre);
-            Serial.print("V");
+        Serial.print("valeur filtre: ");
+        Serial.print(valeurFiltre);
+        Serial.print("V");
 
-            Serial.print("\t");
+        Serial.print("\t");
 
-            Serial.print("Sifflet: ");
-            Serial.println(active ? "On" : "Off");
-        }
+        Serial.print("Sifflet: ");
+        Serial.println(active ? "On" : "Off");
+    }
 }
 
 #endif
