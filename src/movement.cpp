@@ -76,11 +76,13 @@ namespace Movement
         return isnan(var);
     }
 
-    void rotate(float velocity, float radius) {
+    void rotate(float velocity, float radius)
+    {
         move(velocity, isinf(radius) ? 0 : (velocity / radius));
     }
 
-    void move(float velocity, float angularVelocity) {
+    void move(float velocity, float angularVelocity)
+    {
         setVelocity(velocity);
         setAngularVelocity(angularVelocity);
     }
@@ -110,13 +112,16 @@ namespace Movement
 
         bool angleReached = fabs(actualOrientation - initialOrientation) >= fabs(angle) || reset;
 
-        if (!angleReached) {
+        if (!angleReached)
+        {
             rotate(velocity, radius);
-        } else {        
+        }
+        else
+        {
             initialOrientation = NAN;
         }
 
-        return rotateAngularVelocity;
+        return angleReached;
     }
 
     bool rotateAngularVelocity(float velocity, float angularVelocity, float angle, boolean reset)
@@ -133,14 +138,12 @@ namespace Movement
 
         bool angleReached = fabs(actualOrientation - initialOrientation) >= fabs(angle) || reset;
 
-        if (!angleReached) {
+        if (!angleReached)
+        {
             move(velocity, angularVelocity);
-            //moveUnited(velocity, radius, initialOrientation + angle);
         }
-
-        //rotate(velocity, radius);
-        
-        if (angleReached) {
+        else
+        {
             initialOrientation = NAN;
         }
 
@@ -153,15 +156,19 @@ namespace Movement
 
         float actualDistance = computeDistance();
 
-        if (isnan(initialDistance)) {
+        if (isnan(initialDistance))
+        {
             initialDistance = computeDistance();
         }
 
         bool distanceReached = fabs(actualDistance - initialDistance) >= fabs(distance) || reset;
-        
-        if (!distanceReached) {
+
+        if (!distanceReached)
+        {
             move(velocity, 0);
-        } else {
+        }
+        else
+        {
             initialDistance = NAN;
         }
 
@@ -199,32 +206,38 @@ namespace Movement
         return speedMotor;
     }
 
-    void setPIDAngular(float Kp, float Ki, float Kd) {
+    void setPIDAngular(float Kp, float Ki, float Kd)
+    {
         angularPID.Kp = Kp;
         angularPID.Ki = Ki;
         angularPID.Kd = Kd;
     }
 
-    void setPIDVelocity(float Kp, float Ki, float Kd) {
+    void setPIDVelocity(float Kp, float Ki, float Kd)
+    {
         velocityPID.Kp = Kp;
         velocityPID.Ki = Ki;
         velocityPID.Kd = Kd;
     }
 
-    void setWheelSpeed(float rightWheelSpeed, float leftWheelSpeed) {
+    void setWheelSpeed(float rightWheelSpeed, float leftWheelSpeed)
+    {
         float angularVelocity = (leftWheelSpeed - rightWheelSpeed) / WHEEL_BASE_DIAMETER;
         float velocity = (leftWheelSpeed + rightWheelSpeed) / 2.0;
         move(velocity, angularVelocity);
     }
 
-    void setVelocity(float velocity) {
+    void setVelocity(float velocity)
+    {
         velocityPID.Sp = velocity;
     }
-    void setAngularVelocity(float angularVelocity) {
+    void setAngularVelocity(float angularVelocity)
+    {
         angularPID.Sp = angularVelocity;
     }
-    
-    void updatePIDs() {
+
+    void updatePIDs()
+    {
         float rightMotorSpeed = computeRightMotorSpeed();
         float leftMotorSpeed = computeLeftMotorSpeed();
 
@@ -234,7 +247,7 @@ namespace Movement
         angularPID.Pv = angularVelocity;
         velocityPID.Pv = velocity;
 
-        //float wantedVelocity = velocityPID.update();
+        // float wantedVelocity = velocityPID.update();
         float wantedAngularVelocity = angularPID.update();
         float maxVelocity = clamp(MAX_VELOCITY - (fabs(angularVelocity) * WHEEL_BASE_DIAMETER / 2.0), 0, MAX_VELOCITY);
 
@@ -242,16 +255,13 @@ namespace Movement
 
         float wantedRightMotorSpeed = wantedVelocity - wantedAngularVelocity * WHEEL_BASE_DIAMETER / 2.0;
         float wantedLeftMotorSpeed = wantedVelocity + wantedAngularVelocity * WHEEL_BASE_DIAMETER / 2.0;
-        
+
         MOTOR_SetSpeed(RIGHT, clamp(wantedRightMotorSpeed, -1, 1));
         MOTOR_SetSpeed(LEFT, clamp(wantedLeftMotorSpeed, -1, 1));
-
-        Serial.print(wantedLeftMotorSpeed);
-        Serial.print("\t");
-        Serial.println(wantedRightMotorSpeed);
     }
 
-    namespace {
+    namespace
+    {
         PID::valeursPID velocityPID = {};
         PID::valeursPID angularPID = {};
     }

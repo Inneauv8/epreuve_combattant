@@ -67,8 +67,8 @@ ClawState clawState = OPENED;
 
 void setupPID()
 {
-    setPIDRight(0.0425, 0.0001, 0.001);
-    setPIDLeft(0.0425, 0.0001, 0.001);
+    setPIDVelocity(0.15, 0.0, 0);
+    setPIDAngular(0.06, 0.0, 0);
 }
 
 void setupServo()
@@ -126,9 +126,8 @@ void setArm(ArmState state)
 
 void loopLineFollower()
 {
-    PIDLigne::WheelVelocities wheelVelocities = PIDLigne::computeWheelSpeed(WHEEL_BASE_DIAMETER, 20.0);
-    setRightSpeed(wheelVelocities.rightWheelSpeed);
-    setLeftSpeed(wheelVelocities.leftWheelSpeed);
+    PIDLigne::WheelVelocities wheelVelocities = PIDLigne::computeWheelSpeed(WHEEL_BASE_DIAMETER, 10.0);
+    setWheelSpeed(wheelVelocities.rightWheelSpeed, wheelVelocities.leftWheelSpeed);
 }
 
 void followWall(float id, float velocity, float radius = 13.3, float distance = 425.0)
@@ -187,7 +186,7 @@ void updateEverything()
     CapteurLigne::isVariation(1);
 }
 
-byte state = 2; // Remettre à zéro pour le sifflet
+byte state = 0; // Remettre à zéro pour le sifflet
 
 void loop()
 {
