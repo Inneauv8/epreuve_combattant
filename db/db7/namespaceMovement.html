@@ -114,10 +114,10 @@ Fonctions</h2></td></tr>
 <tr class="separator:a814c30370dc9161034bb9e3e1501c517"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a041b426651c996de6d6794d6693b301b"><td class="memItemLeft" align="right" valign="top">float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../db/db7/namespaceMovement.html#a041b426651c996de6d6794d6693b301b">computeRightMotorSpeed</a> ()</td></tr>
 <tr class="separator:a041b426651c996de6d6794d6693b301b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aae7a09bedfa78192279cfc0f79355c7e"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../db/db7/namespaceMovement.html#aae7a09bedfa78192279cfc0f79355c7e">setPIDAngular</a> (float Kp, float Ki, float Kd)</td></tr>
-<tr class="separator:aae7a09bedfa78192279cfc0f79355c7e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a85537e2fb01a5c2c926f5b005e8ea522"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../db/db7/namespaceMovement.html#a85537e2fb01a5c2c926f5b005e8ea522">setPIDVelocity</a> (float Kp, float Ki, float Kd)</td></tr>
-<tr class="separator:a85537e2fb01a5c2c926f5b005e8ea522"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5cbf174b6ce21126f7d749f03d50c280"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../db/db7/namespaceMovement.html#a5cbf174b6ce21126f7d749f03d50c280">setPIDAngular</a> (float Kp, float Ki, float Kd, float cutOff)</td></tr>
+<tr class="separator:a5cbf174b6ce21126f7d749f03d50c280"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a398ce670d2514e87c9b3901c7d491e39"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../db/db7/namespaceMovement.html#a398ce670d2514e87c9b3901c7d491e39">setPIDVelocity</a> (float Kp, float Ki, float Kd, float cutOff)</td></tr>
+<tr class="separator:a398ce670d2514e87c9b3901c7d491e39"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a306418fd93d9a239a4615287b53e32fe"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../db/db7/namespaceMovement.html#a306418fd93d9a239a4615287b53e32fe">setWheelSpeed</a> (float rightWheelSpeed, float leftWheelSpeed)</td></tr>
 <tr class="separator:a306418fd93d9a239a4615287b53e32fe"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ab1b051d01188343f472d55cc308a2ea9"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../db/db7/namespaceMovement.html#ab1b051d01188343f472d55cc308a2ea9">setVelocity</a> (float velocity)</td></tr>
@@ -554,8 +554,8 @@ Variables</h2></td></tr>
 
 </div>
 </div>
-<a id="aae7a09bedfa78192279cfc0f79355c7e" name="aae7a09bedfa78192279cfc0f79355c7e"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aae7a09bedfa78192279cfc0f79355c7e">&#9670;&#160;</a></span>setPIDAngular()</h2>
+<a id="a5cbf174b6ce21126f7d749f03d50c280" name="a5cbf174b6ce21126f7d749f03d50c280"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5cbf174b6ce21126f7d749f03d50c280">&#9670;&#160;</a></span>setPIDAngular()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -576,7 +576,13 @@ Variables</h2></td></tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">float&#160;</td>
-          <td class="paramname"><em>Kd</em>&#160;</td>
+          <td class="paramname"><em>Kd</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">float&#160;</td>
+          <td class="paramname"><em>cutOff</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -588,8 +594,8 @@ Variables</h2></td></tr>
 
 </div>
 </div>
-<a id="a85537e2fb01a5c2c926f5b005e8ea522" name="a85537e2fb01a5c2c926f5b005e8ea522"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a85537e2fb01a5c2c926f5b005e8ea522">&#9670;&#160;</a></span>setPIDVelocity()</h2>
+<a id="a398ce670d2514e87c9b3901c7d491e39" name="a398ce670d2514e87c9b3901c7d491e39"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a398ce670d2514e87c9b3901c7d491e39">&#9670;&#160;</a></span>setPIDVelocity()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -610,7 +616,13 @@ Variables</h2></td></tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">float&#160;</td>
-          <td class="paramname"><em>Kd</em>&#160;</td>
+          <td class="paramname"><em>Kd</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">float&#160;</td>
+          <td class="paramname"><em>cutOff</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
