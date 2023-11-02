@@ -89,7 +89,7 @@ void setup()
     setupServo();
     BoardInit();
     // Good value : 8, 0.001, 0.15
-    PIDLigne::initPID(2.7387791339, 2.625137795, 17, 0, 0.7, LINE_FOLLOWER_PINS, 45);
+    PIDLigne::initPID(2.7387791339, 2.625137795, 2, 0, 0.3, LINE_FOLLOWER_PINS, 45); //17 , 0, 0.7
     Serial.begin(9600);
 
     // CapteurLigne::initLine(LINE_FOLLOWER_PINS, 45);
@@ -129,7 +129,7 @@ void setArm(ArmState state)
 
 void loopLineFollower()
 {
-    PIDLigne::WheelVelocities wheelVelocities = PIDLigne::computeWheelSpeed(WHEEL_BASE_DIAMETER, 10.0);
+    PIDLigne::WheelVelocities wheelVelocities = PIDLigne::computeWheelSpeed(WHEEL_BASE_DIAMETER, 2.5); //vitesse baissé à 5.0 car on perd la balle avant
     setWheelSpeed(wheelVelocities.rightWheelSpeed, wheelVelocities.leftWheelSpeed);
 }
 
@@ -189,7 +189,7 @@ void updateEverything()
     CapteurLigne::isVariation(1);
 }
 
-byte state = 3; // Remettre à zéro pour le sifflet
+byte state = 0; // Remettre à zéro pour le sifflet
 
 void loop()
 {
@@ -234,11 +234,11 @@ void loop()
                 state2++;
             break;
         case 3:
-            if (forward(15, 23))
+            if (forward(20, 23))
                 state2++;
             break;
         case 4:
-            if (rotate(15, 18, (PI / 2.0) - 0.3))
+            if (rotate(15, 18, (PI / 2.0) - 0.45))
                 state2++;
             break;
         case 5:
@@ -360,7 +360,7 @@ void loop()
         break;
 
     case 6: // On fait un tour et puis le shortcut
-        if (forward(15, 45))
+        if (forward(15, 55))
         {
             state++;
         }
