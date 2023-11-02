@@ -37,6 +37,8 @@ const uint8_t LINE_FOLLOWER_PINS[] = {38, 41, 43, 42, 49, 48, 47, 46};
 
 int movementIndex = -1;
 
+
+
 // *************************************************************************************************
 //  FONCTIONS LOCALES
 // *************************************************************************************************
@@ -64,6 +66,10 @@ enum ArmState
 
 ArmState armState = NOT_EXTENDED;
 ClawState clawState = OPENED;
+
+byte state2 = 0;
+byte state3 = 0;
+byte state4 = 0;
 
 void setupPID()
 {
@@ -189,13 +195,13 @@ void updateEverything()
     CapteurLigne::isVariation(1);
 }
 
-byte state = 3; // Remettre à zéro pour le sifflet
+byte state = 0; // Remettre à zéro pour le sifflet
 
 bool bumperState = 0;
 
 void loop()
 {
-    // Serial.println(state);
+    Serial.println(state);
     delay(5);
     switch (state)
     {
@@ -218,65 +224,85 @@ void loop()
         break;
 
     case 1: // Suivi du vert, détection du cup
-        static byte state2 = 0;
+        //static byte state2 = 0; à été mis global 
         switch (state2)
         {
+            
         case 0:
             moveUnited(10, 0.5, 0);
-            if (CapteurLigne::isVariation(115))
-
+            if (CapteurLigne::isVariation(110))
                 state2++;
             break;
         case 1:
             if (forward(10, 2.7387791339))
                 state2++;
             break;
+
         case 2:
-            if (rotate(15, 18, (PI / 2.0)))
+            if (rotate(20, 24.5, PI / 2.0))
                 state2++;
             break;
+
         case 3:
-            if (forward(15, 23))
+            if (forward(20, 24))
                 state2++;
             break;
         case 4:
-            if (rotate(15, 18, (PI / 2.0) - 0.3))
+            if (rotate(20, 24.5, (PI / 2.0) + 0.1))
                 state2++;
             break;
         case 5:
+            if (forward(25, 50))
+                state2++;
+            break;
+            /*
+        case 5:
             if (forward(15, 80))
                 state2++;
-            if (ROBUS_ReadIR(LEFT) > 500)
+            if (ROBUS_ReadIR(RIGHT) > 500)
             {
-                setArm(EXTENDED_LEFT);
+                setArm(EXTENDED_RIGHT);
             }
             break;
         case 6:
-            forward(10, INFINITY);
-            if (ROBUS_ReadIR(LEFT) > 500)
+            forward(15, INFINITY);
+            if (ROBUS_ReadIR(RIGHT) > 500)
             {
-                setArm(EXTENDED_LEFT);
-            }
-            if (CapteurLigne::isVariation(150))
-            {
-                forward(10, INFINITY, true);
                 setArm(EXTENDED_RIGHT);
-                state2++;
             }
-            break;
-        case 7:
-            if (forward(5, 6))
+            */
+        case 6:
+            forward(25, INFINITY);
+            if (CapteurLigne::isVariation(75))
             {
+                forward(15, INFINITY, true);
+                setArm(EXTENDED_LEFT);
                 state = 3;
             }
             break;
+            /*
+        case 7:
+            if (rotate(10, 6, (2 * PI) / 3))
+            {
+                state2++;
+            }
+            break;
+        case 8:
+            if (rotate(10, -3, PI / 2))
+            {
+                state = 3;
+            }
+
+            break;
+            */
         }
         break;
 
     case 2: // Suivi du jaune, détection du cup
-        static byte state3 = 0;
+        //static byte state3 = 0; Elle a été mis global
         switch (state3)
         {
+            
         case 0:
             moveUnited(10, 0.5, 0);
             if (CapteurLigne::isVariation(110))
@@ -288,18 +314,23 @@ void loop()
             break;
 
         case 2:
-            if (rotate(15, 31, PI / 2.0))
+            if (rotate(20, 31, PI / 2.0))
                 state3++;
             break;
 
         case 3:
-            if (forward(15, 24))
+            if (forward(20, 24))
                 state3++;
             break;
         case 4:
-            if (rotate(15, 31, (PI / 2.0) + 0.1))
+            if (rotate(20, 31, (PI / 2.0) + 0.1))
                 state3++;
             break;
+        case 5:
+            if (forward(25, 50))
+                state3++;
+            break;
+            /*
         case 5:
             if (forward(15, 80))
                 state3++;
@@ -314,13 +345,17 @@ void loop()
             {
                 setArm(EXTENDED_RIGHT);
             }
-            if (CapteurLigne::isVariation(50))
+            */
+        case 6:
+            forward(25, INFINITY);
+            if (CapteurLigne::isVariation(75))
             {
                 forward(15, INFINITY, true);
                 setArm(EXTENDED_LEFT);
-                state3++;
+                state = 3;
             }
             break;
+            /*
         case 7:
             if (rotate(10, 6, (2 * PI) / 3))
             {
@@ -334,17 +369,72 @@ void loop()
             }
 
             break;
+            */
         }
         break;
-
     case 3: // Suivi de la ligne, détection de retour à la couleur
-
+        /*
         loopLineFollower();
         if (Couleur::Get() == 'v')
         {
             state++;
         }
         break;
+        */
+       //static byte state4 = 0; à été mis global
+        switch (state4)
+        {
+       case 0:
+            if (forward(10, 2.7387791339))
+                state4++;
+            break;
+
+        case 1:
+            if (rotate(20, 31, PI / 2.0))
+                state4++;
+            break;
+
+        case 2:
+            if (forward(20, 24))
+                state4++;
+            break;
+        case 3:
+            if (rotate(20, 25, (PI / 2.0) - (PI / 18)))
+                state4++;
+            break;
+        case 4:
+            if (forward(25,90)){
+                state4++;
+            }
+            break;
+        case 5:
+            if (forward(5,5)){
+                state = 2;
+                state4 = 0;
+                state3 = 0;
+                state2 = 0;
+                resetOrientation();
+            }
+            break;
+            /*
+        case 5:
+            if (forward(15, 80))
+                state4++;
+            if (ROBUS_ReadIR(RIGHT) > 500)
+            {
+                setArm(EXTENDED_RIGHT);
+            }
+            break;
+        case 6:
+            forward(15, INFINITY);
+            if (ROBUS_ReadIR(RIGHT) > 500)
+            {
+                setArm(EXTENDED_RIGHT);
+            }
+            */
+        }
+        break;
+        /*
     case 4:
         if (forward(15, 10))
         {
@@ -383,6 +473,7 @@ void loop()
             state = 0; // On restart le parcours
         }
         break;
+        */
 
     case 85:
         move(15, 0);

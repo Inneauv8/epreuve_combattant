@@ -152,7 +152,6 @@ namespace CapteurLigne
     variation = abs((int)mean - (int)lastMean);
     lastMean = mean;
 
-
     return (variation > treshhold);
   }
 }

@@ -27,7 +27,7 @@ namespace Couleur
 
         tcs.getRawData(&r, &g, &b, &c);
 
-        Serial.println(String(r) + '\t' + String(g) + '\t' + String(b));
+        //Serial.println(String(r) + '\t' + String(g) + '\t' + String(b));
         // if ( r > 240 && g < 150 && b < 150) return 'r';
         if (r > 25 && g > 25 && b > 30)
             return 'w';

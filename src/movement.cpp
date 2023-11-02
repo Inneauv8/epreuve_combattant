@@ -6,6 +6,11 @@ namespace Movement
     float pulseToDist = M_PI * WHEEL_DIAMETER / 3200.0;
     float orientationOffset = 0;
 
+
+    void resetOrientation() {
+        orientationOffset += computeOrientation();
+    }
+
     float computeOrientation()
     {
         float deltaS = (ENCODER_Read(LEFT) - ENCODER_Read(RIGHT)) * pulseToDist / 2.0;
