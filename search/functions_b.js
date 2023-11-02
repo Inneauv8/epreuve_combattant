@@ -6,5 +6,6 @@ var searchData=
   ['setvelocity_3',['setVelocity',['../db/db7/namespaceMovement.html#ab1b051d01188343f472d55cc308a2ea9',1,'Movement']]],
   ['setwheelspeed_4',['setWheelSpeed',['../db/db7/namespaceMovement.html#a306418fd93d9a239a4615287b53e32fe',1,'Movement']]],
   ['showdatapid_5',['showDataPID',['../db/d41/namespaceMOVE.html#a315e036cd760b1e3d9320732fc4f7137',1,'MOVE']]],
-  ['speedtovoltage_6',['speedToVoltage',['../db/d41/namespaceMOVE.html#a6dc94d29c95a22759d8046d06361f99e',1,'MOVE']]]
+  ['speedtovoltage_6',['speedToVoltage',['../db/d41/namespaceMOVE.html#a6dc94d29c95a22759d8046d06361f99e',1,'MOVE']]],
+  ['sum_7',['sum',['../d5/d4d/namespaceCapteurLigne.html#ab68ded4099e31f291ef39f90c4d2ddf4',1,'CapteurLigne']]]
 ];

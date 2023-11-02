@@ -9,5 +9,6 @@ var searchData=
   ['sifflet_6',['Sifflet',['../dc/d61/namespaceSifflet.html',1,'']]],
   ['sp_7',['Sp',['../dd/d4f/structMOVE_1_1valeursPID.html#a3ad75d15a1ca1e6537523b01ae5299a6',1,'MOVE::valeursPID::Sp()'],['../de/db6/structPID_1_1valeursPID.html#a677c7489f519ee4d41ff1346a9a66ab5',1,'PID::valeursPID::Sp()']]],
   ['speedtovoltage_8',['speedToVoltage',['../db/d41/namespaceMOVE.html#a6dc94d29c95a22759d8046d06361f99e',1,'MOVE']]],
-  ['startpos_9',['startPos',['../db/d41/namespaceMOVE.html#a713957715c2c4f0f8922dd3630098a77',1,'MOVE']]]
+  ['startpos_9',['startPos',['../db/d41/namespaceMOVE.html#a713957715c2c4f0f8922dd3630098a77',1,'MOVE']]],
+  ['sum_10',['sum',['../d5/d4d/namespaceCapteurLigne.html#ab68ded4099e31f291ef39f90c4d2ddf4',1,'CapteurLigne']]]
 ];
