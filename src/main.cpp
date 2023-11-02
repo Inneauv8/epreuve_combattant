@@ -353,14 +353,14 @@ void loop()
 
     case 5:
         setClaw(OPENED);
-        if (rotateAngularVelocity(0, 5, (2 * PI) - 0.8))
+        if (rotateAngularVelocity(0, 3, (2 * PI) - 1))
         {
             state++;
         }
         break;
 
     case 6: // On fait un tour et puis le shortcut
-        if (forward(15, 42))
+        if (forward(15, 45))
         {
             state++;
         }
