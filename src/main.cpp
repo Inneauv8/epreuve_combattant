@@ -332,6 +332,10 @@ void loop()
     case 3: // Suivi de la ligne, détection de retour à la couleur
 
         loopLineFollower();
+        if (CapteurLigne::isVariation(150))
+        {
+            state++;
+        }
         break;
 
     case 4: // On fait un tour et puis le shortcut
