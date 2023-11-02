@@ -1,4 +1,4 @@
-#include "Arduino.h";
+#include "Arduino.h"
 
 #ifndef SIFFLET_H
 #define SIFFLET_H
