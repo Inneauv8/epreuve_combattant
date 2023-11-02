@@ -109,7 +109,6 @@ namespace Movement
         }
 
         float targetOrientation = wrap((initialOrientation + fabs(angle * 2) * (radius > 0 ? 1 : -1)), -M_PI, M_PI);
-
         bool angleReached = fabs(actualOrientation - initialOrientation) >= fabs(angle) || reset;
 
         if (!angleReached)
@@ -206,18 +205,20 @@ namespace Movement
         return speedMotor;
     }
 
-    void setPIDAngular(float Kp, float Ki, float Kd)
+    void setPIDAngular(float Kp, float Ki, float Kd, float cutOff)
     {
         angularPID.Kp = Kp;
         angularPID.Ki = Ki;
         angularPID.Kd = Kd;
+        angularPID.integralCutOff = cutOff;
     }
 
-    void setPIDVelocity(float Kp, float Ki, float Kd)
+    void setPIDVelocity(float Kp, float Ki, float Kd, float cutOff)
     {
         velocityPID.Kp = Kp;
         velocityPID.Ki = Ki;
         velocityPID.Kd = Kd;
+        velocityPID.integralCutOff = cutOff;
     }
 
     void setWheelSpeed(float rightWheelSpeed, float leftWheelSpeed)
@@ -238,31 +239,59 @@ namespace Movement
 
     void updatePIDs()
     {
+        static unsigned long oldTime;
+        unsigned long time = micros();
+        float dt = (time - oldTime) / 1000000.0;
+        oldTime = time;
+
         float rightMotorSpeed = computeRightMotorSpeed();
         float leftMotorSpeed = computeLeftMotorSpeed();
 
         float angularVelocity = (leftMotorSpeed - rightMotorSpeed) / WHEEL_BASE_DIAMETER;
         float velocity = (rightMotorSpeed + leftMotorSpeed) / 2.0;
 
-        angularPID.Pv = angularVelocity;
-        velocityPID.Pv = velocity;
+        // angularPID.Kp = 0.1 * velocity;
 
+        // angularPID.Pv = angularVelocity;
+
+        velocityPID.Pv = velocity;
         float wantedVelocity = velocityPID.update();
+
+        angularPID.Pv = angularVelocity;
         float wantedAngularVelocity = angularPID.update();
+
+        // float wantedVelocity
+
         // float maxVelocity = clamp(MAX_VELOCITY - (fabs(angularVelocity) * WHEEL_BASE_DIAMETER / 2.0), 0, MAX_VELOCITY);
 
         // float wantedVelocity = clamp(velocityPID.update(), -maxVelocity, maxVelocity);
 
-        float wantedRightMotorSpeed = wantedVelocity - wantedAngularVelocity * WHEEL_BASE_DIAMETER / 2.0;
-        float wantedLeftMotorSpeed = wantedVelocity + wantedAngularVelocity * WHEEL_BASE_DIAMETER / 2.0;
+        float wantedRightMotorSpeed = wantedVelocity - (wantedAngularVelocity * WHEEL_BASE_DIAMETER) / 2.0;
+        float wantedLeftMotorSpeed = wantedVelocity + (wantedAngularVelocity * WHEEL_BASE_DIAMETER) / 2.0;
 
-        MOTOR_SetSpeed(RIGHT, clamp(wantedRightMotorSpeed, -1, 1));
-        MOTOR_SetSpeed(LEFT, clamp(wantedLeftMotorSpeed, -1, 1));
+        rightVelocity += wantedRightMotorSpeed * dt;
+        leftVelocity += wantedLeftMotorSpeed * dt;
+
+        MOTOR_SetSpeed(RIGHT, clamp(rightVelocity, -1, 1));
+        MOTOR_SetSpeed(LEFT, clamp(leftVelocity, -1, 1));
+
+
+        //Serial.print(angularPID.Sp);
+        //Serial.print("\t");
+        //Serial.println(angularPID.Pv);
+
+        // Serial.print("Angular: ");
+        // Serial.print(angularPID.Sp - angularPID.Pv);
+        // Serial.print("\t");
+        // Serial.print("Velocity: ");
+        // Serial.println(velocityPID.Sp - velocityPID.Pv);
     }
 
     namespace
     {
         PID::valeursPID velocityPID = {};
         PID::valeursPID angularPID = {};
+        float rightVelocity = 0;
+        float leftVelocity = 0;
     }
 }

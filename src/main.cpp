@@ -67,8 +67,8 @@ ClawState clawState = OPENED;
 
 void setupPID()
 {
-    setPIDVelocity(0.15, 0.001, 0);
-    setPIDAngular(0.1, 0.001, 0);
+    setPIDVelocity(0.2, 0.001, 0.02, 1);
+    setPIDAngular(0.3, 0.001, 0.02, 1);
 }
 
 void setupServo()
@@ -89,7 +89,7 @@ void setup()
     setupServo();
     BoardInit();
     // Good value : 8, 0.001, 0.15
-    PIDLigne::initPID(2.7387791339, 2.625137795, 8, 0, 0.1, LINE_FOLLOWER_PINS, 45);
+    PIDLigne::initPID(2.7387791339, 2.625137795, 17, 0, 0.7, LINE_FOLLOWER_PINS, 45);
     Serial.begin(9600);
 
     // CapteurLigne::initLine(LINE_FOLLOWER_PINS, 45);
@@ -100,7 +100,10 @@ void setup()
     setClaw(CLOSED);
 
     for (int i; i < 100; i++)
+    {
         CapteurLigne::isVariation(1);
+        Couleur::Get();
+    }
 }
 
 bool activateServoForDistance(float id, float distance, float targetAngle, float resetAngle)
@@ -130,11 +133,11 @@ void loopLineFollower()
     setWheelSpeed(wheelVelocities.rightWheelSpeed, wheelVelocities.leftWheelSpeed);
 }
 
-void followWall(float id, float velocity, float radius = 13.3, float distance = 425.0)
+void followWall(float id, float velocity, float radius = 7, float distance = 425.0)
 {
     float baseAngularVelocity = velocity / radius;
 
-    float angularVelocity = sigmoid(ROBUS_ReadIR(id), distance, 1, 25.0, -2) * (id == RIGHT ? baseAngularVelocity : -baseAngularVelocity);
+    float angularVelocity = sigmoid(ROBUS_ReadIR(id), distance, 1, 0.5, -2) * (id == RIGHT ? baseAngularVelocity : -baseAngularVelocity);
 
     Movement::move(velocity, angularVelocity);
 }
@@ -195,7 +198,7 @@ void loop()
     switch (state)
     {
     case 0: // Attente du sifflet, détection de la couleur de départ
-
+        // Couleur::Get();
         if (!Sifflet::active)
         {
             if (Sifflet::update(1.0))
@@ -205,7 +208,10 @@ void loop()
         }
         if (Sifflet::active)
         {
-            state = 2;
+            if (Couleur::Get() == 'j')
+                state = 2;
+            else
+                state = 1;
         }
         break;
 
@@ -215,7 +221,7 @@ void loop()
         {
         case 0:
             moveUnited(10, 0.5, 0);
-            if (CapteurLigne::isVariation(100))
+            if (CapteurLigne::isVariation(115))
 
                 state2++;
             break;
@@ -228,11 +234,11 @@ void loop()
                 state2++;
             break;
         case 3:
-            if (forward(15, 24))
+            if (forward(15, 23))
                 state2++;
             break;
         case 4:
-            if (rotate(15, 18, (PI / 2.0) - 0.1))
+            if (rotate(15, 18, (PI / 2.0) - 0.2))
                 state2++;
             break;
         case 5:
@@ -257,7 +263,7 @@ void loop()
             }
             break;
         case 7:
-            if (forward(5, 10))
+            if (forward(5, 6))
             {
                 state = 3;
             }
@@ -289,7 +295,7 @@ void loop()
                 state3++;
             break;
         case 4:
-            if (rotate(15, 32, (PI / 2.0) + 0.1))
+            if (rotate(15, 31, (PI / 2.0) + 0.1))
                 state3++;
             break;
         case 5:
@@ -314,13 +320,13 @@ void loop()
             }
             break;
         case 7:
-            if (rotate(15, 6, (2 * PI) / 3))
+            if (rotate(10, 6, (2 * PI) / 3))
             {
                 state3++;
             }
             break;
         case 8:
-            if (rotate(15, -3, PI / 2))
+            if (rotate(10, -3, PI / 2))
             {
                 state = 3;
             }
@@ -332,24 +338,40 @@ void loop()
     case 3: // Suivi de la ligne, détection de retour à la couleur
 
         loopLineFollower();
-        if (CapteurLigne::isVariation(150))
+        if (Couleur::Get() == 'v')
+        {
+            state++;
+        }
+        break;
+    case 4:
+        if (forward(15, 10))
+        {
+            state++;
+        }
+
+        break;
+
+    case 5:
+        setClaw(OPENED);
+        if (rotateAngularVelocity(0, 5, (2 * PI) - 0.8))
         {
             state++;
         }
         break;
 
-    case 4: // On fait un tour et puis le shortcut
-    case 5:
+    case 6: // On fait un tour et puis le shortcut
+        if (forward(15, 42))
+        {
+            state++;
+        }
+        break;
+    case 7:
 
         followWall(RIGHT, 15);
 
-        if (CapteurLigne::isVariation(110))
-        {
-            state++;
-        }
         break;
 
-    case 6: // Feni
+    case 8: // Feni
 
         move(0, 0);
 
@@ -358,6 +380,14 @@ void loop()
             setClaw(CLOSED);
             state = 0; // On restart le parcours
         }
+        break;
+
+    case 85:
+        move(15, 0);
+        break;
+
+    case 86:
+        Serial.println(CapteurLigne::sum());
         break;
     case 87:
         Sifflet::update(1.0);

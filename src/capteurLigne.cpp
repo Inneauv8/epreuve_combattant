@@ -129,8 +129,7 @@ namespace CapteurLigne
       total += sensorValues[i];
     }
 
-    mean = mean * 0.9 + total * 0.1;
-    Serial.println(mean);
+    mean = mean * 0.99 + total * 0.01;
     return (mean);
   }
 
@@ -153,7 +152,7 @@ namespace CapteurLigne
     variation = abs((int)mean - (int)lastMean);
     lastMean = mean;
 
-    // Serial.println(variation);
+
     return (variation > treshhold);
   }
 }

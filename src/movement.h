@@ -1,8 +1,8 @@
 /****************************************************************************************
 Nom du fichier : movement.h
-Auteur :                   
-Date de création : 
-  
+Auteur :
+Date de création :
+
 ****************************************************************************************/
 #ifndef PROTOTYPE_H
 #define PROTOTYPE_H
@@ -12,8 +12,9 @@ Date de création :
 #include "mathX.h"
 #include "pid.h"
 #include "float.h"
+#include "Move.h"
 
-#define WHEEL_BASE_DIAMETER 7.5 //7.480315
+#define WHEEL_BASE_DIAMETER 7.5 // 7.480315
 #define WHEEL_DIAMETER 2.992126
 #define MAX_VELOCITY 30
 #define INACTIVE NAN
@@ -24,16 +25,17 @@ namespace Movement
     extern float pulseToDist;
     extern float orientationOffset;
 
-    struct WheelVelocities {
+    struct WheelVelocities
+    {
         float rightVelocity;
         float leftVelocity;
     };
-	
+
     float computeOrientation();
     float computeDistance();
 
     void resetOrientation();
-    
+
     bool distanceFlag(float distance, float *initialDistance);
     bool orientationFlag(float angle, float *initialOrientation);
     bool distanceFlag(float distance);
@@ -46,8 +48,8 @@ namespace Movement
 
     void moveUnited(float velocity, float radius, float orientation);
 
-    bool rotateAngularVelocity(float velocity, float angularVelocity, float angle, boolean reset);
-    
+    bool rotateAngularVelocity(float velocity, float angularVelocity, float angle, boolean reset = false);
+
     bool rotate(float velocity, float radius, float angle, boolean reset = false);
 
     bool forward(float velocity, float distance, boolean reset = false);
@@ -55,8 +57,8 @@ namespace Movement
     float computeLeftMotorSpeed();
     float computeRightMotorSpeed();
 
-    void setPIDAngular(float Kp, float Ki, float Kd);
-    void setPIDVelocity(float Kp, float Ki, float Kd);
+    void setPIDAngular(float Kp, float Ki, float Kd, float cutOff);
+    void setPIDVelocity(float Kp, float Ki, float Kd, float cutOff);
 
     void setWheelSpeed(float rightWheelSpeed, float leftWheelSpeed);
 
@@ -64,15 +66,18 @@ namespace Movement
     void setAngularVelocity(float angularVelocity);
 
     void updatePIDs();
-	namespace {
-		// *************************************************************************************************
-		// VARIABLES LOCALES
-		// *************************************************************************************************
-		/* VIDE */
+    namespace
+    {
+        // *************************************************************************************************
+        // VARIABLES LOCALES
+        // *************************************************************************************************
+        /* VIDE */
 
         extern PID::valeursPID angularPID;
         extern PID::valeursPID velocityPID;
-	}
+        extern float rightVelocity;
+        extern float leftVelocity;
+    }
 }
 
 #endif // PROTOTYPE_H

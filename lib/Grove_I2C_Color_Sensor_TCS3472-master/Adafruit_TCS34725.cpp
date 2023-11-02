@@ -16,9 +16,9 @@
 */
 /**************************************************************************/
 #ifdef __AVR
-    #include <avr/pgmspace.h>
+#include <avr/pgmspace.h>
 #elif defined(ESP8266)
-    #include <pgmspace.h>
+#include <pgmspace.h>
 #endif
 #include <stdlib.h>
 #include <math.h>
@@ -34,7 +34,8 @@
     @brief  Implements missing powf function
 */
 /**************************************************************************/
-float powf(const float x, const float y) {
+float powf(const float x, const float y)
+{
     return (float)(pow((double)x, (double)y));
 }
 
@@ -43,15 +44,16 @@ float powf(const float x, const float y) {
     @brief  Writes a register and an 8 bit value over I2C
 */
 /**************************************************************************/
-void Adafruit_TCS34725::write8(uint8_t reg, uint32_t value) {
+void Adafruit_TCS34725::write8(uint8_t reg, uint32_t value)
+{
     Wire.beginTransmission(TCS34725_ADDRESS);
-    #if ARDUINO >= 100
+#if ARDUINO >= 100
     Wire.write(TCS34725_COMMAND_BIT | reg);
     Wire.write(value & 0xFF);
-    #else
+#else
     Wire.send(TCS34725_COMMAND_BIT | reg);
     Wire.send(value & 0xFF);
-    #endif
+#endif
     Wire.endTransmission();
 }
 
@@ -60,21 +62,22 @@ void Adafruit_TCS34725::write8(uint8_t reg, uint32_t value) {
     @brief  Reads an 8 bit value over I2C
 */
 /**************************************************************************/
-uint8_t Adafruit_TCS34725::read8(uint8_t reg) {
+uint8_t Adafruit_TCS34725::read8(uint8_t reg)
+{
     Wire.beginTransmission(TCS34725_ADDRESS);
-    #if ARDUINO >= 100
+#if ARDUINO >= 100
     Wire.write(TCS34725_COMMAND_BIT | reg);
-    #else
+#else
     Wire.send(TCS34725_COMMAND_BIT | reg);
-    #endif
+#endif
     Wire.endTransmission();
 
     Wire.requestFrom(TCS34725_ADDRESS, 1);
-    #if ARDUINO >= 100
+#if ARDUINO >= 100
     return Wire.read();
-    #else
+#else
     return Wire.receive();
-    #endif
+#endif
 }
 
 /**************************************************************************/
@@ -82,25 +85,27 @@ uint8_t Adafruit_TCS34725::read8(uint8_t reg) {
     @brief  Reads a 16 bit values over I2C
 */
 /**************************************************************************/
-uint16_t Adafruit_TCS34725::read16(uint8_t reg) {
-    uint16_t x; uint16_t t;
+uint16_t Adafruit_TCS34725::read16(uint8_t reg)
+{
+    uint16_t x;
+    uint16_t t;
 
     Wire.beginTransmission(TCS34725_ADDRESS);
-    #if ARDUINO >= 100
+#if ARDUINO >= 100
     Wire.write(TCS34725_COMMAND_BIT | reg);
-    #else
+#else
     Wire.send(TCS34725_COMMAND_BIT | reg);
-    #endif
+#endif
     Wire.endTransmission();
 
     Wire.requestFrom(TCS34725_ADDRESS, 2);
-    #if ARDUINO >= 100
+#if ARDUINO >= 100
     t = Wire.read();
     x = Wire.read();
-    #else
+#else
     t = Wire.receive();
     x = Wire.receive();
-    #endif
+#endif
     x <<= 8;
     x |= t;
     return x;
@@ -111,7 +116,8 @@ uint16_t Adafruit_TCS34725::read16(uint8_t reg) {
     Enables the device
 */
 /**************************************************************************/
-void Adafruit_TCS34725::enable(void) {
+void Adafruit_TCS34725::enable(void)
+{
     write8(TCS34725_ENABLE, TCS34725_ENABLE_PON);
     delay(3);
     write8(TCS34725_ENABLE, TCS34725_ENABLE_PON | TCS34725_ENABLE_AEN);
@@ -122,7 +128,8 @@ void Adafruit_TCS34725::enable(void) {
     Disables the device (putting it in lower power sleep mode)
 */
 /**************************************************************************/
-void Adafruit_TCS34725::disable(void) {
+void Adafruit_TCS34725::disable(void)
+{
     /* Turn the device off to save power */
     uint8_t reg = 0;
     reg = read8(TCS34725_ENABLE);
@@ -138,7 +145,8 @@ void Adafruit_TCS34725::disable(void) {
     Constructor
 */
 /**************************************************************************/
-Adafruit_TCS34725::Adafruit_TCS34725(tcs34725IntegrationTime_t it, tcs34725Gain_t gain) {
+Adafruit_TCS34725::Adafruit_TCS34725(tcs34725IntegrationTime_t it, tcs34725Gain_t gain)
+{
     _tcs34725Initialised = false;
     _tcs34725IntegrationTime = it;
     _tcs34725Gain = gain;
@@ -154,18 +162,20 @@ Adafruit_TCS34725::Adafruit_TCS34725(tcs34725IntegrationTime_t it, tcs34725Gain_
     doing anything else)
 */
 /**************************************************************************/
-boolean Adafruit_TCS34725::begin(void) {
+boolean Adafruit_TCS34725::begin(void)
+{
     Wire.begin();
 
     /* Make sure we're actually connected */
     uint8_t x = read8(TCS34725_ID);
-    if ((x != 0x44) && (x != 0x10)) {
+    if ((x != 0x44) && (x != 0x10))
+    {
         return false;
     }
     _tcs34725Initialised = true;
 
     /* Set default integration time and gain */
-    setIntegrationTime(_tcs34725IntegrationTime);
+    setIntegrationTime(TCS34725_INTEGRATIONTIME_24MS);
     setGain(_tcs34725Gain);
 
     /* Note: by default, the device is in power down mode on bootup */
@@ -179,8 +189,10 @@ boolean Adafruit_TCS34725::begin(void) {
     Sets the integration time for the TC34725
 */
 /**************************************************************************/
-void Adafruit_TCS34725::setIntegrationTime(tcs34725IntegrationTime_t it) {
-    if (!_tcs34725Initialised) {
+void Adafruit_TCS34725::setIntegrationTime(tcs34725IntegrationTime_t it)
+{
+    if (!_tcs34725Initialised)
+    {
         begin();
     }
 
@@ -196,8 +208,10 @@ void Adafruit_TCS34725::setIntegrationTime(tcs34725IntegrationTime_t it) {
     Adjusts the gain on the TCS34725 (adjusts the sensitivity to light)
 */
 /**************************************************************************/
-void Adafruit_TCS34725::setGain(tcs34725Gain_t gain) {
-    if (!_tcs34725Initialised) {
+void Adafruit_TCS34725::setGain(tcs34725Gain_t gain)
+{
+    if (!_tcs34725Initialised)
+    {
         begin();
     }
 
@@ -213,8 +227,10 @@ void Adafruit_TCS34725::setGain(tcs34725Gain_t gain) {
     @brief  Reads the raw red, green, blue and clear channel values
 */
 /**************************************************************************/
-void Adafruit_TCS34725::getRawData(uint16_t* r, uint16_t* g, uint16_t* b, uint16_t* c) {
-    if (!_tcs34725Initialised) {
+void Adafruit_TCS34725::getRawData(uint16_t *r, uint16_t *g, uint16_t *b, uint16_t *c)
+{
+    if (!_tcs34725Initialised)
+    {
         begin();
     }
 
@@ -224,25 +240,26 @@ void Adafruit_TCS34725::getRawData(uint16_t* r, uint16_t* g, uint16_t* b, uint16
     *b = read16(TCS34725_BDATAL);
 
     /* Set a delay for the integration time */
-    switch (_tcs34725IntegrationTime) {
-        case TCS34725_INTEGRATIONTIME_2_4MS:
-            delay(3);
-            break;
-        case TCS34725_INTEGRATIONTIME_24MS:
-            delay(24);
-            break;
-        case TCS34725_INTEGRATIONTIME_50MS:
-            delay(50);
-            break;
-        case TCS34725_INTEGRATIONTIME_101MS:
-            delay(101);
-            break;
-        case TCS34725_INTEGRATIONTIME_154MS:
-            delay(154);
-            break;
-        case TCS34725_INTEGRATIONTIME_700MS:
-            delay(700);
-            break;
+    switch (_tcs34725IntegrationTime)
+    {
+    case TCS34725_INTEGRATIONTIME_2_4MS:
+        delay(3);
+        break;
+    case TCS34725_INTEGRATIONTIME_24MS:
+        delay(10);
+        break;
+    case TCS34725_INTEGRATIONTIME_50MS:
+        delay(50);
+        break;
+    case TCS34725_INTEGRATIONTIME_101MS:
+        delay(101);
+        break;
+    case TCS34725_INTEGRATIONTIME_154MS:
+        delay(154);
+        break;
+    case TCS34725_INTEGRATIONTIME_700MS:
+        delay(700);
+        break;
     }
 }
 
@@ -252,10 +269,11 @@ void Adafruit_TCS34725::getRawData(uint16_t* r, uint16_t* g, uint16_t* b, uint16
             Kelvin
 */
 /**************************************************************************/
-uint16_t Adafruit_TCS34725::calculateColorTemperature(uint16_t r, uint16_t g, uint16_t b) {
-    float X, Y, Z;      /* RGB to XYZ correlation      */
-    float xc, yc;       /* Chromaticity co-ordinates   */
-    float n;            /* McCamy's formula            */
+uint16_t Adafruit_TCS34725::calculateColorTemperature(uint16_t r, uint16_t g, uint16_t b)
+{
+    float X, Y, Z; /* RGB to XYZ correlation      */
+    float xc, yc;  /* Chromaticity co-ordinates   */
+    float n;       /* McCamy's formula            */
     float cct;
 
     /* 1. Map RGB values to their XYZ counterparts.    */
@@ -285,7 +303,8 @@ uint16_t Adafruit_TCS34725::calculateColorTemperature(uint16_t r, uint16_t g, ui
     @brief  Converts the raw R/G/B values to lux
 */
 /**************************************************************************/
-uint16_t Adafruit_TCS34725::calculateLux(uint16_t r, uint16_t g, uint16_t b) {
+uint16_t Adafruit_TCS34725::calculateLux(uint16_t r, uint16_t g, uint16_t b)
+{
     float illuminance;
 
     /* This only uses RGB ... how can we integrate clear or calculate lux */
@@ -295,29 +314,33 @@ uint16_t Adafruit_TCS34725::calculateLux(uint16_t r, uint16_t g, uint16_t b) {
     return (uint16_t)illuminance;
 }
 
-
-void Adafruit_TCS34725::setInterrupt(boolean i) {
+void Adafruit_TCS34725::setInterrupt(boolean i)
+{
     uint8_t r = read8(TCS34725_ENABLE);
-    if (i) {
+    if (i)
+    {
         r |= TCS34725_ENABLE_AIEN;
-    } else {
+    }
+    else
+    {
         r &= ~TCS34725_ENABLE_AIEN;
     }
     write8(TCS34725_ENABLE, r);
 }
 
-void Adafruit_TCS34725::clearInterrupt(void) {
+void Adafruit_TCS34725::clearInterrupt(void)
+{
     Wire.beginTransmission(TCS34725_ADDRESS);
-    #if ARDUINO >= 100
+#if ARDUINO >= 100
     Wire.write(TCS34725_COMMAND_BIT | 0x66);
-    #else
+#else
     Wire.send(TCS34725_COMMAND_BIT | 0x66);
-    #endif
+#endif
     Wire.endTransmission();
 }
 
-
-void Adafruit_TCS34725::setIntLimits(uint16_t low, uint16_t high) {
+void Adafruit_TCS34725::setIntLimits(uint16_t low, uint16_t high)
+{
     write8(0x04, low & 0xFF);
     write8(0x05, low >> 8);
     write8(0x06, high & 0xFF);
