@@ -189,7 +189,7 @@ void updateEverything()
     CapteurLigne::isVariation(1);
 }
 
-byte state = 0; // Remettre à zéro pour le sifflet
+byte state = 3; // Remettre à zéro pour le sifflet
 
 void loop()
 {
@@ -238,7 +238,7 @@ void loop()
                 state2++;
             break;
         case 4:
-            if (rotate(15, 18, (PI / 2.0) - 0.2))
+            if (rotate(15, 18, (PI / 2.0) - 0.3))
                 state2++;
             break;
         case 5:
@@ -353,7 +353,7 @@ void loop()
 
     case 5:
         setClaw(OPENED);
-        if (rotateAngularVelocity(0, 3, (2 * PI) - 1))
+        if (rotateAngularVelocity(0, 3, (2.0 * PI) - 0.4))
         {
             state++;
         }
